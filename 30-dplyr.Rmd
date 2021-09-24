@@ -201,7 +201,7 @@ rna3
 
 `r msmbstyle::question_begin()`
 
-Using pipes, subset the `rna` data to genes with an expression higher 
+Using pipes, subset the `rna` data to keep genes with an expression higher 
 than 50000 in female mice at time 0, and retain only the columns `gene`, 
 `sample`, `time`, `expression` and `age`
 
