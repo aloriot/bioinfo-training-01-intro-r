@@ -210,17 +210,17 @@ bioinformatics world, where annotations about genes are scattered in
 different tables that have one or more shared columns. The data we are
 going to use are available in the course package and can be loaded as
 shown below.</p>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="sec-join.html#cb481-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="sec-join.html#cb477-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
 <pre><code>## 
 ## This is 'rWSBIM1207' version 0.1.14</code></pre>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="sec-join.html#cb483-1" aria-hidden="true"></a><span class="kw">data</span>(jdf)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="sec-join.html#cb479-1" aria-hidden="true"></a><span class="kw">data</span>(jdf)</span></code></pre></div>
 <p>The example data is composed of pairs of tables (we have tibbles here,
 but this would equally work with dataframes). The first member of the
 pair contains protein <a href="https://www.uniprot.org/">UniProt</a><label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> UniProt is the protein information database. Its mission is to <em>provide the scientific community with a comprehensive, high-quality and freely accessible resource of protein sequence and functional information</em>.</span> unique
 accession number (<code>uniprot</code> variable), the most likely sub-cellular
 localisation of these respective proteins (<code>organelle</code> variable) as
 well as the proteins identifier (<code>entry</code>).</p>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="sec-join.html#cb484-1" aria-hidden="true"></a>jdf1</span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="sec-join.html#cb480-1" aria-hidden="true"></a>jdf1</span></code></pre></div>
 <pre><code>## # A tibble: 25 × 3
 ##    uniprot  organelle                             entry      
 ##    &lt;chr&gt;    &lt;chr&gt;                                 &lt;chr&gt;      
@@ -240,7 +240,7 @@ protein (<code>gene_name</code> variable), a description of the gene
 (<code>description</code> variable), the uniprot accession number (this is the
 common variable that can be used to join tables) and the species the
 protein information comes from (<code>organism</code> variable).</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="sec-join.html#cb486-1" aria-hidden="true"></a>jdf2</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="sec-join.html#cb482-1" aria-hidden="true"></a>jdf2</span></code></pre></div>
 <pre><code>## # A tibble: 25 × 4
 ##    gene_name description                                      uniprot organism
 ##    &lt;chr&gt;     &lt;chr&gt;                                            &lt;chr&gt;   &lt;chr&gt;   
@@ -259,8 +259,8 @@ protein information comes from (<code>organism</code> variable).</p>
 variables. We are going to use <code>dplyr</code>’s <code>full_join</code> function to do
 so, that finds the common variable (in this case <code>uniprot</code>) to match
 observations from the first and second table.</p>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="sec-join.html#cb488-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"dplyr"</span>)</span>
-<span id="cb488-2"><a href="sec-join.html#cb488-2" aria-hidden="true"></a><span class="kw">full_join</span>(jdf1, jdf2)</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="sec-join.html#cb484-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb484-2"><a href="sec-join.html#cb484-2" aria-hidden="true"></a><span class="kw">full_join</span>(jdf1, jdf2)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 25 × 6
 ##    uniprot  organelle        entry   gene_name description              organism
@@ -284,9 +284,9 @@ across different tables.</p>
 manually using the <code>by</code> argument, as shown below with the <code>jdf1</code> (as
 above) and <code>jdf3</code> tables, where the UniProt accession number is
 encoded using a different capitalisation.</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="sec-join.html#cb491-1" aria-hidden="true"></a><span class="kw">names</span>(jdf3)</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="sec-join.html#cb487-1" aria-hidden="true"></a><span class="kw">names</span>(jdf3)</span></code></pre></div>
 <pre><code>## [1] "gene_name"   "description" "UniProt"     "organism"</code></pre>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="sec-join.html#cb493-1" aria-hidden="true"></a><span class="kw">full_join</span>(jdf1, jdf3, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"uniprot"</span> =<span class="st"> "UniProt"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="sec-join.html#cb489-1" aria-hidden="true"></a><span class="kw">full_join</span>(jdf1, jdf3, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"uniprot"</span> =<span class="st"> "UniProt"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 25 × 6
 ##    uniprot  organelle        entry   gene_name description              organism
 ##    &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;                    &lt;chr&gt;   
@@ -320,7 +320,7 @@ and <code>jdf5</code>. What has happened for observations <code>P26039</code> an
 ► Solution<span id="sol-start-43" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-43', 'sol-start-43')"></span>
 </p>
 <div id="sol-body-43" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="sec-join.html#cb495-1" aria-hidden="true"></a><span class="kw">full_join</span>(jdf4, jdf5)</span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="sec-join.html#cb491-1" aria-hidden="true"></a><span class="kw">full_join</span>(jdf4, jdf5)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 14 × 6
 ##    uniprot  organelle        entry  gene_name description               organism
@@ -361,7 +361,7 @@ that are present in only one or both tables.</p>
 tables.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-186"></span>
+<span id="fig:unnamed-chunk-185"></span>
 <p class="caption marginnote shownote">
 Figure 7.1: An inner join matches pairs of observation matching in both tables, this dropping those that are unique to one table. Figure taken from <em>R for Data Science</em>.
 </p>
@@ -375,7 +375,7 @@ Figure 7.1: An inner join matches pairs of observation matching in both tables, 
 <li>A <strong>full join</strong> keeps all observations.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-187"></span>
+<span id="fig:unnamed-chunk-186"></span>
 <p class="caption marginnote shownote">
 Figure 7.2: Outer joins match observations that appear in at least on table, filling up missing values with <code>NA</code> values. Figure taken from <em>R for Data Science</em>.
 </p>
@@ -397,7 +397,7 @@ Figure 7.2: Outer joins match observations that appear in at least on table, fil
 ► Solution<span id="sol-start-44" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-44', 'sol-start-44')"></span>
 </p>
 <div id="sol-body-44" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="sec-join.html#cb498-1" aria-hidden="true"></a><span class="kw">left_join</span>(jdf4, jdf5)</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="sec-join.html#cb494-1" aria-hidden="true"></a><span class="kw">left_join</span>(jdf4, jdf5)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 10 × 6
 ##    uniprot  organelle                entry    gene_name description     organism
@@ -433,7 +433,7 @@ Figure 7.2: Outer joins match observations that appear in at least on table, fil
 ► Solution<span id="sol-start-45" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-45', 'sol-start-45')"></span>
 </p>
 <div id="sol-body-45" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="sec-join.html#cb501-1" aria-hidden="true"></a><span class="kw">right_join</span>(jdf4, jdf5)</span></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="sec-join.html#cb497-1" aria-hidden="true"></a><span class="kw">right_join</span>(jdf4, jdf5)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 5 × 6
 ##   uniprot organelle entry     gene_name description                     organism
@@ -464,7 +464,7 @@ Figure 7.2: Outer joins match observations that appear in at least on table, fil
 ► Solution<span id="sol-start-46" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-46', 'sol-start-46')"></span>
 </p>
 <div id="sol-body-46" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="sec-join.html#cb504-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf4, jdf5)</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="sec-join.html#cb500-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf4, jdf5)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 1 × 6
 ##   uniprot organelle entry     gene_name description         organism
@@ -488,7 +488,7 @@ reticulum</a> (often
 abbreviated ER) and in the <a href="https://en.wikipedia.org/wiki/Golgi_apparatus">Golgi
 apparatus</a> (often
 abbreviated GA).</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="sec-join.html#cb507-1" aria-hidden="true"></a>jdf6</span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="sec-join.html#cb503-1" aria-hidden="true"></a>jdf6</span></code></pre></div>
 <pre><code>## # A tibble: 5 × 4
 ##   uniprot organelle             entry       isoform
 ##   &lt;chr&gt;   &lt;chr&gt;                 &lt;chr&gt;         &lt;dbl&gt;
@@ -499,7 +499,7 @@ abbreviated GA).</p>
 ## 5 P11276  Extracellular matrix  FINC_MOUSE        1</code></pre>
 <p>If we now want to join <code>jdf6</code> and <code>jdf2</code>, the variables of the latter
 will be duplicated.</p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="sec-join.html#cb509-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf2)</span></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="sec-join.html#cb505-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf2)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 5 × 7
 ##   uniprot organelle             entry       isoform gene_name description organism
@@ -513,7 +513,7 @@ will be duplicated.</p>
 correct information from <code>jdf2</code>. One needs however to be careful when
 duplicated keys exist in both tables. Below, we create an inner join
 between <code>jdf6</code> and <code>jdf7</code>, both having duplicated <code>Q99PL5</code> entries.</p>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="sec-join.html#cb512-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="sec-join.html#cb508-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7)</span></code></pre></div>
 <pre><code>## Joining, by = "uniprot"</code></pre>
 <pre><code>## # A tibble: 4 × 9
 ##   uniprot organelle   entry  isoform gene_name description  organism isoform_num
@@ -544,7 +544,7 @@ localisation of the protein. <code>jdf7</code> has also two entries, referring t
 two different quantitative measurements (variable <code>measure</code>). When
 joining the duplicated keys, you get all possible combinations.</p>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-188"></span>
+<span id="fig:unnamed-chunk-187"></span>
 <p class="caption marginnote shownote">
 Figure 7.3: Joins with duplicated keys in both tables, producing all possible combinations. Figure taken from <em>R for Data Science</em>.
 </p>
@@ -578,7 +578,7 @@ tables) as well as the isoform number, called <code>isoform</code> and
 only automatically joined based on the shared <code>uniprot</code> key. Here, we
 need to join using both keys and need to explicitly name the variables
 used for the join.</p>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="sec-join.html#cb515-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"uniprot"</span> =<span class="st"> "uniprot"</span>, <span class="st">"isoform"</span> =<span class="st"> "isoform_num"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="sec-join.html#cb511-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"uniprot"</span> =<span class="st"> "uniprot"</span>, <span class="st">"isoform"</span> =<span class="st"> "isoform_num"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 8
 ##   uniprot organelle    entry   isoform gene_name description    organism measure
 ##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;      &lt;dbl&gt;
@@ -610,9 +610,9 @@ keys. Below, we first fix the misnamed variable in <code>jdf7</code>. Instead of
 updating the variable name by checking its index manually, we grep it
 programmatically and store it in a new variable <code>i</code>. We can then join
 the two tables without having to specify the two keys explicitly.</p>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="sec-join.html#cb517-1" aria-hidden="true"></a>i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">"isoform"</span>, <span class="kw">names</span>(jdf7))</span>
-<span id="cb517-2"><a href="sec-join.html#cb517-2" aria-hidden="true"></a><span class="kw">names</span>(jdf7)[i] &lt;-<span class="st"> "isoform"</span></span>
-<span id="cb517-3"><a href="sec-join.html#cb517-3" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7)</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="sec-join.html#cb513-1" aria-hidden="true"></a>i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">"isoform"</span>, <span class="kw">names</span>(jdf7))</span>
+<span id="cb513-2"><a href="sec-join.html#cb513-2" aria-hidden="true"></a><span class="kw">names</span>(jdf7)[i] &lt;-<span class="st"> "isoform"</span></span>
+<span id="cb513-3"><a href="sec-join.html#cb513-3" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, jdf7)</span></code></pre></div>
 <pre><code>## Joining, by = c("uniprot", "isoform")</code></pre>
 <pre><code>## # A tibble: 2 × 8
 ##   uniprot organelle    entry   isoform gene_name description    organism measure
@@ -679,25 +679,25 @@ Figure 7.4: Matching dimension and names when binding by rows and columns.
 <code>d2</code>, and then binding by rows using <code>d2</code> and <code>d3</code>. Lets start with
 <code>d1</code> and <code>d2</code> shown below; both have the same number of columns but,
 and this is crucial, do not have the same column names:</p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="sec-join.html#cb520-1" aria-hidden="true"></a>d1</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="sec-join.html#cb516-1" aria-hidden="true"></a>d1</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
 ## 3 3 3</code></pre>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="sec-join.html#cb522-1" aria-hidden="true"></a>d2</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="sec-join.html#cb518-1" aria-hidden="true"></a>d2</span></code></pre></div>
 <pre><code>##   a b
 ## 1 4 4
 ## 2 5 5</code></pre>
 <p>While de number of columns match, the names don’t, which results in an
 error<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> The failing call to <code>rbind</code> is wrapped into a <code>try</code> call here
 to stop the error from aborting the document compilation.</span> when we use <code>rbind</code>:</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="sec-join.html#cb524-1" aria-hidden="true"></a><span class="kw">try</span>(<span class="kw">rbind</span>(d1, d2))</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="sec-join.html#cb520-1" aria-hidden="true"></a><span class="kw">try</span>(<span class="kw">rbind</span>(d1, d2))</span></code></pre></div>
 <pre><code>## Error in match.names(clabs, names(xi)) : 
 ##   names do not match previous names</code></pre>
 <p>Before <code>rbind</code>ing two dataframes, we must assure that their number of columns and
 rownames match exactly:</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="sec-join.html#cb526-1" aria-hidden="true"></a><span class="kw">names</span>(d2) &lt;-<span class="st"> </span><span class="kw">names</span>(d1)</span>
-<span id="cb526-2"><a href="sec-join.html#cb526-2" aria-hidden="true"></a><span class="kw">rbind</span>(d1, d2)</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="sec-join.html#cb522-1" aria-hidden="true"></a><span class="kw">names</span>(d2) &lt;-<span class="st"> </span><span class="kw">names</span>(d1)</span>
+<span id="cb522-2"><a href="sec-join.html#cb522-2" aria-hidden="true"></a><span class="kw">rbind</span>(d1, d2)</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
@@ -706,7 +706,7 @@ rownames match exactly:</p>
 ## 5 5 5</code></pre>
 <p>If we want to bind to dataframes along their columns, we must make
 sure that their number of rows match; rownames not hinder here:</p>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="sec-join.html#cb528-1" aria-hidden="true"></a><span class="kw">cbind</span>(d2, d3)</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="sec-join.html#cb524-1" aria-hidden="true"></a><span class="kw">cbind</span>(d2, d3)</span></code></pre></div>
 <pre><code>##   x y v1 v2 v3
 ## 1 4 4  1  3  5
 ## 2 5 5  2  4  6</code></pre>
@@ -716,13 +716,13 @@ observations for the same set of variables - there is more than only
 the column names. Below, we <code>rbind</code> dataframes with identical column
 names but different variables, which end up all being coerced into
 characters.</p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="sec-join.html#cb530-1" aria-hidden="true"></a>d1</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="sec-join.html#cb526-1" aria-hidden="true"></a>d1</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
 ## 3 3 3</code></pre>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="sec-join.html#cb532-1" aria-hidden="true"></a>d4 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span>
-<span id="cb532-2"><a href="sec-join.html#cb532-2" aria-hidden="true"></a><span class="kw">str</span>(<span class="kw">rbind</span>(d1, d4))</span></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="sec-join.html#cb528-1" aria-hidden="true"></a>d4 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">y =</span> letters[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span>
+<span id="cb528-2"><a href="sec-join.html#cb528-2" aria-hidden="true"></a><span class="kw">str</span>(<span class="kw">rbind</span>(d1, d4))</span></code></pre></div>
 <pre><code>## 'data.frame':	5 obs. of  2 variables:
 ##  $ x: chr  "1" "2" "3" "a" ...
 ##  $ y: chr  "1" "2" "3" "a" ...</code></pre>

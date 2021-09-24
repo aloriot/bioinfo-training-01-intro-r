@@ -223,7 +223,7 @@ rna %>%
 
 ## Mutate
 
-Frequently you'll want to create new columns based on the values in existing
+Frequently you'll want to create new columns based on the values of existing
 columns, for example to do unit conversions, or to find the ratio of values in two
 columns. For this we'll use `mutate()`.
 
@@ -276,9 +276,9 @@ rna %>%
 `r msmbstyle::question_begin()`
 
 Create a new data frame from the `rna` data that meets the following criteria: 
-contains only the `gene`, `chromosome_name`, `phenotype_description`, `sample`, and `expression` columns and a new
-column giving the log expression the gene.
-This data frame must only contain gene located on autosomes and associated with a phenotype_description.
+contains only the `gene`, `chromosome_name`, `phenotype_description`, `sample`, 
+and `expression` columns and a new column giving the log expression the gene.
+This data frame must only contain genes located on autosomes and associated with a phenotype_description.
 
 **Hint**: think about how the commands should be ordered to produce
 this data frame!
@@ -370,27 +370,6 @@ rna %>%
             median_expression = median(expression)) 
 ```
 
-It is sometimes useful to rearrange the result of a query to inspect the values. 
-For instance, we can sort on `mean_expression` to put the genes lowly expressed first:
-
-
-```{r, purl = FALSE}
-rna %>%
-  group_by(gene, infection, time) %>%
-  summarize(mean_expression = mean(expression),
-            median_expression = median(expression)) %>% 
-  arrange(mean_expression)
-```
-
-To sort in descending order, we need to add the `desc()` function:
-
-```{r, purl = FALSE}
-rna %>%
-  group_by(gene, infection, time) %>%
-  summarize(mean_expression = mean(expression),
-            median_expression = median(expression)) %>% 
-  arrange(desc(mean_expression))
-```
 
 
 ### Counting
@@ -432,7 +411,8 @@ rna %>%
   summarize(n = n())
 ```
 
-We can use `arrange()` to sort the table, to facilitate the comparisons.
+It is sometimes useful to sort the result to facilitate the comparisons. 
+We can use `arrange()` to sort the table.
 For instance, we might want to arrange the table above by time:
 
 ```{r purl = FALSE}
@@ -448,6 +428,15 @@ rna %>%
   count(infection, time) %>%
   arrange(n)
 ```
+
+To sort in descending order, we need to add the `desc()` function:
+
+```{r, purl = FALSE}
+rna %>%
+  count(infection, time) %>%
+  arrange(desc(n))
+```
+
 
 
 
