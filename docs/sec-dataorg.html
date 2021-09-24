@@ -357,7 +357,6 @@ data cleaning and analysis.</p>
 <li><a href="sec-dataorg.html#zeros">Not filling in zeros</a></li>
 <li><a href="sec-dataorg.html#null">Using problematic null values</a></li>
 <li><a href="sec-dataorg.html#formatting">Using formatting to convey information</a></li>
-<li><a href="sec-dataorg.html#formatting_pretty">Using formatting to make the data sheet look pretty</a></li>
 <li><a href="sec-dataorg.html#comments">Placing comments in cells</a></li>
 <li><a href="sec-dataorg.html#units">Placing units in cells</a></li>
 <li><a href="sec-dataorg.html#info">Entering more than one piece of information in a cell</a></li>
@@ -445,39 +444,34 @@ for different software applications in their article:</p>
 <div id="formatting" class="section level3" number="1.3.5">
 <h3>
 <span class="header-section-number">1.3.5</span> Using formatting to convey information</h3>
-<p><strong>Examples</strong>:</p>
+<p><strong>Example 1</strong>:</p>
 <ul>
+<li><p>leaving blank rows to indicate separations in data.</p></li>
 <li><p>highlighting cells, rows or columns that should be excluded
 from an analysis</p></li>
-<li><p>leaving blank rows to indicate separations in data.</p></li>
 </ul>
-<p><img src="figs/formatting.png"></p>
-<p><strong>Solution</strong>: create a new field to encode which data should be
+<p><img src="figs/formatting.png">
+=&gt; Create a new field to encode which data should be
 excluded.</p>
 <p><img src="figs/good_formatting.png"></p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
-</div>
-<div id="formatting_pretty" class="section level3" number="1.3.6">
-<h3>
-<span class="header-section-number">1.3.6</span> Using formatting to make the data sheet look pretty</h3>
-<p><strong>Example</strong>: merging cells.</p>
+<p><strong>Example 2</strong>: merging cells.</p>
 <p><img src="figs/merged_cells.png"></p>
 <p>Merged cells will make your data unreadable by statistics software.</p>
 <p><strong>Solution</strong>:
-Consider restructuring your data in such a way
+Restructure your data in such a way
 that you will not need to merge cells to organize your data.</p>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="comments" class="section level3" number="1.3.7">
+<div id="comments" class="section level3" number="1.3.6">
 <h3>
-<span class="header-section-number">1.3.7</span> Placing comments in cells</h3>
+<span class="header-section-number">1.3.6</span> Placing comments in cells</h3>
 <p>Most analysis software can’t see Excel comments.</p>
 <p>Create another column to add notes if neeeded.</p>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="units" class="section level3" number="1.3.8">
+<div id="units" class="section level3" number="1.3.7">
 <h3>
-<span class="header-section-number">1.3.8</span> Placing units in cells</h3>
+<span class="header-section-number">1.3.7</span> Placing units in cells</h3>
 <ul>
 <li><p>Don’t include units in cells</p></li>
 <li><p>Ideally, all the values you place in one column should be in the same unit.
@@ -485,9 +479,9 @@ If for some reason they are not, create another column specifying the units.</p>
 </ul>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="info" class="section level3" number="1.3.9">
+<div id="info" class="section level3" number="1.3.8">
 <h3>
-<span class="header-section-number">1.3.9</span> Entering more than one piece of information in a cell</h3>
+<span class="header-section-number">1.3.8</span> Entering more than one piece of information in a cell</h3>
 <p><strong>Example</strong>: Recording ABO and Rhesus groups in one cell, such as A+,
 B+, A-, …</p>
 <p><strong>Solution</strong>: Don’t include more than one piece of information in a
@@ -495,9 +489,9 @@ cell. This will limit the ways in which you can analyze your data.
 Include one column the ABO group and one for the Rhesus group.</p>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="field_name" class="section level3" number="1.3.10">
+<div id="field_name" class="section level3" number="1.3.9">
 <h3>
-<span class="header-section-number">1.3.10</span> Using problematic field names</h3>
+<span class="header-section-number">1.3.9</span> Using problematic field names</h3>
 <p>Choose descriptive field names, but be careful not to include spaces,
 numbers, or special characters of any kind:</p>
 <ul>
@@ -559,9 +553,9 @@ after a few months, a year, or more are slim.</p>
 </table>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="special" class="section level3" number="1.3.11">
+<div id="special" class="section level3" number="1.3.10">
 <h3>
-<span class="header-section-number">1.3.11</span> Using special characters in data</h3>
+<span class="header-section-number">1.3.10</span> Using special characters in data</h3>
 <p><strong>Example</strong>: when writing longer text in a cell, people often
 include line breaks, em-dashes, vertical tabs, etc in their spreadsheet.
 (This can also occurs accidentally by copying text from other applications…)
@@ -573,9 +567,9 @@ such as lines being cut in half and other encoding errors.</p>
 <p><strong>Solution</strong>: Include in cells only text and spaces.</p>
 <p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
-<div id="metadata" class="section level3" number="1.3.12">
+<div id="metadata" class="section level3" number="1.3.11">
 <h3>
-<span class="header-section-number">1.3.12</span> Inclusion of metadata in data table</h3>
+<span class="header-section-number">1.3.11</span> Inclusion of metadata in data table</h3>
 <p><strong>Example</strong>: You add a legend at the top or bottom of your data table
 explaining column meaning, units, exceptions, etc.</p>
 <p><strong>Solution</strong>: Recording data about your data (“metadata”) is
