@@ -1,0 +1,127 @@
+---
+title: "Data manipulation and visualisation with R"
+author: "Laurent Gatto, Manon Martin & Axelle Loriot"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+knit: bookdown::preview_chapter
+description: "Course material for the Data manipulation and visualisation with R training (SMCS & CBIO, UCLouvain)."
+output:
+  msmbstyle::msmb_html_book:
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    split_bib: no
+    css: style.css
+  bookdown::gitbook:
+    split_by: chapter
+    split_bib: no
+    css: style.css
+link-citations: yes
+bibliography: [refs.bib, packages.bib]
+---
+
+
+# Preamble {-}
+
+## Training aims {-}
+
+*Do you want to get started with reproducible data analysis with R, one of the most used software for the analysis of high throughput biology data?*
+
+R is a free and open-source software. It is one of the most widely used in the bio-medical research field, likely due to the availability of numerous R/Bioconductor packages specifically dedicated to high throughput data.
+
+The goal of this training is to initiate wet-lab scientists to reproducible data analysis with R and its RStudio integrated environment, focusing on data manipulation, data visualisation and basic data analysis.
+
+## Pre-requisites {-}
+
+This training doesn’t require any previous knowledge of R. There are no programming or technical pre-requisities for this course, other than basic computer usage, such as general knowledge about files (binary and text files) and folders and as well as downloading files. Familiarity with a spreadsheet editor is helpful for the first
+chapter.
+
+## Content {-}
+
+* Discovering R, and the RStudio environment
+* Importance of tidy data in general and how it translates into dataframes in R
+* Data manipulation and analysis using R standard commands and the tidyverse packages
+* Data visualisation with ggplot2
+
+## Requirements {-}
+
+Participants must bring a laptop with a Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges on. They should have a few specific software packages installed:
+
+* Download R from the CRAN page: https://cloud.r-project.org/. At the top of that page, choose the Download R link corresponding to your operating system. If you use Windows, follow install R for the first time, then click the link to download R. The installation procedure is like any other software, and you can safely use all default options. If you use Mac (OS X), download the pkg installer that matches you OS version and install like any other software. Linux users are advised to use their package manager.
+
+* Download and install the Rstudio Desktop Open source edition: https://rstudio.com/products/rstudio/download/#download. Choose the installer for your operating system and version. Install as any other software.
+
+For technical assistance https://moodle.uclouvain.be/course/view.php?id=4862
+
+## Provisional timetable {-}
+
+|             | Tuesday 28-9-21                                                  | Thursday 30-9-21                     |
+| ----------- | ---------------------------------------------------------------- | ------------------------------------ |
+| 9h-10h30    | Data organisation with Spreadsheets<br>R and Rstudio             | Data visualization                   |
+| 10h45-12h45 | Introduction to R<br>Starting with data                          | Data visualization<br>Joining tables |
+| 13h45-15h45 | Starting with data<br>Manipulating and analyzing data with dplyr | Summary exercise                     |
+| 16h-17h     | Manipulating and analyzing data with dplyr                       | Further topics                       |
+
+## References and credits {-}
+
+References are provided throughout the course. Several stand out
+however, as they cover large parts of the material or provide
+complementary resources.
+
+The material for the first chapters, covering the *Introduction to
+data science with R*, is based on the [**Data Carpentry** Ecology
+curiculum](https://datacarpentry.org/lessons/#ecology-workshop) [@DCRecol].
+
+General references for this course are *R for Data Science*
+[@r4ds:2017] and *Bioinformatics Data Skills* [@Buffalo:2015].
+
+The [RStudio Cheat
+Sheets](https://www.rstudio.com/resources/cheatsheets/) are also a
+handy resource and readers will be pointed to specific sheets in the
+respective chapters.
+
+This training is organised by the SMCS in partnership with laurent Gatto, from the [CBIO Lab](https://lgatto.github.io/cbio-lab/) in the de Duve Institute and is being taught by Axelle Loriot and Manon Martin at the UCLouvain, Belgium.
+
+
+## About this course material {-}
+
+This material is written in R markdown [@R-rmarkdown] and compiled as a
+book using `knitr` [@R-knitr] `bookdown` [@R-bookdown]. The source
+code is publicly available in a Github repository
+[https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro](https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro)
+and the compiled material can be read at https://uclouvain-cbio.github.io/bioinfo-training-01-intro/.
+
+
+## Citation {-}
+
+If you use this course, please cite it as
+
+> Laurent Gatto, Kevin Missault & Axelle Loriot. (2019, April
+> 3). UCLouvain-CBIO/WSBIM1207: Introduction to bioinformatics
+> (Version v1.0.0). Zenodo. http://doi.org/10.5281/zenodo.2626733
+
+[![DOI](https://zenodo.org/badge/147494586.svg)](https://zenodo.org/record/2626733)
+
+
+## License {-}
+
+This material is licensed under the [Creative Commons
+Attribution-ShareAlike 4.0
+License](https://creativecommons.org/licenses/by-sa/4.0/).
+
+
+## Setup {-}
+
+For chapter \@ref(sec-dataorg) about *Data organisation with
+Spreadsheets*, a spreadsheet programme is necessary.
+
+We will be using the [R environment for statistical
+computing](https://www.r-project.org/) as main data science language.
+We will also use the
+[RStudio](https://www.rstudio.com/products/RStudio/) interface to
+interact with R and write scripts and reports. Both R and RStudio are
+easy to install and works on all major operating systems.
+
+Once R and RStudio are installed, a set of packages will need to be
+installed. See section \@ref(sec-setup2) for details.
+
