@@ -199,7 +199,6 @@ rna3
 ```
 
 
-
 `r msmbstyle::question_begin()`
 
 Using pipes, subset the `rna` data to genes with an expression higher 
