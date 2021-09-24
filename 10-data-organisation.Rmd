@@ -203,7 +203,7 @@ Cleaned data could look like this
 An **excellent reference**, in particular with regard to R scripting
 is the *Tidy Data* paper @Wickham:2014.
 
-## Common Spreadsheet Errors{#errors}
+## Common Spreadsheet Errors
 
 <!-- This lesson is meant to be used as a reference for discussion as -->
 <!-- learners identify issues with the messy dataset discussed in the -->
@@ -248,7 +248,7 @@ false associations between things!
 In the example above, the computer will see (for example) the third row 
 and assume that all columns refer to the same patient. 
 
-[back](#errors)
+
 
 ### Using multiple tabs {#tabs}
 
@@ -267,7 +267,7 @@ The next time you want to create another tab or table,
 ask yourself if you could avoid adding this tab simply by adding
 a new column to your original spreadsheet. 
 
-[back](#errors)
+
 
 ### Not filling in zeros {#zeros}
 
@@ -290,7 +290,7 @@ with subsequent calculations or analyses.
 It's very important to record zeros as zeros and truly
 missing data as nulls.
 
-[back](#errors)
+
 
 ### Using problematic null values {#null}
 
@@ -325,7 +325,7 @@ for different software applications in their article:
 
 ![](./figs/3_white_table_1.jpg)
 
-[back](#errors)
+
 
 ### Using formatting to convey information {#formatting}
 
@@ -352,7 +352,7 @@ Merged cells will make your data unreadable by statistics software.
 Restructure your data in such a way
 that you will not need to merge cells to organize your data.
 
-[back](#errors)
+
 
 ### Placing comments in cells {#comments}
 
@@ -360,7 +360,7 @@ Most analysis software can't see Excel comments.
 
 Create another column to add notes if neeeded. 
 
-[back](#errors)
+
 
 ### Placing units in cells {#units}
 
@@ -369,7 +369,7 @@ Create another column to add notes if neeeded.
 - Ideally, all the values you place in one column should be in the same unit.
 If for some reason they are not, create another column specifying the units.
 
-[back](#errors)
+
 
 ### Entering more than one piece of information in a cell {#info}
 
@@ -380,7 +380,7 @@ B+, A-, ...
 cell. This will limit the ways in which you can analyze your data.
 Include one column the ABO group and one for the Rhesus group.
 
-[back](#errors)
+
 
 ### Using problematic field names {#field_name}
 
@@ -414,7 +414,7 @@ Including the units in the field names avoids confusion.
 | cell_type | CellType | Cell Type |
 | Observation_01  | first_observation | 1st Obs |
 
-[back](#errors)
+
 
 ### Using special characters in data {#special}
 
@@ -430,7 +430,7 @@ such as lines being cut in half and other encoding errors.
 
 **Solution**: Include in cells only text and spaces.
 
-[back](#errors)
+
 
 ### Inclusion of metadata in data table {#metadata}
 
@@ -463,7 +463,7 @@ Attribution 4.0 International
 License](https://creativecommons.org/licenses/by/4.0/).)
 
 
-[back](#errors)
+
 
 
 

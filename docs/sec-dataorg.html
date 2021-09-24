@@ -131,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a id="active-page" href="sec-dataorg.html"><span class="toc-section-number">1</span> Data organisation with Spreadsheets</a><ul class="toc-sections">
 <li class="toc"><a href="#spreadsheet-programs"> Spreadsheet programs</a></li>
 <li class="toc"><a href="#formatting-data-tables-in-spreadsheets"> Formatting data tables in spreadsheets</a></li>
-<li class="toc"><a href="#errors"> Common Spreadsheet Errors</a></li>
+<li class="toc"><a href="#common-spreadsheet-errors"> Common Spreadsheet Errors</a></li>
 <li class="toc"><a href="#exporting-data"> Exporting data</a></li>
 </ul>
 <a href="sec-rrstudio.html"><span class="toc-section-number">2</span> R and RStudio</a>
@@ -339,7 +339,7 @@ what was wrong with this data and how we would fix it.</p>
 is the <em>Tidy Data</em> paper <span class="citation">Wickham (<label for="tufte-mn-8" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle">2014<span class="marginnote">Wickham, Hadley. 2014. “Tidy Data.” <em>Journal of Statistical Software, Articles</em> 59 (10): 1–23. <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.</span>)</span>.</p>
 </div>
 </div>
-<div id="errors" class="section level2" number="1.3">
+<div id="common-spreadsheet-errors" class="section level2" number="1.3">
 <h2>
 <span class="header-section-number">1.3</span> Common Spreadsheet Errors</h2>
 <!-- This lesson is meant to be used as a reference for discussion as -->
@@ -375,7 +375,6 @@ false associations between things!</p>
 <p><img src="figs/multiple_tables.png"></p>
 <p>In the example above, the computer will see (for example) the third row
 and assume that all columns refer to the same patient.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="tabs" class="section level3" number="1.3.2">
 <h3>
@@ -391,7 +390,6 @@ data in a new tab.</p>
 <p>The next time you want to create another tab or table,
 ask yourself if you could avoid adding this tab simply by adding
 a new column to your original spreadsheet.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="zeros" class="section level3" number="1.3.3">
 <h3>
@@ -411,7 +409,6 @@ you intend to be zeros. This might cause problems
 with subsequent calculations or analyses.</p>
 <p>It’s very important to record zeros as zeros and truly
 missing data as nulls.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="null" class="section level3" number="1.3.4">
 <h3>
@@ -439,7 +436,6 @@ choices. Avoid things like “none”, “no data”, “na” (in lowercase),
 <p><span class="citation">White et al. (<label for="tufte-mn-9" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-9" class="margin-toggle">2013<span class="marginnote">White, Ethan P., Elita Baldridge, Zachary T. Brym, Kenneth J. Locey, Daniel J. McGlinn, and Sarah R. Supp. 2013. “Nine Simple Ways to Make It Easier to (Re)use Your Data.” <em>PeerJ PrePrints</em> 1 (July): e7v2. <a href="https://doi.org/10.7287/peerj.preprints.7v2">https://doi.org/10.7287/peerj.preprints.7v2</a>.</span>)</span> explain good choices for indicating null values
 for different software applications in their article:</p>
 <p><img src="figs/3_white_table_1.jpg"></p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="formatting" class="section level3" number="1.3.5">
 <h3>
@@ -460,14 +456,12 @@ excluded.</p>
 <p><strong>Solution</strong>:
 Restructure your data in such a way
 that you will not need to merge cells to organize your data.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="comments" class="section level3" number="1.3.6">
 <h3>
 <span class="header-section-number">1.3.6</span> Placing comments in cells</h3>
 <p>Most analysis software can’t see Excel comments.</p>
 <p>Create another column to add notes if neeeded.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="units" class="section level3" number="1.3.7">
 <h3>
@@ -477,7 +471,6 @@ that you will not need to merge cells to organize your data.</p>
 <li><p>Ideally, all the values you place in one column should be in the same unit.
 If for some reason they are not, create another column specifying the units.</p></li>
 </ul>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="info" class="section level3" number="1.3.8">
 <h3>
@@ -487,7 +480,6 @@ B+, A-, …</p>
 <p><strong>Solution</strong>: Don’t include more than one piece of information in a
 cell. This will limit the ways in which you can analyze your data.
 Include one column the ABO group and one for the Rhesus group.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="field_name" class="section level3" number="1.3.9">
 <h3>
@@ -551,7 +543,6 @@ after a few months, a year, or more are slim.</p>
 </tr>
 </tbody>
 </table>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="special" class="section level3" number="1.3.10">
 <h3>
@@ -565,7 +556,6 @@ and right-aligned quotation marks) are included.</p>
 <p>When exporting this data into other softwares, dangerous things may occur,
 such as lines being cut in half and other encoding errors.</p>
 <p><strong>Solution</strong>: Include in cells only text and spaces.</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 </div>
 <div id="metadata" class="section level3" number="1.3.11">
 <h3>
@@ -593,7 +583,6 @@ the files and folders in a project.</p>
 University of Edinburgh. MANTRA is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
 Attribution 4.0 International
 License</a>.)</p>
-<p><a href="sec-dataorg.html#errors">back</a></p>
 <p><strong>Take-home message</strong></p>
 <ul>
 <li><p>Never modify your raw data. Always make a copy before making any
