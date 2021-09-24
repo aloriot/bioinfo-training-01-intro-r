@@ -5,16 +5,15 @@ fig:unnamed-chunk-4
 fig:unnamed-chunk-5
 fig:unnamed-chunk-6
 fig:unnamed-chunk-7
-fig:bioinfoproj
 fig:rstudiohelp
-fig:unnamed-chunk-74
+fig:unnamed-chunk-75
 fig:firstfactorplot
 fig:paintermodel
 fig:plotmethod
+fig:unnamed-chunk-187
+fig:unnamed-chunk-191
+fig:unnamed-chunk-192
 fig:unnamed-chunk-193
-fig:unnamed-chunk-197
-fig:unnamed-chunk-198
-fig:unnamed-chunk-199
 fig:bindfig
 sec-dataorg
 spreadsheet-programs
@@ -58,7 +57,6 @@ conditional-subsetting
 names
 missing-data
 sec-genvec
-additional-exercises
 sec-startdata
 presentation-of-the-gene-expression-data
 what-are-data-frames
@@ -70,7 +68,7 @@ formatting-dates
 summary-of-r-objects
 lists
 sec-exportandsave
-additional-exercises-1
+additional-exercises
 sec-dplyr
 data-manipulation-using-dplyr-and-tidyr
 loading-data-with-tidyverse
@@ -95,7 +93,7 @@ customisation
 composing-plots
 exporting-plots
 other-packages-for-visualisation
-additional-exercises-2
+additional-exercises-1
 sec-join
 combining-tables
 different-types-of-joins
@@ -103,7 +101,7 @@ multiple-matches
 matching-across-multiple-keys
 merge-in-base-r
 row-and-column-binding
-additional-exercises-3
+additional-exercises-2
 sec-next
 summarizedexperiment
 creating-a-summarizedexperiment

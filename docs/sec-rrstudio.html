@@ -68,7 +68,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -217,8 +216,8 @@ troubleshooting with the R user community.</p></li>
 <span class="header-section-number">2.1</span> What is R? What is RStudio?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-is-r-what-is-rstudio')" onmouseout="reset_tooltip('what-is-r-what-is-rstudio-tooltip')"><span class="tooltiptext" id="what-is-r-what-is-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The term <a href="https://www.r-project.org/">R</a> is used to refer to both the
-<em>programming language</em>, the <em>environment for statistical computing</em>
-and <em>the software</em> that interprets the scripts written using it.</p>
+<strong>programming language</strong>, the <em>environment for statistical computing</em>
+and <strong>the software</strong> that interprets the scripts written using it.</p>
 <p><a href="https://rstudio.com">RStudio</a> is currently a very popular way to not
 only write your R scripts but also to interact with the R
 software<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> As opposed to using R directly from the command line
@@ -230,6 +229,7 @@ therefore both need to be installed on your computer.</p>
 Sheet</a>
 provides much more information that will be covered here, but can be
 useful to learn keyboard shortcuts and discover new features.</p>
+<p><a href="https://www.rstudio.com/resources/cheatsheets/">Other RStudio Cheat sheets</a> are available for specific topics.</p>
 </div>
 <div id="why-learn-r" class="section level2" number="2.2">
 <h2>
@@ -251,11 +251,18 @@ you feedback and spot mistakes.</p>
 <p>Working with scripts forces you to have a deeper understanding of what
 you are doing, and facilitates your learning and comprehension of the
 methods you use.</p>
+<p><em>Summary of (dis)advantages of working with scripts:</em></p>
+<ul>
+<li>(-) learning curve</li>
+<li>(+) share, comment code</li>
+<li>(+) redo quickly an analysis</li>
+<li>(+) reproducibility</li>
+</ul>
 </div>
 <div id="r-code-is-great-for-reproducibility" class="section level3 unnumbered">
 <h3>R code is great for reproducibility<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-code-is-great-for-reproducibility')" onmouseout="reset_tooltip('r-code-is-great-for-reproducibility-tooltip')"><span class="tooltiptext" id="r-code-is-great-for-reproducibility-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>Reproducibility is when someone else (including your future self) can
+<p><strong>Reproducibility</strong> is when someone else (including your future self) can
 obtain the same results from the same dataset when using the same
 analysis.</p>
 <p>R integrates with other tools to generate manuscripts from your
@@ -269,7 +276,7 @@ requirements.</p>
 <div id="r-is-interdisciplinary-and-extensible" class="section level3 unnumbered">
 <h3>R is interdisciplinary and extensible<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-is-interdisciplinary-and-extensible')" onmouseout="reset_tooltip('r-is-interdisciplinary-and-extensible-tooltip')"><span class="tooltiptext" id="r-is-interdisciplinary-and-extensible-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>With 10000+ packages<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> i.e. add-ons that confer R with new functionality,
+<p>With 10000+ <strong>packages</strong><label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> i.e. add-ons that confer R with new functionality,
 such as bioinformatics data analysis</span> that can be installed to extend its
 capabilities, R provides a framework that allows you to combine
 statistical approaches from many scientific disciplines to best suit
@@ -290,7 +297,7 @@ Figure 2.1: Exponential increase of the number of packages available on <a href=
 <p>The skills you learn with R scale easily with the size of your
 dataset. Whether your dataset has hundreds or millions of lines, it
 won’t make much difference to you.</p>
-<p>R is designed for data analysis. It comes with special data structures
+<p>R is <strong>designed for data analysis</strong>. It comes with special data structures
 and data types that make handling of missing data and statistical
 factors convenient.</p>
 <p>R can connect to spreadsheets, databases, and many other data formats,
@@ -384,7 +391,7 @@ tutorial below.</p>
 <code>New project</code>.</li>
 <li>Enter a name for this new folder (or “directory”), and choose a
 convenient location for it. This will be your <strong>working directory</strong>
-for this session (or whole course) (e.g., <code>wsbim1207</code>).</li>
+for this session (or whole training) (e.g., <code>bioinfo_training_intro</code>).</li>
 <li>Click on <code>Create project</code>.</li>
 <li>(Optional) Set Preferences to ‘Never’ save workspace in RStudio.</li>
 </ol>
@@ -448,9 +455,12 @@ Figure 2.5: Example of a working directory structure.
 </p>
 <img src="figs/working-directory-structure.png" alt="Example of a working directory structure." width="100%">
 </div>
-<p>For this course, we will need a <code>data/</code> folder to store our raw data,
-and we will use <code>data_output/</code> for when we learn how to export data as
-CSV files, and <code>fig_output/</code> folder for the figures that we will save.</p>
+<p>For this course, we will need:</p>
+<ul>
+<li>a <code>data/</code> folder to store our raw data,</li>
+<li>a <code>data_output/</code> folder for when we learn how to export data as CSV files,</li>
+<li>and a <code>fig_output/</code> folder for the figures that we will save.</li>
+</ul>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -458,7 +468,7 @@ CSV files, and <code>fig_output/</code> folder for the figures that we will save
 <div class="question-body">
 <p>Under the <code>Files</code> tab on the right of the screen, click on <code>New Folder</code> and
 create a folder named <code>data</code> within your newly created working directory
-(e.g., <code>~/wsbim1207/data</code>). (Alternatively, type <code>dir.create("data")</code> at
+(e.g., <code>~/bioinfo_training_intro/data</code>). (Alternatively, type <code>dir.create("data")</code> at
 your R console.) Repeat these operations to create a <code>data_output/</code> and a
 <code>fig_output</code> folders.</p>
 <p class="question-end">
@@ -477,34 +487,9 @@ Figure 2.6: How it should look like at the beginning of this lesson
 </p>
 <img src="figs/r-starting-how-it-should-look-like.png" alt="How it should look like at the beginning of this lesson" width="100%">
 </div>
-<p><strong>Project management</strong> is also applicable to bioinformatics projects,
-of course<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> In this course, we consider bioinformatics as
-data science applied to biological or bio-medical data.</span>. William Noble (<span class="citation"><label for="tufte-mn-10" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle">Noble (2009)<span class="marginnote">Noble, William Stafford. 2009. <span>“A Quick Guide to Organizing Computational Biology Projects.”</span> <em>PLOS Computational Biology</em> 5 (7): 1–5. <a href="https://doi.org/10.1371/journal.pcbi.1000424">https://doi.org/10.1371/journal.pcbi.1000424</a>.</span></span>) proposes the
-following directory structure:</p>
-<blockquote>
-<p>Directory names are in large typeface, and filenames are in smaller
-typeface. Only a subset of the files are shown here. Note that the
-dates are formatted <code>&lt;year&gt;-&lt;month&gt;-&lt;day&gt;</code> so that they can be
-sorted in chronological order. The source code <code>src/ms-analysis.c</code>
-is compiled to create <code>bin/ms-analysis</code> and is documented in
-<code>doc/ms-analysis.html</code>. The <code>README</code> files in the data directories
-specify who downloaded the data files from what URL on what
-date. The driver script <code>results/2009-01-15/runall</code> automatically
-generates the three subdirectories split1, split2, and split3,
-corresponding to three cross-validation splits. The
-<code>bin/parse-sqt.py</code> script is called by both of the <code>runall</code> driver
-scripts.</p>
-</blockquote>
-<div class="figure">
-<span style="display:block;" id="fig:bioinfoproj"></span>
-<p class="caption marginnote shownote">
-Figure 2.7: Directory structure for a sample bioinformatics project.
-</p>
-<img src="figs/noble-bioinfo-project.png" alt="Directory structure for a sample bioinformatics project." width="100%">
-</div>
 <p>The most important aspect of a well defined and well documented
 project directory is to enable someone unfamiliar with the
-project<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> That someone could be, and very likely will be your
+project<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> That someone could be, and very likely will be your
 future self, a couple of months or years after the analyses were
 run.</span> to</p>
 <ol style="list-style-type: decimal">
@@ -523,7 +508,7 @@ analysis parameters.</p></li>
 place from where R will be looking for and saving the files. When you
 write code for your project, it should refer to files in relation to
 the root of your working directory and only need files within this
-structure.</p>
+structure with <strong>relative paths</strong>.</p>
 <p>Using RStudio projects makes this easy and ensures that your working
 directory is set properly. If you need to check it, you can use
 <code>getwd()</code>. If for some reason your working directory is not what it
@@ -534,17 +519,17 @@ Alternatively you can use <code>setwd("/path/to/working/directory")</code> to
 reset your working directory. However, your scripts should not include
 this line because it will fail on someone else’s computer.</p>
 <p><strong>Example</strong></p>
-<p>The shema below represents the working directory <code>wsbim1207</code> with the
+<p>The schema below represents the working directory <code>bioinfo_training_intro</code> with the
 <code>data</code> and <code>fig_output</code> sub-directories, and 2 files in the latter:</p>
-<pre><code>wsbim1207/data/
-         /fig_output/fig1.pdf
-         /fig_output/fig2.png</code></pre>
+<pre><code>bioinfo_training_intro/data/
+                      /fig_output/fig1.pdf
+                      /fig_output/fig2.png</code></pre>
 <p>If we were in the working directory, we could refer to the <code>fig1.pdf</code>
-file using the relative path <code>wsbim1207/fig_output/fig1.pdf</code> or the
-absolute path <code>/home/user/wsbim1207/fig_output/fig1.pdf</code>.</p>
+file using the relative path <code>fig_output/fig1.pdf</code> or the
+absolute path <code>/home/user/bioinfo_training_intro/fig_output/fig1.pdf</code>.</p>
 <p>If we were in the <code>data</code> directory, we would use the relative path
 <code>../fig_output/fig1.pdf</code> or the same absolute path
-<code>/home/user/wsbim1207/fig_output/fig1.pdf</code>.</p>
+<code>/home/user/bioinfo_training_intro/fig_output/fig1.pdf</code>.</p>
 </div>
 </div>
 <div id="interacting-with-r" class="section level2" number="2.5">
@@ -553,10 +538,10 @@ absolute path <code>/home/user/wsbim1207/fig_output/fig1.pdf</code>.</p>
 </h2>
 <p>The basis of programming is that we write down instructions for the
 computer to follow, and then we tell the computer to follow those
-instructions. We write, or <em>code</em>, instructions in R because it is a
+instructions. We write, or <strong>code</strong>, instructions in R because it is a
 common language that both the computer and we can understand. We call
 the instructions <em>commands</em> and we tell the computer to follow the
-instructions by <em>executing</em> (also called <em>running</em>) those commands.</p>
+instructions by <strong>executing</strong> (also called <em>running</em>) those commands.</p>
 <p>There are two main ways of interacting with R: by using the
 <strong>console</strong> or by using <strong>scripts</strong> (plain text files that contain
 your code). The console pane (in RStudio, the bottom left panel) is
@@ -578,12 +563,6 @@ will be sent to the console and executed when you press <code>Ctrl</code> +
 <code>Enter</code>. You can find other keyboard shortcuts in this <a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf">RStudio
 cheatsheet about the RStudio
 IDE</a>.</p>
-<p>At some point in your analysis you may want to check the content of a
-variable or the structure of an object, without necessarily keeping a
-record of it in your script. You can type these commands and execute
-them directly in the console. RStudio provides the <code>Ctrl</code> + <code>1</code> and
-<code>Ctrl</code> + <code>2</code> shortcuts allow you to jump between the script and the
-console panes.</p>
 <p>If R is ready to accept commands, the R console shows a <code>&gt;</code> prompt. If
 it receives a command (by typing, copy-pasting or sent from the script
 editor using <code>Ctrl</code> + <code>Enter</code>), R will try to execute it, and when
@@ -607,7 +586,7 @@ return you to the <code>&gt;</code> prompt.</p>
 taste of how you can use R to analyse data for your own
 research. However, you will need to learn more to do advanced
 operations such as cleaning your dataset, using statistical methods,
-or creating beautiful graphics<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> We will introduce most of these (except statistics)
+or creating beautiful graphics<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> We will introduce most of these (except statistics)
 here, but will only manage to scratch the surface of the wealth of
 what is possible to do with R.</span>. The best way to become
 proficient and efficient at R, as with any other tool, is to use it to
@@ -621,13 +600,30 @@ suit your purpose might make it easier for you to get started.</p>
 <h2>
 <span class="header-section-number">2.7</span> Seeking help<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seeking-help')" onmouseout="reset_tooltip('seeking-help-tooltip')"><span class="tooltiptext" id="seeking-help-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
+<p>In brief:</p>
+<ul>
+<li><p>Help on functions and datasets through the <em>help</em> pages: RStudio help interface or commands <code>help(mean)</code> or <code>?mean</code></p></li>
+<li>
+<p>Asking for help when I get an error message or I don’t know how to achieve an operation:</p>
+<ul>
+<li>your neighbour</li>
+<li>more experimented colleague</li>
+<li><a href="http://stackoverflow.com/questions/tagged/r">Stack Overflow with r tag</a></li>
+<li>
+<a href="https://stat.ethz.ch/mailman/listinfo/r-help">R-help mailing list</a> or <a href="http://www.r-project.org/mail.html">topic-specific mailing lists</a>
+</li>
+<li>on a specific package: look at the description file, contact the author, open an issue on GitHub</li>
+</ul>
+</li>
+</ul>
+<p>In details:</p>
 <div id="use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions" class="section level3 unnumbered">
 <h3>Use the built-in RStudio help interface to search for more information on R functions<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions')" onmouseout="reset_tooltip('use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions-tooltip')"><span class="tooltiptext" id="use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:rstudiohelp"></span>
 <p class="caption marginnote shownote">
-Figure 2.8: RStudio help interface.
+Figure 2.7: RStudio help interface.
 </p>
 <img src="figs/rstudiohelp.png" alt="RStudio help interface." width="70%">
 </div>
@@ -720,7 +716,7 @@ to recreate the exact same object as the one in memory:</p>
 file) with your script up to the point of the error (and after
 removing everything that is not relevant to your
 issue). Alternatively, in particular if your question is not related
-to a data frame, you can save any R object to a file<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> See section <a href="sec-startdata.html#sec-exportandsave">4.10</a> for a better
+to a data frame, you can save any R object to a file<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> See section <a href="sec-startdata.html#sec-exportandsave">4.10</a> for a better
 introduction about exporting and saving data.</span>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-rrstudio.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(iris, <span class="at">file=</span><span class="st">"/tmp/iris.rds"</span>)</span></code></pre></div>
 <p>The content of this file is however not human readable and cannot be
@@ -735,20 +731,15 @@ the packages that you are using, and other information that can be very helpful
 to understand your problem.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sec-rrstudio.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.1.0 (2021-05-18)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Manjaro Linux
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Big Sur 10.16
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/libblas.so.3.10.0
-## LAPACK: /usr/lib/liblapack.so.3.10.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## [1] C/UTF-8/C/C/C/C
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
@@ -825,6 +816,7 @@ the reprex package and of its philosophy.</p></li>
 <h2>
 <span class="header-section-number">2.8</span> R packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-packages')" onmouseout="reset_tooltip('r-packages-tooltip')"><span class="tooltiptext" id="r-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
+<p>R packages need to be : (1) installed (+ their depednencies), and (2) loaded in your environment</p>
 <div id="loading-packages" class="section level3" number="2.8.1">
 <h3>
 <span class="header-section-number">2.8.1</span> Loading packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('loading-packages')" onmouseout="reset_tooltip('loading-packages-tooltip')"><span class="tooltiptext" id="loading-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -848,13 +840,8 @@ we install the <code>dplyr</code> package that we will learn about late.</p>
 dependencies, i.e. all the packages that it relies on to function.</p>
 <p><a href="https://github.com/">Github</a> is a general-pupose online software
 project repository and is well suited for R package development. To
-install a package from Gtihub, one can use the <code>install_github()</code>
-function from the <code>devtools</code> package. Below we first install the
-latter from CRAN (as show above), then we install <code>rWSBIM1207</code>
-directly from the user <code>UCLouvain-CBIO</code> github repository.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="sec-rrstudio.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb15-2"><a href="sec-rrstudio.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb15-3"><a href="sec-rrstudio.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"UCLouvain-CBIO/rWSBIM1207"</span>)</span></code></pre></div>
+install a package from Github, one can use the <code>install_github()</code>
+function from the <code>devtools</code> package.</p>
 
 </div>
 </div>

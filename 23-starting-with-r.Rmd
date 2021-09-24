@@ -62,8 +62,8 @@ in use. It's also best to avoid dots (`.`) within an object name as in
 `my.dataset`. There are many functions in R with dots in their names
 for historical reasons, but because dots have a special meaning in R
 (for methods) and other programming languages, it's best to avoid
-them. It is also recommended to use nouns for object names, and verbs
-for function names. It's important to be consistent in the styling of
+them. It is also recommended to use **nouns for object names**, and **verbs
+for function names**. It's important to be consistent in the styling of
 your code (where you put spaces, how you name objects, etc.). Using a
 consistent coding style makes your code clearer to read for your
 future self and your collaborators. In R, some popular style guides
@@ -109,7 +109,7 @@ weight_kg <- 57.5
 ```
 
 This means that assigning a value to one object does not change the values of
-other objects  For example, let's store the animal's weight in pounds in a new
+other objects.  For example, let's store the animal's weight in pounds in a new
 object, `weight_lb`:
 
 ```{r, purl=FALSE}
@@ -156,14 +156,11 @@ mass_index <- mass/age  # mass_index?
 
 ## Functions and their arguments
 
-Functions are "canned scripts" that automate more complicated sets of commands
-including operations assignments, etc. Many functions are predefined, or can be
-made available by importing R *packages* (more on that later). A function
-usually gets one or more inputs called *arguments*. Functions often (but not
-always) return a *value*. A typical example would be the function `sqrt()`. The
-input (the argument) must be a number, and the return value (in fact, the
-output) is the square root of that number. Executing a function ('running it')
-is called *calling* the function. An example of a function call is:
+Functions are "*canned scripts*" that automate more complicated sets of commands
+including operations assignments, etc. Many functions are predefined, can be
+made available by importing R *packages* (more on that later) or can be built by the user. 
+
+A function usually gets one or more inputs called **arguments**. Functions often (but not always) return a **value**. A typical example would be the function `sqrt()`. The input (the argument) must be a number, and the return value (in fact, the output) is the square root of that number. Executing a function ('running it') is called *calling* the function. An example of a function call is:
 
 ```{r, eval=FALSE, purl=FALSE}
 b <- sqrt(a)
@@ -195,8 +192,7 @@ round(3.14159)
 Here, we've called `round()` with just one argument, `3.14159`, and it has
 returned the value `3`.  That's because the default is to round to the nearest
 whole number. If we want more digits we can see how to do that by getting
-information about the `round` function.  We can use `args(round)` or look at the
-help for this function using `?round`.
+information about the `round` function.  We can use `args(round)` or look at the help for this function using `?round`.
 
 ```{r, results='show', purl=FALSE}
 args(round)
@@ -237,8 +233,7 @@ doing.
 
 
 A vector is the most common and basic data type in R, and is pretty much
-the workhorse of R. A vector is composed by a series of values, which can be
-either numbers or characters. We can assign a series of values to a vector using
+the workhorse of R. A vector is composed by a series of values. We can assign a series of values to a vector using
 the `c()` function. For example we can create a vector of animal weights and assign
 it to a new object `weight_g`:
 
@@ -540,12 +535,12 @@ x[c("A", "C")]
 
 As R was designed to analyze datasets, it includes the concept of
 missing data (which is uncommon in other programming
-languages). Missing data are represented in vectors as `NA`.
+languages). Missing data are represented in vectors as `NA` (*Not Available*).
 
 When doing operations on numbers, most functions will return `NA` if
 the data you are working with include missing values. This feature
 makes it harder to overlook the cases where you are dealing with
-missing data.  You can add the argument `na.rm = TRUE` to calculate
+missing data. You can add the argument `na.rm = TRUE` to calculate
 the result while ignoring the missing values.
 
 ```{r}
@@ -639,7 +634,7 @@ What are the defaults for character and logical vectors?
 
 `r msmbstyle::solution_begin()`
 ```{r}
-character(2) ## the empty charater
+character(2) ## the empty character
 logical(2)   ## FALSE
 ```
 `r msmbstyle::solution_end()`
@@ -709,6 +704,25 @@ one would use:
 ```{r}
 seq(from = 1, to = 20, length.out = 3)
 ```
+
+`r msmbstyle::question_begin()`
+Generate a sequence of numbers 
+
+* from 1 to 100 with steps of 3, 
+* from 50 to 10 of length 8
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r, eval=TRUE}
+# from 1 to 100 with steps of 3
+seq(1,100, by = 3)
+# from 10 to 50 of length 8
+seq(50,10, length.out = 8)
+```
+
+`r msmbstyle::solution_end()`
+
 
 ### Random samples and permutations {-}
 
@@ -816,182 +830,4 @@ Now that we have learned how to write scripts, and the basics of R's
 data structures, we are ready to start working with larger data, and
 learn about data frames.
 
-## Additional exercises
-
-
-`r msmbstyle::question_begin()`
-- Create two vectors `x` and `y` containing the numbers 1 to 10 and 10
-  to 1 respectively. You can use the `seq` or `:` functions rather
-  than constructing them by hand.
-- Check their type. Depending how they were created, they can be
-  integers or doubles.
-- Take the sum (see the `sum()` function) of each vector and verify
-  they are identical.
-- Sum vectors element-wise, and verify that all results are identical.
-- Swap the value or `x` and `y`.
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::question_begin()`
-- Create a vector named x containing the numbers 20 to 2. Retrieve
-  elements that are strictly larger than 5 and smaller or equal than 15.
-
-- Remove the first 8 elements from `x` and store the result in `x2`.
-`r msmbstyle::question_end()`
-
-
-```{r, echo=FALSE, include=FALSE}
-x <- 20:2
-x
-x[x > 5 & x < 15]
-x2 <- x[-(1:8)]
-```
-
-
-`r msmbstyle::question_begin()`
-
-You're doing an colony counting experiment, counting every day, from
-Monday to Friday how many molds you see in your cell cultures.
-
-- Create a vector named `molds` containing the results of your counts:
-  1, 2, 5, 8 and 10.
-
-- Set the names of `molds` using week days and extract the number of
-  molds identified on Wednesday.
-
-`r msmbstyle::question_end()`
-
-```{r, echo=FALSE, include=FALSE}
-molds <- c(1, 2, 5, 8, 10)
-days <-  c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-names(molds) <- days
-molds["Wednesday"]
-```
-
-`r msmbstyle::question_begin()`
-
-- Calculate the mean of a random distribution *N(15, 1)* of size 100
-  and store it in variable `m1`.
-- Calculate the mean of a random distribution *N(0, 1)* of size 100
-  and store it in variable `m2`.
-- Calculate the mean of another random distribution *N(15, 1)* of size
-  1000 and store it in variable `m3`.
-- Can you guess which one of `m1` and `m2` will be larger? Verify in R.
-- Can you guess which one of `m1` and `m3` will be larger? Verify in R.
-
-`r msmbstyle::question_end()`
-
-`r msmbstyle::question_begin()`
-
-- Using the `sample` function, simulate a set of 100 students voting
-  (randomly) for 1, 2 or 3 breaks during the WSBIM1207 course.
-
-- Display the values as  a table of votes.
-
-- Compute the number of students that wanted more that 1 break.
-
-- Bonus: as above, but setting the probability for votes to 1/5, 2/5
-  and 2/5 respectively. Read `?sample` to find out how to do that.
-
-`r msmbstyle::question_end()`
-
-
-```{r, echo=FALSE, include=FALSE}
-m1 <- mean(rnorm(100, 15, 1))
-m2 <- mean(rnorm(100, 0, 1))
-m3 <- mean(rnorm(1000, 15, 1))
-
-## From the nature of the distributions, I expect m1 > m2
-m1 > m2
-
-## I cannot predict which one of m1 and m3 will be larger, only that
-## they will be very close to each other, variating around 15
-m1
-m3
-```
-
-`r msmbstyle::question_begin()`
-
-Given vectors `v1`, `v2` and `v3` below
-
-```{r}
-v1 <- c(1, 2, 3, "4")
-v2 <- c(45, 23, TRUE, 21, 12, 34)
-v3 <- c(v1, v2)
-```
-
-- What is the class of `v3`?
-- What is the length of `v3`?
-- Assign names `"a"`, `"b"`, .. to the `v3`.
-- What is the value of `v3["e"]`?
-- Re-using `v1`, create a vector `v4` containing
-
-```{r, echo = FALSE, comment = NA}
-(v4 <- c(v1[2:1], "NEW", v1[3:4]))
-```
-
-- What is the command to round 3.1234 to two decimanl digits?
-- If you execute `round(3.1234)`, you get `3`. Why?
-
-The WSBIM1207 students were asked how many breaks they wanted during
-the four-hour Thursday morning sessions. The answers are stored in
-vectors `p1` (only one break of 30 minutes), `p2` (two breaks of 15
-minutes) and `p3` (three breaks of 10 minutes).
-
-```{r}
-p1 <- c(1, 1, 1)
-names(p1) <- c("A34", "D3", "F12")
-p2 <- c(2, 2, 2, 2)
-names(p2) <- c("W4", "A21", "K7", "K8")
-p3 <- c(3, 3, 3, 3, 3, 3, 3)
-names(p3) <- c("D1", "D2", "A10", "D5", "D15", "A16", "B22")
-```
-
-- What command would you use to identify the number of respective
-  answers?
-- Concatenate all answers into a single vector `p`.
-- What command would you use to get the vote for student `D2` from vector `p`?
-
-`r msmbstyle::question_end()`
-
-
-`r msmbstyle::question_begin()`
-
-Copy and paset the code chunk below to generate a vector of marks,
-including some students with missing values that didn't take that
-test.
-
-
-```{r, eval = FALSE}
-c(student1 = 12, student2 = 11, student3 = 4, student4 = 6, student5 = 7,
-  student6 = 8.5, student7 = 13.5, student8 = 5.5, student9 = 13.5,
-  student10 = 2.5, student11 = 17, student12 = 18, student13 = 15,
-  student14 = 8, student15 = 7, student16 = 12, student17 = 18.5,
-  student18 = 7.5, student19 = 13.5, student20 = 6, student21 = 9,
-  student22 = 16, student23 = 8.5, student24 = 9, student25 = NA,
-  student26 = NA, student27 = 14, student28 = 16.5, student29 = 12,
-  student30 = NA, student31 = 12.5, student32 = 3, student33 = NA,
-  student34 = 17, student35 = 16, student36 = 9, student37 = 6,
-  student38 = 7, student39 = 8.5, student40 = 8.5, student41 = 8,
-  student42 = 16.5, student43 = 4.5, student44 = NA, student45 = 8,
-  student46 = 8, student47 = 7.5, student48 = 8.5, student49 = 2,
-  student50 = 14, student51 = 6.5, student52 = 12, student53 = 16.5,
-  student54 = 7, student55 = 9.5, student56 = 12, student57 = 8.5,
-  student58 = 15.5, student59 = 9, student60 = 13.5, student61 = 18,
-  student62 = 12.5, student63 = 19.5, student64 = 13, student65 = 17.5,
-  student66 = 8.5, student67 = 9, student68 = 7, student69 = 12.5,
-  student70 = NA, student71 = 19, student72 = 11.5, student73 = 9,
-  student74 = 9.5, student75 = 12, student76 = 11, student77 = 12,
-  student78 = 14, student79 = 17, student80 = 8.5, student81 = 10,
-  student82 = 10, student83 = NA, student84 = 10.5, student85 = 14,
-  student86 = 7.5, student87 = 4, student88 = 9, student89 = 6.5,
-  student90 = 10.5, student91 = 9.5, student92 = 13, student93 = 11.5,
-  student94 = NA, student95 = 6, student96 = 12.5, student97 = 11.5,
-  student98 = 4, student99 = 11.5, student100 = 8)
-```
-
-- What is the number of students that have a mark > 10?
-
-- What is the number of students that have a mark greater than the average score?
-
-`r msmbstyle::question_end()`
+For other distributions, see `?Distributions`.
