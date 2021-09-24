@@ -55,12 +55,12 @@ For technical assistance https://moodle.uclouvain.be/course/view.php?id=4862
 
 ## Provisional timetable {-}
 
-|             | Tuesday 28-9-21                                                  | Thursday 30-9-21                     |
-| ----------- | ---------------------------------------------------------------- | ------------------------------------ |
-| 9h-10h30    | Data organisation with Spreadsheets<br>R and Rstudio             | Data visualization                   |
-| 10h45-12h45 | Introduction to R<br>Starting with data                          | Data visualization<br>Joining tables |
-| 13h45-15h45 | Starting with data<br>Manipulating and analyzing data with dplyr | Summary exercise                     |
-| 16h-17h     | Manipulating and analyzing data with dplyr                       | Further topics                       |
+|             | Day 1                                                            | Day 2                                        |
+| ----------- | ---------------------------------------------------------------- | ------------------------------------         |
+| 9h-10h30    | Data organisation with Spreadsheets R and Rstudio                | Data visualization                           |
+| 10h45-12h45 | Introduction to R Starting with data                             | Data visualization (cont) and joining tables |
+| 13h45-15h45 | Starting with data Manipulating and analyzing data with dplyr    | Summary exercise                             |
+| 16h-17h     | Manipulating and analyzing data with dplyr                       | Further topics                               |
 
 ## References and credits {-}
 
@@ -80,27 +80,21 @@ Sheets](https://www.rstudio.com/resources/cheatsheets/) are also a
 handy resource and readers will be pointed to specific sheets in the
 respective chapters.
 
-This training is organised by the SMCS in partnership with laurent Gatto, from the [CBIO Lab](https://lgatto.github.io/cbio-lab/) in the de Duve Institute and is being taught by Axelle Loriot and Manon Martin at the UCLouvain, Belgium.
+This training is organised by the SMCS in partnership with laurent
+Gatto, from the [CBIO Lab](https://lgatto.github.io/cbio-lab/) in the
+de Duve Institute and is being taught by Axelle Loriot and Manon
+Martin at the UCLouvain, Belgium.
 
 
 ## About this course material {-}
 
-This material is written in R markdown [@R-rmarkdown] and compiled as a
-book using `knitr` [@R-knitr] `bookdown` [@R-bookdown]. The source
+This material is written in R markdown [@R-rmarkdown] and compiled as
+a book using `knitr` [@R-knitr] `bookdown` [@R-bookdown]. The source
 code is publicly available in a Github repository
-[https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro](https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro)
-and the compiled material can be read at https://uclouvain-cbio.github.io/bioinfo-training-01-intro/.
+[https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro-r](https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro-r)
+and the compiled material can be read at
+https://uclouvain-cbio.github.io/bioinfo-training-01-intro-r
 
-
-## Citation {-}
-
-If you use this course, please cite it as
-
-> Laurent Gatto, Kevin Missault & Axelle Loriot. (2019, April
-> 3). UCLouvain-CBIO/WSBIM1207: Introduction to bioinformatics
-> (Version v1.0.0). Zenodo. http://doi.org/10.5281/zenodo.2626733
-
-[![DOI](https://zenodo.org/badge/147494586.svg)](https://zenodo.org/record/2626733)
 
 
 ## License {-}
@@ -124,4 +118,3 @@ easy to install and works on all major operating systems.
 
 Once R and RStudio are installed, a set of packages will need to be
 installed. See section \@ref(sec-setup2) for details.
-
