@@ -44,7 +44,6 @@ columns represent:
 | mouse      | The mouse unique identifier.                                                                 |
 | ENTREZID   | The gene ID for the ENTREZ database                                                          |
 | product    | The gene product                                                                             |
-| external_gene_name  | The name of the gene in the ENSEMBL database                                        |
 | ensembl_gene_id     | The ID of the gene from the ENSEMBL database                                        |
 | external_synonym    | A name synonym for the gene                                                         |
 | chromosome_name                      | The chromosome name of the gene                                    |
