@@ -485,8 +485,10 @@ than 50000 in female mice at time 0, and retain only the columns <code>gene</cod
 </p>
 <div id="sol-body-24" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="sec-dplyr.html#cb293-1" aria-hidden="true"></a>rna <span class="op">%&gt;%</span></span>
-<span id="cb293-2"><a href="sec-dplyr.html#cb293-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(expression <span class="op">&gt;</span><span class="st"> </span><span class="dv">50000</span>, sex <span class="op">==</span><span class="st"> "Female"</span>, time <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ) <span class="op">%&gt;%</span></span>
-<span id="cb293-3"><a href="sec-dplyr.html#cb293-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, sample, time, expression, age)</span></code></pre></div>
+<span id="cb293-2"><a href="sec-dplyr.html#cb293-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(expression <span class="op">&gt;</span><span class="st"> </span><span class="dv">50000</span>, </span>
+<span id="cb293-3"><a href="sec-dplyr.html#cb293-3" aria-hidden="true"></a>         sex <span class="op">==</span><span class="st"> "Female"</span>, </span>
+<span id="cb293-4"><a href="sec-dplyr.html#cb293-4" aria-hidden="true"></a>         time <span class="op">==</span><span class="st"> </span><span class="dv">0</span> ) <span class="op">%&gt;%</span></span>
+<span id="cb293-5"><a href="sec-dplyr.html#cb293-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, sample, time, expression, age)</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 5
 ##   gene   sample      time expression   age
 ##   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
@@ -532,8 +534,9 @@ columns. For this we’ll use <code>mutate()</code>.</p>
 ## # … with 32,418 more rows</code></pre>
 <p>You can also create a second new column based on the first new column within the same call of <code>mutate()</code>:</p>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="sec-dplyr.html#cb297-1" aria-hidden="true"></a>rna <span class="op">%&gt;%</span><span class="st">  </span></span>
-<span id="cb297-2"><a href="sec-dplyr.html#cb297-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_hours =</span> time <span class="op">*</span><span class="st"> </span><span class="dv">24</span>, <span class="dt">time_mn =</span> time_hours <span class="op">*</span><span class="st"> </span><span class="dv">60</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb297-3"><a href="sec-dplyr.html#cb297-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(time, time_hours, time_mn) </span></code></pre></div>
+<span id="cb297-2"><a href="sec-dplyr.html#cb297-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_hours =</span> time <span class="op">*</span><span class="st"> </span><span class="dv">24</span>, </span>
+<span id="cb297-3"><a href="sec-dplyr.html#cb297-3" aria-hidden="true"></a>         <span class="dt">time_mn =</span> time_hours <span class="op">*</span><span class="st"> </span><span class="dv">60</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb297-4"><a href="sec-dplyr.html#cb297-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(time, time_hours, time_mn) </span></code></pre></div>
 <pre><code>## # A tibble: 32,428 × 3
 ##     time time_hours time_mn
 ##    &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
@@ -589,8 +592,6 @@ in the chain, and the <code>is.na()</code> function that determines whether some
 <p>If we want to keep only mouse gene that have a human homolog, we can insert a “!”
 symbol that negates the result, so we’re asking for every row where
 hsapiens_homolog_associated_gene_name <em>is not</em> an <code>NA</code>.</p>
-<p>The first few rows of the output are full of <code>NA</code>s, so if we wanted to remove
-those we could insert a <code>filter()</code> in the chain:</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="sec-dplyr.html#cb303-1" aria-hidden="true"></a>rna <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb303-2"><a href="sec-dplyr.html#cb303-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, hsapiens_homolog_associated_gene_name) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb303-3"><a href="sec-dplyr.html#cb303-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(hsapiens_homolog_associated_gene_name))</span></code></pre></div>

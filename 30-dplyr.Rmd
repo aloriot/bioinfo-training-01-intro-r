@@ -212,7 +212,9 @@ than 50000 in female mice at time 0, and retain only the columns `gene`,
 
 ```{r, eval=TRUE, purl=FALSE}
 rna %>%
-  filter(expression > 50000, sex == "Female", time == 0 ) %>%
+  filter(expression > 50000, 
+         sex == "Female", 
+         time == 0 ) %>%
   select(gene, sample, time, expression, age)
 ```
 
@@ -237,7 +239,8 @@ You can also create a second new column based on the first new column within the
 
 ```{r, purl = FALSE}
 rna %>%  
-  mutate(time_hours = time * 24, time_mn = time_hours * 60) %>% 
+  mutate(time_hours = time * 24, 
+         time_mn = time_hours * 60) %>% 
   select(time, time_hours, time_mn) 
 ```
 
@@ -263,9 +266,6 @@ rna %>%
 If we want to keep only mouse gene that have a human homolog, we can insert a "!"
 symbol that negates the result, so we're asking for every row where 
 hsapiens_homolog_associated_gene_name *is not* an `NA`.
-
-The first few rows of the output are full of `NA`s, so if we wanted to remove
-those we could insert a `filter()` in the chain:
 
 ```{r, purl = FALSE}
 rna %>% 
