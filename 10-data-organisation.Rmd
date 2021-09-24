@@ -366,6 +366,8 @@ Create another column to add notes if neeeded.
 
 - Don’t include units in cells
 
+![](./figs/units.png)
+
 - Ideally, all the values you place in one column should be in the same unit.
 If for some reason they are not, create another column specifying the units.
 
