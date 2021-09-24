@@ -21,7 +21,7 @@
 
 <title>Chapter 2 R and RStudio | Data manipulation and visualisation with R</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -40,25 +40,6 @@ if(f.classList.contains('fa-plus-square')) {
     f.classList.remove('fa-minus-square')
 }
 
-}
-</script>
-<script>
-function copy_link(id) {
-  var dummy = document.createElement('input'),
-  text = window.location.href.split(/[?#]/)[0] + '#' + id;
-  document.body.appendChild(dummy);
-  dummy.value = text;
-  dummy.select();
-  document.execCommand('copy');
-  document.body.removeChild(dummy);
-  
-  var tooltip = document.getElementById(id + '-tooltip');
-  tooltip.innerHTML = 'Copied!';
-}
-
-function reset_tooltip(id) {
-  var tooltip = document.getElementById(id);
-  tooltip.innerHTML = 'Copy link';
 }
 </script>
 
@@ -130,29 +111,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 </head>
@@ -213,8 +171,7 @@ troubleshooting with the R user community.</p></li>
 </ul>
 <div id="what-is-r-what-is-rstudio" class="section level2" number="2.1">
 <h2>
-<span class="header-section-number">2.1</span> What is R? What is RStudio?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-is-r-what-is-rstudio')" onmouseout="reset_tooltip('what-is-r-what-is-rstudio-tooltip')"><span class="tooltiptext" id="what-is-r-what-is-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.1</span> What is R? What is RStudio?</h2>
 <p>The term <a href="https://www.r-project.org/">R</a> is used to refer to both the
 <strong>programming language</strong>, the <em>environment for statistical computing</em>
 and <strong>the software</strong> that interprets the scripts written using it.</p>
@@ -233,11 +190,9 @@ useful to learn keyboard shortcuts and discover new features.</p>
 </div>
 <div id="why-learn-r" class="section level2" number="2.2">
 <h2>
-<span class="header-section-number">2.2</span> Why learn R?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('why-learn-r')" onmouseout="reset_tooltip('why-learn-r-tooltip')"><span class="tooltiptext" id="why-learn-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.2</span> Why learn R?</h2>
 <div id="r-does-not-involve-lots-of-pointing-and-clicking-and-thats-a-good-thing" class="section level3 unnumbered">
-<h3>R does not involve lots of pointing and clicking, and that’s a good thing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-does-not-involve-lots-of-pointing-and-clicking-and-thats-a-good-thing')" onmouseout="reset_tooltip('r-does-not-involve-lots-of-pointing-and-clicking-and-thats-a-good-thing-tooltip')"><span class="tooltiptext" id="r-does-not-involve-lots-of-pointing-and-clicking-and-thats-a-good-thing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R does not involve lots of pointing and clicking, and that’s a good thing</h3>
 <p>The learning curve might be steeper than with other software, but with
 R, the results of your analysis do not rely on remembering a
 succession of pointing and clicking, but instead on a series of
@@ -260,8 +215,7 @@ methods you use.</p>
 </ul>
 </div>
 <div id="r-code-is-great-for-reproducibility" class="section level3 unnumbered">
-<h3>R code is great for reproducibility<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-code-is-great-for-reproducibility')" onmouseout="reset_tooltip('r-code-is-great-for-reproducibility-tooltip')"><span class="tooltiptext" id="r-code-is-great-for-reproducibility-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R code is great for reproducibility</h3>
 <p><strong>Reproducibility</strong> is when someone else (including your future self) can
 obtain the same results from the same dataset when using the same
 analysis.</p>
@@ -274,8 +228,7 @@ to be reproducible, so knowing R will give you an edge with these
 requirements.</p>
 </div>
 <div id="r-is-interdisciplinary-and-extensible" class="section level3 unnumbered">
-<h3>R is interdisciplinary and extensible<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-is-interdisciplinary-and-extensible')" onmouseout="reset_tooltip('r-is-interdisciplinary-and-extensible-tooltip')"><span class="tooltiptext" id="r-is-interdisciplinary-and-extensible-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R is interdisciplinary and extensible</h3>
 <p>With 10000+ <strong>packages</strong><label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> i.e. add-ons that confer R with new functionality,
 such as bioinformatics data analysis</span> that can be installed to extend its
 capabilities, R provides a framework that allows you to combine
@@ -284,7 +237,7 @@ the analytical framework you need to analyze your data. For instance,
 R has packages for image analysis, GIS, time series, population
 genetics, and a lot more.</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<span id="fig:unnamed-chunk-2"></span>
 <p class="caption marginnote shownote">
 Figure 2.1: Exponential increase of the number of packages available on <a href="https://cran.r-project.org/">CRAN</a>, the Comprehensive R Archive Network. From the R Journal, Volume 10/2, December 2018.
 </p>
@@ -292,8 +245,7 @@ Figure 2.1: Exponential increase of the number of packages available on <a href=
 </div>
 </div>
 <div id="r-works-on-data-of-all-shapes-and-sizes" class="section level3 unnumbered">
-<h3>R works on data of all shapes and sizes<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-works-on-data-of-all-shapes-and-sizes')" onmouseout="reset_tooltip('r-works-on-data-of-all-shapes-and-sizes-tooltip')"><span class="tooltiptext" id="r-works-on-data-of-all-shapes-and-sizes-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R works on data of all shapes and sizes</h3>
 <p>The skills you learn with R scale easily with the size of your
 dataset. Whether your dataset has hundreds or millions of lines, it
 won’t make much difference to you.</p>
@@ -304,15 +256,13 @@ factors convenient.</p>
 on your computer or on the web.</p>
 </div>
 <div id="r-produces-high-quality-graphics" class="section level3 unnumbered">
-<h3>R produces high-quality graphics<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-produces-high-quality-graphics')" onmouseout="reset_tooltip('r-produces-high-quality-graphics-tooltip')"><span class="tooltiptext" id="r-produces-high-quality-graphics-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R produces high-quality graphics</h3>
 <p>The plotting functionalities in R are endless, and allow you to adjust
 any aspect of your graph to convey most effectively the message from
 your data.</p>
 </div>
 <div id="r-has-a-large-and-welcoming-community" class="section level3 unnumbered">
-<h3>R has a large and welcoming community<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-has-a-large-and-welcoming-community')" onmouseout="reset_tooltip('r-has-a-large-and-welcoming-community-tooltip')"><span class="tooltiptext" id="r-has-a-large-and-welcoming-community-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>R has a large and welcoming community</h3>
 <p>Thousands of people use R daily. Many of them are willing to help you
 through mailing lists and websites such as <a href="https://stackoverflow.com/">Stack
 Overflow</a>, or on the <a href="https://community.rstudio.com/">RStudio
@@ -320,8 +270,7 @@ community</a>. These broad user community
 extends to specialised areas such as bioinformatics.</p>
 </div>
 <div id="not-only-is-r-free-but-it-is-also-open-source-and-cross-platform" class="section level3 unnumbered">
-<h3>Not only is R free, but it is also open-source and cross-platform<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('not-only-is-r-free-but-it-is-also-open-source-and-cross-platform')" onmouseout="reset_tooltip('not-only-is-r-free-but-it-is-also-open-source-and-cross-platform-tooltip')"><span class="tooltiptext" id="not-only-is-r-free-but-it-is-also-open-source-and-cross-platform-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>Not only is R free, but it is also open-source and cross-platform</h3>
 <p>Anyone can inspect the source code to see how R works. Because of this
 transparency, there is less chance for mistakes, and if you (or
 someone else) find some, you can report and fix bugs.</p>
@@ -329,8 +278,7 @@ someone else) find some, you can report and fix bugs.</p>
 </div>
 <div id="knowing-your-way-around-rstudio" class="section level2" number="2.3">
 <h2>
-<span class="header-section-number">2.3</span> Knowing your way around RStudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('knowing-your-way-around-rstudio')" onmouseout="reset_tooltip('knowing-your-way-around-rstudio-tooltip')"><span class="tooltiptext" id="knowing-your-way-around-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.3</span> Knowing your way around RStudio</h2>
 <p>Let’s start by learning about <a href="https://www.rstudio.com/">RStudio</a>,
 which is an Integrated Development Environment (IDE) for working with
 R.</p>
@@ -344,7 +292,7 @@ the plots we will generate. RStudio can also be used for other things
 (e.g., version control, developing packages, writing Shiny apps) that
 we will not cover during the workshop.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<span id="fig:unnamed-chunk-3"></span>
 <p class="caption marginnote shownote">
 Figure 2.2: RStudio interface screenshot. Clockwise from top left: Source, Environment/History, Files/Plots/Packages/Help/Viewer, Console.
 </p>
@@ -368,8 +316,7 @@ easier and less error-prone.</p>
 </div>
 <div id="getting-set-up" class="section level2" number="2.4">
 <h2>
-<span class="header-section-number">2.4</span> Getting set up<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('getting-set-up')" onmouseout="reset_tooltip('getting-set-up-tooltip')"><span class="tooltiptext" id="getting-set-up-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.4</span> Getting set up</h2>
 <p>It is good practice to keep a set of related data, analyses, and text
 self-contained in a single folder, called the <strong>working
 directory</strong>. All of the scripts within this folder can then use
@@ -400,7 +347,7 @@ for this session (or whole training) (e.g., <code>bioinfo_training_intro</code>)
 To turn that off, go to Tools –&gt; ‘Global Options’ and select the ‘Never’ option
 for ‘Save workspace to .RData’ on exit.’</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<span id="fig:unnamed-chunk-4"></span>
 <p class="caption marginnote shownote">
 Figure 2.3: Set ‘Save workspace to .RData on exit’ to ‘Never’
 </p>
@@ -410,7 +357,7 @@ Figure 2.3: Set ‘Save workspace to .RData on exit’ to ‘Never’
 systems</a>, we are
 going to set UTF-8 by default:</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<span id="fig:unnamed-chunk-5"></span>
 <p class="caption marginnote shownote">
 Figure 2.4: Set the default text encoding to UTF-8 to save us headache in the coming future. (Figure from the link above).
 </p>
@@ -418,8 +365,7 @@ Figure 2.4: Set the default text encoding to UTF-8 to save us headache in the co
 </div>
 <div id="organizing-your-working-directory" class="section level3" number="2.4.1">
 <h3>
-<span class="header-section-number">2.4.1</span> Organizing your working directory<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('organizing-your-working-directory')" onmouseout="reset_tooltip('organizing-your-working-directory-tooltip')"><span class="tooltiptext" id="organizing-your-working-directory-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<span class="header-section-number">2.4.1</span> Organizing your working directory</h3>
 <p>Using a consistent folder structure across your projects will help keep things
 organized, and will also make it easy to find/file things in the future. This
 can be especially helpful when you have multiple projects. In general, you may
@@ -449,7 +395,7 @@ separate folder for your functions (more on that later).</li>
 your project needs, but these should form the backbone of your working
 directory.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<span id="fig:unnamed-chunk-6"></span>
 <p class="caption marginnote shownote">
 Figure 2.5: Example of a working directory structure.
 </p>
@@ -481,7 +427,7 @@ because we are only going to use one file and it will make things
 easier.</p>
 <p>Your working directory should now look like this:</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-7"></span>
+<span id="fig:unnamed-chunk-7"></span>
 <p class="caption marginnote shownote">
 Figure 2.6: How it should look like at the beginning of this lesson
 </p>
@@ -502,8 +448,7 @@ analysis parameters.</p></li>
 </div>
 <div id="the-working-directory" class="section level3" number="2.4.2">
 <h3>
-<span class="header-section-number">2.4.2</span> The working directory<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-working-directory')" onmouseout="reset_tooltip('the-working-directory-tooltip')"><span class="tooltiptext" id="the-working-directory-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<span class="header-section-number">2.4.2</span> The working directory</h3>
 <p>The working directory is an important concept to understand. It is the
 place from where R will be looking for and saving the files. When you
 write code for your project, it should refer to files in relation to
@@ -534,8 +479,7 @@ absolute path <code>/home/user/bioinfo_training_intro/fig_output/fig1.pdf</code>
 </div>
 <div id="interacting-with-r" class="section level2" number="2.5">
 <h2>
-<span class="header-section-number">2.5</span> Interacting with R<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('interacting-with-r')" onmouseout="reset_tooltip('interacting-with-r-tooltip')"><span class="tooltiptext" id="interacting-with-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.5</span> Interacting with R</h2>
 <p>The basis of programming is that we write down instructions for the
 computer to follow, and then we tell the computer to follow those
 instructions. We write, or <strong>code</strong>, instructions in R because it is a
@@ -580,8 +524,7 @@ return you to the <code>&gt;</code> prompt.</p>
 </div>
 <div id="how-to-learn-more-during-and-after-the-course" class="section level2" number="2.6">
 <h2>
-<span class="header-section-number">2.6</span> How to learn more during and after the course?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('how-to-learn-more-during-and-after-the-course')" onmouseout="reset_tooltip('how-to-learn-more-during-and-after-the-course-tooltip')"><span class="tooltiptext" id="how-to-learn-more-during-and-after-the-course-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.6</span> How to learn more during and after the course?</h2>
 <p>The material we cover during this course will give you an initial
 taste of how you can use R to analyse data for your own
 research. However, you will need to learn more to do advanced
@@ -598,8 +541,7 @@ suit your purpose might make it easier for you to get started.</p>
 </div>
 <div id="seeking-help" class="section level2" number="2.7">
 <h2>
-<span class="header-section-number">2.7</span> Seeking help<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('seeking-help')" onmouseout="reset_tooltip('seeking-help-tooltip')"><span class="tooltiptext" id="seeking-help-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.7</span> Seeking help</h2>
 <p>In brief:</p>
 <ul>
 <li><p>Help on functions and datasets through the <em>help</em> pages: RStudio help interface or commands <code>help(mean)</code> or <code>?mean</code></p></li>
@@ -618,10 +560,9 @@ suit your purpose might make it easier for you to get started.</p>
 </ul>
 <p>In details:</p>
 <div id="use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions" class="section level3 unnumbered">
-<h3>Use the built-in RStudio help interface to search for more information on R functions<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions')" onmouseout="reset_tooltip('use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions-tooltip')"><span class="tooltiptext" id="use-the-built-in-rstudio-help-interface-to-search-for-more-information-on-r-functions-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>Use the built-in RStudio help interface to search for more information on R functions</h3>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:rstudiohelp"></span>
+<span id="fig:rstudiohelp"></span>
 <p class="caption marginnote shownote">
 Figure 2.7: RStudio help interface.
 </p>
@@ -630,27 +571,25 @@ Figure 2.7: RStudio help interface.
 <p>One of the fastest ways to get help, is to use the RStudio help
 interface. This panel by default can be found at the lower right hand
 panel of RStudio. As seen in the screenshot, by typing the word
-“Mean,” RStudio tries to also give a number of suggestions that you
+“Mean”, RStudio tries to also give a number of suggestions that you
 might be interested in. The description is then shown in the display
 window.</p>
 </div>
 <div id="i-know-the-name-of-the-function-i-want-to-use-but-im-not-sure-how-to-use-it" class="section level3 unnumbered">
-<h3>I know the name of the function I want to use, but I’m not sure how to use it<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('i-know-the-name-of-the-function-i-want-to-use-but-im-not-sure-how-to-use-it')" onmouseout="reset_tooltip('i-know-the-name-of-the-function-i-want-to-use-but-im-not-sure-how-to-use-it-tooltip')"><span class="tooltiptext" id="i-know-the-name-of-the-function-i-want-to-use-but-im-not-sure-how-to-use-it-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>I know the name of the function I want to use, but I’m not sure how to use it</h3>
 <p>If you need help with a specific function, let’s say <code>barplot()</code>, you
 can type:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="sec-rrstudio.html#cb4-1" aria-hidden="true" tabindex="-1"></a>?barplot</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="sec-rrstudio.html#cb4-1" aria-hidden="true"></a>?barplot</span></code></pre></div>
 <p>If you just need to remind yourself of the names of the arguments, you can use:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sec-rrstudio.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(lm)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sec-rrstudio.html#cb5-1" aria-hidden="true"></a><span class="kw">args</span>(lm)</span></code></pre></div>
 </div>
 <div id="i-want-to-use-a-function-that-does-x-there-must-be-a-function-for-it-but-i-dont-know-which-one" class="section level3 unnumbered">
-<h3>I want to use a function that does X, there must be a function for it but I don’t know which one…<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('i-want-to-use-a-function-that-does-x-there-must-be-a-function-for-it-but-i-dont-know-which-one')" onmouseout="reset_tooltip('i-want-to-use-a-function-that-does-x-there-must-be-a-function-for-it-but-i-dont-know-which-one-tooltip')"><span class="tooltiptext" id="i-want-to-use-a-function-that-does-x-there-must-be-a-function-for-it-but-i-dont-know-which-one-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>I want to use a function that does X, there must be a function for it but I don’t know which one…</h3>
 <p>If you are looking for a function to do a particular task, you can use the
 <code>help.search()</code> function, which is called by the double question mark <code>??</code>.
 However, this only looks through the installed packages for help pages with a
 match to your search request</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="sec-rrstudio.html#cb6-1" aria-hidden="true" tabindex="-1"></a>??kruskal</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="sec-rrstudio.html#cb6-1" aria-hidden="true"></a>??kruskal</span></code></pre></div>
 <p>If you can’t find what you are looking for, you can use
 the <a href="http://www.rdocumentation.org">rdocumentation.org</a> website that searches
 through the help files across all packages available.</p>
@@ -659,8 +598,7 @@ you to the appropriate package documentation or a helpful forum where someone
 else has already asked your question.</p>
 </div>
 <div id="i-am-stuck-i-get-an-error-message-that-i-dont-understand" class="section level3 unnumbered">
-<h3>I am stuck… I get an error message that I don’t understand<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('i-am-stuck-i-get-an-error-message-that-i-dont-understand')" onmouseout="reset_tooltip('i-am-stuck-i-get-an-error-message-that-i-dont-understand-tooltip')"><span class="tooltiptext" id="i-am-stuck-i-get-an-error-message-that-i-dont-understand-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>I am stuck… I get an error message that I don’t understand</h3>
 <p>Start by googling the error message. However, this doesn’t always work very well
 because often, package developers rely on the error catching provided by R. You
 end up with general error messages that might not be very helpful to diagnose a
@@ -679,8 +617,7 @@ place to understand the underpinnings of the R language.</p>
 but it is full of useful information.</p>
 </div>
 <div id="asking-for-help" class="section level3 unnumbered">
-<h3>Asking for help<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('asking-for-help')" onmouseout="reset_tooltip('asking-for-help-tooltip')"><span class="tooltiptext" id="asking-for-help-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>Asking for help</h3>
 <p>The key to receiving help from someone is for them to rapidly grasp
 your problem. You should make it as easy as possible to pinpoint where
 the issue might be.</p>
@@ -703,9 +640,9 @@ Wickham</a>.</p>
 <p>To share an object with someone else, if it’s relatively small, you
 can use the function <code>dput()</code>. It will output R code that can be used
 to recreate the exact same object as the one in memory:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="sec-rrstudio.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## iris is an example data frame that comes with R and head() is a</span></span>
-<span id="cb7-2"><a href="sec-rrstudio.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="do">## function that returns the first part of the data frame</span></span>
-<span id="cb7-3"><a href="sec-rrstudio.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dput</span>(<span class="fu">head</span>(iris))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="sec-rrstudio.html#cb7-1" aria-hidden="true"></a><span class="co">## iris is an example data frame that comes with R and head() is a</span></span>
+<span id="cb7-2"><a href="sec-rrstudio.html#cb7-2" aria-hidden="true"></a><span class="co">## function that returns the first part of the data frame</span></span>
+<span id="cb7-3"><a href="sec-rrstudio.html#cb7-3" aria-hidden="true"></a><span class="kw">dput</span>(<span class="kw">head</span>(iris))</span></code></pre></div>
 <pre><code>## structure(list(Sepal.Length = c(5.1, 4.9, 4.7, 4.6, 5, 5.4), 
 ##     Sepal.Width = c(3.5, 3, 3.2, 3.1, 3.6, 3.9), Petal.Length = c(1.4, 
 ##     1.4, 1.3, 1.5, 1.4, 1.7), Petal.Width = c(0.2, 0.2, 0.2, 
@@ -718,44 +655,41 @@ removing everything that is not relevant to your
 issue). Alternatively, in particular if your question is not related
 to a data frame, you can save any R object to a file<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> See section <a href="sec-startdata.html#sec-exportandsave">4.10</a> for a better
 introduction about exporting and saving data.</span>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-rrstudio.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(iris, <span class="at">file=</span><span class="st">"/tmp/iris.rds"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-rrstudio.html#cb9-1" aria-hidden="true"></a><span class="kw">saveRDS</span>(iris, <span class="dt">file=</span><span class="st">"/tmp/iris.rds"</span>)</span></code></pre></div>
 <p>The content of this file is however not human readable and cannot be
 posted directly on Stack Overflow. Instead, it can be sent to someone
 by email who can read it with the <code>readRDS()</code> command (here it is
 assumed that the downloaded file is in a <code>Downloads</code> folder in the
 user’s home directory):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="sec-rrstudio.html#cb10-1" aria-hidden="true" tabindex="-1"></a>some_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file=</span><span class="st">"~/Downloads/iris.rds"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="sec-rrstudio.html#cb10-1" aria-hidden="true"></a>some_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="dt">file=</span><span class="st">"~/Downloads/iris.rds"</span>)</span></code></pre></div>
 <p>Last, but certainly not least, <strong>always include the output of <code>sessionInfo()</code></strong>
 as it provides critical information about your platform, the versions of R and
 the packages that you are using, and other information that can be very helpful
 to understand your problem.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sec-rrstudio.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.1.0 (2021-05-18)
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sec-rrstudio.html#cb11-1" aria-hidden="true"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.0.2 (2020-06-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur 10.16
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-## [1] C/UTF-8/C/C/C/C
+## [1] fr_BE.UTF-8/fr_BE.UTF-8/fr_BE.UTF-8/C/fr_BE.UTF-8/fr_BE.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bookdown_0.24    msmbstyle_0.0.19 png_0.1-7        digest_0.6.27   
-##  [5] R6_2.5.1         jsonlite_1.7.2   magrittr_2.0.1   evaluate_0.14   
-##  [9] highr_0.9        rlang_0.4.11     stringi_1.7.4    rstudioapi_0.13 
-## [13] jquerylib_0.1.4  bslib_0.3.0      xml2_1.3.2       rmarkdown_2.11  
-## [17] tools_4.1.0      stringr_1.4.0    xfun_0.26        yaml_2.2.1      
-## [21] fastmap_1.1.0    compiler_4.1.0   htmltools_0.5.2  knitr_1.34      
-## [25] sass_0.4.0</code></pre>
+##  [1] bookdown_0.20    msmbstyle_0.0.11 png_0.1-7        digest_0.6.25   
+##  [5] magrittr_2.0.1   evaluate_0.14    highr_0.8        rlang_0.4.11    
+##  [9] stringi_1.5.3    rstudioapi_0.13  xml2_1.3.2       rmarkdown_2.3   
+## [13] tools_4.0.2      stringr_1.4.0    xfun_0.17        yaml_2.2.1      
+## [17] compiler_4.0.2   htmltools_0.5.0  knitr_1.30</code></pre>
 </div>
 <div id="where-to-ask-for-help" class="section level3 unnumbered">
-<h3>Where to ask for help?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('where-to-ask-for-help')" onmouseout="reset_tooltip('where-to-ask-for-help-tooltip')"><span class="tooltiptext" id="where-to-ask-for-help-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>Where to ask for help?</h3>
 <ul>
 <li>The person sitting next to you during the course. Don’t hesitate to
 talk to your neighbour during the workshop, compare your answers,
@@ -791,8 +725,7 @@ phylogenetics, etc…), the complete list is
 </ul>
 </div>
 <div id="more-resources" class="section level3 unnumbered">
-<h3>More resources<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('more-resources')" onmouseout="reset_tooltip('more-resources-tooltip')"><span class="tooltiptext" id="more-resources-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>More resources</h3>
 <ul>
 <li><p>The <a href="http://www.r-project.org/posting-guide.html">Posting Guide</a> for
 the R mailing lists.</p></li>
@@ -814,28 +747,25 @@ the reprex package and of its philosophy.</p></li>
 </div>
 <div id="r-packages" class="section level2" number="2.8">
 <h2>
-<span class="header-section-number">2.8</span> R packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-packages')" onmouseout="reset_tooltip('r-packages-tooltip')"><span class="tooltiptext" id="r-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">2.8</span> R packages</h2>
 <p>R packages need to be : (1) installed (+ their depednencies), and (2) loaded in your environment</p>
 <div id="loading-packages" class="section level3" number="2.8.1">
 <h3>
-<span class="header-section-number">2.8.1</span> Loading packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('loading-packages')" onmouseout="reset_tooltip('loading-packages-tooltip')"><span class="tooltiptext" id="loading-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<span class="header-section-number">2.8.1</span> Loading packages</h3>
 <p>As we have seen above, R packages play a fundamental role in R. The
 make use of a package’s functionality, assuming it is installed, we
 first need to load it to be able to use it. This is done with the
 <code>library()</code> function. Below, we load <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="sec-rrstudio.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="sec-rrstudio.html#cb13-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"ggplot2"</span>)</span></code></pre></div>
 </div>
 <div id="installing-packages" class="section level3" number="2.8.2">
 <h3>
-<span class="header-section-number">2.8.2</span> Installing packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('installing-packages')" onmouseout="reset_tooltip('installing-packages-tooltip')"><span class="tooltiptext" id="installing-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<span class="header-section-number">2.8.2</span> Installing packages</h3>
 <p>The default package repository is The <em>Comprehensive R Archive
 Network</em> (CRAN), and any package that is available on CRAN can be
 installed with the <code>install.packages()</code> function. Below, for example,
 we install the <code>dplyr</code> package that we will learn about late.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="sec-rrstudio.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="sec-rrstudio.html#cb14-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">"dplyr"</span>)</span></code></pre></div>
 <p>This command will install the <code>dplyr</code> package as well as all its
 dependencies, i.e. all the packages that it relies on to function.</p>
 <p><a href="https://github.com/">Github</a> is a general-purpose online software
@@ -853,8 +783,6 @@ function from the <code>devtools</code> package.</p>
 </p>
 <p class="build-date">Page built: 
 2021-09-24
- using 
-R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>

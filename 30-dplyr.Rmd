@@ -2,7 +2,7 @@
 
 
 ```{r dplyrsetup, echo=FALSE, purl=FALSE, message=FALSE}
-
+if (!file.exists("data/rnaseq.csv"))
 download.file(url = "https://raw.githubusercontent.com/Bioconductor/bioconductor-teaching/master/data/GSE96870/rnaseq.csv",
               destfile = "data/rnaseq.csv")
 ```

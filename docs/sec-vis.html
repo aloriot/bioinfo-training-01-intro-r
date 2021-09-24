@@ -21,7 +21,7 @@
 
 <title>Chapter 6 Data visualization | Data manipulation and visualisation with R</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -40,25 +40,6 @@ if(f.classList.contains('fa-plus-square')) {
     f.classList.remove('fa-minus-square')
 }
 
-}
-</script>
-<script>
-function copy_link(id) {
-  var dummy = document.createElement('input'),
-  text = window.location.href.split(/[?#]/)[0] + '#' + id;
-  document.body.appendChild(dummy);
-  dummy.value = text;
-  dummy.select();
-  document.execCommand('copy');
-  document.body.removeChild(dummy);
-  
-  var tooltip = document.getElementById(id + '-tooltip');
-  tooltip.innerHTML = 'Copied!';
-}
-
-function reset_tooltip(id) {
-  var tooltip = document.getElementById(id);
-  tooltip.innerHTML = 'Copy link';
 }
 </script>
 
@@ -130,29 +111,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 </head>
@@ -186,7 +144,7 @@ div.csl-indent {
 <li class="toc"><a href="#composing-plots"> Composing plots</a></li>
 <li class="toc"><a href="#exporting-plots"> Exporting plots</a></li>
 <li class="toc"><a href="#other-packages-for-visualisation"> Other packages for visualisation</a></li>
-<li class="toc"><a href="#additional-exercises-1"> Additional exercises</a></li>
+<li class="toc"><a href="#additional-exercises"> Additional exercises</a></li>
 </ul>
 <a href="sec-join.html"><span class="toc-section-number">7</span> Joining tables</a>
 <a href="sec-next.html"><span class="toc-section-number">8</span> Next steps</a>
@@ -213,9 +171,9 @@ div.csl-indent {
 </ul>
 <p>We start by loading the required packages. <strong><code>ggplot2</code></strong> is included
 in the <strong><code>tidyverse</code></strong> package.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="sec-vis.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="sec-vis.html#cb415-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div>
 <p>If not still in the workspace, load the data we saved in the previous lesson.</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="sec-vis.html#cb416-1" aria-hidden="true" tabindex="-1"></a>rna <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/rnaseq.csv"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="sec-vis.html#cb416-1" aria-hidden="true"></a>rna &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">"data/rnaseq.csv"</span>)</span></code></pre></div>
 <p>The <a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data Visualization Cheat
 Sheet</a>
 will cover the basics and more advanced features of <code>ggplot2</code> and will
@@ -227,18 +185,17 @@ Pedersen are also very instructive.</p>
 <div id="plotting-with-ggplot2" class="section level2" number="6.1">
 <h2>
 <span class="header-section-number">6.1</span> Plotting with <strong><code>ggplot2</code></strong>
-<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('plotting-with-ggplot2')" onmouseout="reset_tooltip('plotting-with-ggplot2-tooltip')"><span class="tooltiptext" id="plotting-with-ggplot2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p><strong><code>ggplot2</code></strong> is a plotting package that makes it simple to create
 complex plots from data in a data frame. It provides a more
 programmatic interface for specifying what variables to plot, how they
 are displayed, and general visual properties. The theoretical
 foundation that supports the <code>ggplot2</code> is the <em>Grammar of Graphics</em>
-(<span class="citation"><label for="tufte-mn-11" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-11" class="margin-toggle">Wilkinson (2005)<span class="marginnote">Wilkinson, Leland. 2005. <em>The Grammar of Graphics (statistics and Computing)</em>. Berlin, Heidelberg: Springer-Verlag.</span></span>). Using this approach, we only need minimal changes
+(<span class="citation">Wilkinson (<label for="tufte-mn-11" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-11" class="margin-toggle">2005<span class="marginnote">Wilkinson, Leland. 2005. <em>The Grammar of Graphics (Statistics and Computing)</em>. Berlin, Heidelberg: Springer-Verlag.</span>)</span>). Using this approach, we only need minimal changes
 if the underlying data change or if we decide to change from a bar
 plot to a scatterplot. This helps in creating publication quality
 plots with minimal amounts of adjustments and tweaking.</p>
-<p>There is a book about <code>ggplot2</code> (<span class="citation"><label for="tufte-mn-12" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-12" class="margin-toggle">Wickham (2016)<span class="marginnote">Wickham, Hadley. 2016. <em><span class="nocase">ggplot2</span>: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org">http://ggplot2.org</a>.</span></span>) that provides a good
+<p>There is a book about <code>ggplot2</code> (<span class="citation">Wickham (<label for="tufte-mn-12" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-12" class="margin-toggle">2016<span class="marginnote">Wickham, Hadley. 2016. <em>ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="http://ggplot2.org">http://ggplot2.org</a>.</span>)</span>) that provides a good
 overview, but it is outdated. The 3rd edition is in preparation and
 will be <a href="https://ggplot2-book.org/">freely available online</a>. The
 <code>ggplot2</code> webpage
@@ -257,14 +214,14 @@ be used for different types of plots:</p>
 <li>use the <code>ggplot()</code> function and bind the plot to a specific data
 frame using the <code>data</code> argument</li>
 </ul>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="sec-vis.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="sec-vis.html#cb418-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna)</span></code></pre></div>
 <ul>
 <li>define a mapping (using the aesthetic (<code>aes</code>) function), by
 selecting the variables to be plotted and specifying how to present
 them in the graph, e.g. as x/y positions or characteristics such as
 size, shape, color, etc.</li>
 </ul>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="sec-vis.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> expression))</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="sec-vis.html#cb419-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> expression))</span></code></pre></div>
 <ul>
 <li>
 <p>add ‘geoms’ – geometries, or graphical representations of the data
@@ -278,20 +235,20 @@ different geoms; we will use some common ones today, including:</p>
 </ul>
 <p>To add a geom(etry) to the plot use the <code>+</code> operator. Because we have
 two continuous variables, let’s use <code>geom_histogram()</code> first:</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="sec-vis.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> expression)) <span class="sc">+</span></span>
-<span id="cb421-2"><a href="sec-vis.html#cb421-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="sec-vis.html#cb421-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> expression)) <span class="op">+</span></span>
+<span id="cb421-2"><a href="sec-vis.html#cb421-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="BIOINFO_01_files/figure-html/first-ggplot-1.png" width="672"></p>
 <p>The <code>+</code> in the <strong><code>ggplot2</code></strong> package is particularly useful because it
 allows you to modify existing <code>ggplot</code> objects. This means you can
 easily set up plot templates and conveniently explore different types
 of plots, so the above plot can also be generated with code like this:</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="sec-vis.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign plot to a variable</span></span>
-<span id="cb423-2"><a href="sec-vis.html#cb423-2" aria-hidden="true" tabindex="-1"></a>rna_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb423-3"><a href="sec-vis.html#cb423-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> expression))</span>
-<span id="cb423-4"><a href="sec-vis.html#cb423-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb423-5"><a href="sec-vis.html#cb423-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw the plot</span></span>
-<span id="cb423-6"><a href="sec-vis.html#cb423-6" aria-hidden="true" tabindex="-1"></a>rna_plot <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="sec-vis.html#cb423-1" aria-hidden="true"></a><span class="co"># Assign plot to a variable</span></span>
+<span id="cb423-2"><a href="sec-vis.html#cb423-2" aria-hidden="true"></a>rna_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb423-3"><a href="sec-vis.html#cb423-3" aria-hidden="true"></a>                   <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> expression))</span>
+<span id="cb423-4"><a href="sec-vis.html#cb423-4" aria-hidden="true"></a></span>
+<span id="cb423-5"><a href="sec-vis.html#cb423-5" aria-hidden="true"></a><span class="co"># Draw the plot</span></span>
+<span id="cb423-6"><a href="sec-vis.html#cb423-6" aria-hidden="true"></a>rna_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -307,18 +264,18 @@ change the number or width of the bins.</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-35" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-35', 'sol-start-35')"></span>
 </p>
 <div id="sol-body-35" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="sec-vis.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change bins</span></span>
-<span id="cb425-2"><a href="sec-vis.html#cb425-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rna, <span class="fu">aes</span>(<span class="at">x =</span> expression)) <span class="sc">+</span></span>
-<span id="cb425-3"><a href="sec-vis.html#cb425-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="sec-vis.html#cb425-1" aria-hidden="true"></a><span class="co"># change bins</span></span>
+<span id="cb425-2"><a href="sec-vis.html#cb425-2" aria-hidden="true"></a><span class="kw">ggplot</span>(rna, <span class="kw">aes</span>(<span class="dt">x =</span> expression)) <span class="op">+</span></span>
+<span id="cb425-3"><a href="sec-vis.html#cb425-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">15</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-179-1.png" width="672"></p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="sec-vis.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change binwidth</span></span>
-<span id="cb426-2"><a href="sec-vis.html#cb426-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rna, <span class="fu">aes</span>(<span class="at">x =</span> expression)) <span class="sc">+</span></span>
-<span id="cb426-3"><a href="sec-vis.html#cb426-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="sec-vis.html#cb426-1" aria-hidden="true"></a><span class="co"># change binwidth</span></span>
+<span id="cb426-2"><a href="sec-vis.html#cb426-2" aria-hidden="true"></a><span class="kw">ggplot</span>(rna, <span class="kw">aes</span>(<span class="dt">x =</span> expression)) <span class="op">+</span></span>
+<span id="cb426-3"><a href="sec-vis.html#cb426-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2000</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-179-2.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -329,11 +286,11 @@ change the number or width of the bins.</p>
 apply log2 transformation to have a more symmetric distribution. Note
 that we add here a small constant value (<code>+1</code>) to avoid having <code>-Inf</code>
 values returned for expression values equal to 0.</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="sec-vis.html#cb427-1" aria-hidden="true" tabindex="-1"></a>rna <span class="ot">&lt;-</span> rna <span class="sc">%&gt;%</span></span>
-<span id="cb427-2"><a href="sec-vis.html#cb427-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">expression_log =</span> <span class="fu">log2</span>(expression <span class="sc">+</span> <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="sec-vis.html#cb427-1" aria-hidden="true"></a>rna &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb427-2"><a href="sec-vis.html#cb427-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">expression_log =</span> <span class="kw">log2</span>(expression <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</span></code></pre></div>
 <p>If we now draw the histogram of the log2-transformed expressions, the
 distribution is indeed closer to a normal distribution.</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="sec-vis.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rna, <span class="fu">aes</span>(<span class="at">x =</span> expression_log)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="sec-vis.html#cb428-1" aria-hidden="true"></a><span class="kw">ggplot</span>(rna, <span class="kw">aes</span>(<span class="dt">x =</span> expression_log)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="BIOINFO_01_files/figure-html/second-ggplot-1.png" width="672"></p>
 <p>From now on we will work on the log-transformed expression values.</p>
@@ -358,14 +315,14 @@ now have a warning message appearing here?</li>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-36" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-36', 'sol-start-36')"></span>
 </p>
 <div id="sol-body-36" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="sec-vis.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> expression_log))<span class="sc">+</span> </span>
-<span id="cb430-2"><a href="sec-vis.html#cb430-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb430-3"><a href="sec-vis.html#cb430-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="sec-vis.html#cb430-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> expression_log))<span class="op">+</span><span class="st"> </span></span>
+<span id="cb430-2"><a href="sec-vis.html#cb430-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb430-3"><a href="sec-vis.html#cb430-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_log10</span>()</span></code></pre></div>
 <pre><code>## Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 507 rows containing non-finite values (stat_bin).</code></pre>
@@ -388,75 +345,74 @@ added at the beginning of the line containing the new layer,
 <strong><code>ggplot2</code></strong> will not add the new layer and will return an error
 message.</li>
 </ul>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="sec-vis.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the correct syntax for adding layers</span></span>
-<span id="cb434-2"><a href="sec-vis.html#cb434-2" aria-hidden="true" tabindex="-1"></a>rna_plot <span class="sc">+</span></span>
-<span id="cb434-3"><a href="sec-vis.html#cb434-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb434-4"><a href="sec-vis.html#cb434-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb434-5"><a href="sec-vis.html#cb434-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This will not add the new layer and will return an error message</span></span>
-<span id="cb434-6"><a href="sec-vis.html#cb434-6" aria-hidden="true" tabindex="-1"></a>rna_plot</span>
-<span id="cb434-7"><a href="sec-vis.html#cb434-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="sec-vis.html#cb434-1" aria-hidden="true"></a><span class="co"># This is the correct syntax for adding layers</span></span>
+<span id="cb434-2"><a href="sec-vis.html#cb434-2" aria-hidden="true"></a>rna_plot <span class="op">+</span></span>
+<span id="cb434-3"><a href="sec-vis.html#cb434-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span>
+<span id="cb434-4"><a href="sec-vis.html#cb434-4" aria-hidden="true"></a></span>
+<span id="cb434-5"><a href="sec-vis.html#cb434-5" aria-hidden="true"></a><span class="co"># This will not add the new layer and will return an error message</span></span>
+<span id="cb434-6"><a href="sec-vis.html#cb434-6" aria-hidden="true"></a>rna_plot</span>
+<span id="cb434-7"><a href="sec-vis.html#cb434-7" aria-hidden="true"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 </div>
 <div id="building-your-plots-iteratively" class="section level2" number="6.2">
 <h2>
-<span class="header-section-number">6.2</span> Building your plots iteratively<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('building-your-plots-iteratively')" onmouseout="reset_tooltip('building-your-plots-iteratively-tooltip')"><span class="tooltiptext" id="building-your-plots-iteratively-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.2</span> Building your plots iteratively</h2>
 <p>We will now draw a scatter plot with two continuous variables and the <code>geom_point()</code> function.
 This graph will represent the log2 fold changes comparing time 8 versus time 0 and time 4 versus time 0. To this end, we first need to compute the means of the log-transformed expression values by gene and time then the log fold changes by subtracting the mean log expressions between time 8 and time 0 and between time 4 and time 0. Note that we also include here the gene biotype that we will use later on to represent the genes.</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="sec-vis.html#cb435-1" aria-hidden="true" tabindex="-1"></a>rna_FC <span class="ot">&lt;-</span> rna <span class="sc">%&gt;%</span> <span class="fu">select</span>(gene, time,</span>
-<span id="cb435-2"><a href="sec-vis.html#cb435-2" aria-hidden="true" tabindex="-1"></a>                         gene_biotype, expression_log) <span class="sc">%&gt;%</span></span>
-<span id="cb435-3"><a href="sec-vis.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gene, time, gene_biotype) <span class="sc">%&gt;%</span></span>
-<span id="cb435-4"><a href="sec-vis.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_exp =</span> <span class="fu">mean</span>(expression_log)) <span class="sc">%&gt;%</span></span>
-<span id="cb435-5"><a href="sec-vis.html#cb435-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> time,</span>
-<span id="cb435-6"><a href="sec-vis.html#cb435-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> mean_exp) <span class="sc">%&gt;%</span></span>
-<span id="cb435-7"><a href="sec-vis.html#cb435-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_8_vs_0 =</span> <span class="st">`</span><span class="at">8</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>, <span class="at">time_4_vs_0 =</span> <span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">0</span><span class="st">`</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="sec-vis.html#cb435-1" aria-hidden="true"></a>rna_FC &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(gene, time,</span>
+<span id="cb435-2"><a href="sec-vis.html#cb435-2" aria-hidden="true"></a>                         gene_biotype, expression_log) <span class="op">%&gt;%</span></span>
+<span id="cb435-3"><a href="sec-vis.html#cb435-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(gene, time, gene_biotype) <span class="op">%&gt;%</span></span>
+<span id="cb435-4"><a href="sec-vis.html#cb435-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(expression_log)) <span class="op">%&gt;%</span></span>
+<span id="cb435-5"><a href="sec-vis.html#cb435-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> time,</span>
+<span id="cb435-6"><a href="sec-vis.html#cb435-6" aria-hidden="true"></a>              <span class="dt">values_from =</span> mean_exp) <span class="op">%&gt;%</span></span>
+<span id="cb435-7"><a href="sec-vis.html#cb435-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_8_vs_0 =</span> <span class="st">`</span><span class="dt">8</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">0</span><span class="st">`</span>, <span class="dt">time_4_vs_0 =</span> <span class="st">`</span><span class="dt">4</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">0</span><span class="st">`</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'gene', 'time'. You can override using the `.groups` argument.</code></pre>
 <p>We can then build a ggplot with the newly created dataset <code>rna_FC</code>. Building plots with <strong><code>ggplot2</code></strong> is typically an iterative process. We start by
 defining the dataset we’ll use, lay out the axes, and choose a geom:</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="sec-vis.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb437-2"><a href="sec-vis.html#cb437-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0)) <span class="sc">+</span></span>
-<span id="cb437-3"><a href="sec-vis.html#cb437-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="sec-vis.html#cb437-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb437-2"><a href="sec-vis.html#cb437-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb437-3"><a href="sec-vis.html#cb437-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/create-ggplot-object-1.png" width="672"></p>
 <p>Then, we start modifying this plot to extract more information from it. For
 instance, we can add transparency (<code>alpha</code>) to avoid overplotting:</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="sec-vis.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb438-2"><a href="sec-vis.html#cb438-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0)) <span class="sc">+</span></span>
-<span id="cb438-3"><a href="sec-vis.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="sec-vis.html#cb438-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb438-2"><a href="sec-vis.html#cb438-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb438-3"><a href="sec-vis.html#cb438-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/adding-transparency-1.png" width="672"></p>
 <p>We can also add colors for all the points:</p>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="sec-vis.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb439-2"><a href="sec-vis.html#cb439-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0)) <span class="sc">+</span></span>
-<span id="cb439-3"><a href="sec-vis.html#cb439-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"blue"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="sec-vis.html#cb439-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb439-2"><a href="sec-vis.html#cb439-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb439-3"><a href="sec-vis.html#cb439-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>, <span class="dt">color =</span> <span class="st">"blue"</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/adding-colors-1.png" width="672"></p>
 <p>Or to color each gene in the plot differently, you could use a
 vector as an input to the argument <strong>color</strong>. <strong><code>ggplot2</code></strong> will
 provide a different color corresponding to different values in the
 vector. Here is an example where we color with <strong><code>gene_biotype</code></strong>:</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-vis.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb440-2"><a href="sec-vis.html#cb440-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0)) <span class="sc">+</span></span>
-<span id="cb440-3"><a href="sec-vis.html#cb440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="fu">aes</span>(<span class="at">color =</span> gene_biotype))</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-vis.html#cb440-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb440-2"><a href="sec-vis.html#cb440-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb440-3"><a href="sec-vis.html#cb440-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>, <span class="kw">aes</span>(<span class="dt">color =</span> gene_biotype))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/color-by-gene_biotype1-1.png" width="672"></p>
 <p>We can also specify the colors directly inside the mapping provided in
 the <code>ggplot()</code> function. This will be seen by any geom layers and the
 mapping will be determined by the x- and y-axis set up in <code>aes()</code>.</p>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-vis.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb441-2"><a href="sec-vis.html#cb441-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0,</span>
-<span id="cb441-3"><a href="sec-vis.html#cb441-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">color =</span> gene_biotype)) <span class="sc">+</span></span>
-<span id="cb441-4"><a href="sec-vis.html#cb441-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="sec-vis.html#cb441-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb441-2"><a href="sec-vis.html#cb441-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb441-3"><a href="sec-vis.html#cb441-3" aria-hidden="true"></a>                                <span class="dt">color =</span> gene_biotype)) <span class="op">+</span></span>
+<span id="cb441-4"><a href="sec-vis.html#cb441-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/color-by-gene_biotype2-1.png" width="672"></p>
 <p>Finally, we could also add a diagonal line with the <code>geom_abline()</code> function:</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-vis.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb442-2"><a href="sec-vis.html#cb442-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0,</span>
-<span id="cb442-3"><a href="sec-vis.html#cb442-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">color =</span> gene_biotype)) <span class="sc">+</span></span>
-<span id="cb442-4"><a href="sec-vis.html#cb442-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb442-5"><a href="sec-vis.html#cb442-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="sec-vis.html#cb442-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb442-2"><a href="sec-vis.html#cb442-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb442-3"><a href="sec-vis.html#cb442-3" aria-hidden="true"></a>                                <span class="dt">color =</span> gene_biotype)) <span class="op">+</span></span>
+<span id="cb442-4"><a href="sec-vis.html#cb442-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb442-5"><a href="sec-vis.html#cb442-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/adding-diag-1.png" width="672"></p>
 <p>Notice that we can change the geom layer and colors will be still
 determined by <strong><code>gene_biotype</code></strong></p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="sec-vis.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb443-2"><a href="sec-vis.html#cb443-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0,</span>
-<span id="cb443-3"><a href="sec-vis.html#cb443-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">color =</span> gene_biotype)) <span class="sc">+</span></span>
-<span id="cb443-4"><a href="sec-vis.html#cb443-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb443-5"><a href="sec-vis.html#cb443-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="sec-vis.html#cb443-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb443-2"><a href="sec-vis.html#cb443-2" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb443-3"><a href="sec-vis.html#cb443-3" aria-hidden="true"></a>                                <span class="dt">color =</span> gene_biotype)) <span class="op">+</span></span>
+<span id="cb443-4"><a href="sec-vis.html#cb443-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></span>
+<span id="cb443-5"><a href="sec-vis.html#cb443-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/color-by-gene_biotype3-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
@@ -483,18 +439,18 @@ compare it with the hexagonal bin plot that you created.</p></li>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-37" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-37', 'sol-start-37')"></span>
 </p>
 <div id="sol-body-37" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="sec-vis.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"hexbin"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="sec-vis.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"hexbin"</span>)</span>
-<span id="cb445-2"><a href="sec-vis.html#cb445-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb445-3"><a href="sec-vis.html#cb445-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna_FC, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time_4_vs_0,</span>
-<span id="cb445-4"><a href="sec-vis.html#cb445-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> time_8_vs_0)) <span class="sc">+</span></span>
-<span id="cb445-5"><a href="sec-vis.html#cb445-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
-<span id="cb445-6"><a href="sec-vis.html#cb445-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="sec-vis.html#cb444-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">"hexbin"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="sec-vis.html#cb445-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"hexbin"</span>)</span>
+<span id="cb445-2"><a href="sec-vis.html#cb445-2" aria-hidden="true"></a></span>
+<span id="cb445-3"><a href="sec-vis.html#cb445-3" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna_FC, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_<span class="dv">4</span>_vs_<span class="dv">0</span>,</span>
+<span id="cb445-4"><a href="sec-vis.html#cb445-4" aria-hidden="true"></a>                                <span class="dt">y =</span> time_<span class="dv">8</span>_vs_<span class="dv">0</span>)) <span class="op">+</span></span>
+<span id="cb445-5"><a href="sec-vis.html#cb445-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hex</span>() <span class="op">+</span></span>
+<span id="cb445-6"><a href="sec-vis.html#cb445-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-182-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -514,14 +470,14 @@ different colors. Is this a good way to show this type of data?</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-38" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-38', 'sol-start-38')"></span>
 </p>
 <div id="sol-body-38" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-vis.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb446-2"><a href="sec-vis.html#cb446-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb446-3"><a href="sec-vis.html#cb446-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> time))</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-vis.html#cb446-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb446-2"><a href="sec-vis.html#cb446-2" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb446-3"><a href="sec-vis.html#cb446-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> time))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-183-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -531,31 +487,30 @@ different colors. Is this a good way to show this type of data?</p>
 </div>
 <div id="boxplot" class="section level2" number="6.3">
 <h2>
-<span class="header-section-number">6.3</span> Boxplot<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('boxplot')" onmouseout="reset_tooltip('boxplot-tooltip')"><span class="tooltiptext" id="boxplot-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.3</span> Boxplot</h2>
 <p>We can use boxplots to visualize the distribution of gene expressions
 within each sample:</p>
-<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="sec-vis.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb447-2"><a href="sec-vis.html#cb447-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log, <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb447-3"><a href="sec-vis.html#cb447-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="sec-vis.html#cb447-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb447-2"><a href="sec-vis.html#cb447-2" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log, <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb447-3"><a href="sec-vis.html#cb447-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/boxplot-1.png" width="672"></p>
 <p>By adding points to boxplot, we can have a better idea of the number of
 measurements and of their distribution:</p>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-vis.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb448-2"><a href="sec-vis.html#cb448-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb448-3"><a href="sec-vis.html#cb448-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb448-4"><a href="sec-vis.html#cb448-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"tomato"</span>) <span class="sc">+</span></span>
-<span id="cb448-5"><a href="sec-vis.html#cb448-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-vis.html#cb448-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb448-2"><a href="sec-vis.html#cb448-2" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb448-3"><a href="sec-vis.html#cb448-3" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb448-4"><a href="sec-vis.html#cb448-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">"tomato"</span>) <span class="op">+</span></span>
+<span id="cb448-5"><a href="sec-vis.html#cb448-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/boxplot-with-points-1.png" width="672"></p>
 <p>Note how the boxplot layer is in front of the jitter layer? What do you
 need to change in the code to put the boxplot below the points?</p>
 <p>You may notice that the values on the x-axis are still not properly readable. Let’s change the orientation of the labels and adjust them vertically and horizontally so they don’t overlap. You can use a 90-degree angle, or experiment to find the appropriate angle for diagonally oriented labels:</p>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="sec-vis.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb449-2"><a href="sec-vis.html#cb449-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb449-3"><a href="sec-vis.html#cb449-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb449-4"><a href="sec-vis.html#cb449-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"tomato"</span>) <span class="sc">+</span></span>
-<span id="cb449-5"><a href="sec-vis.html#cb449-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb449-6"><a href="sec-vis.html#cb449-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,  <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="sec-vis.html#cb449-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb449-2"><a href="sec-vis.html#cb449-2" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb449-3"><a href="sec-vis.html#cb449-3" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb449-4"><a href="sec-vis.html#cb449-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">color =</span> <span class="st">"tomato"</span>) <span class="op">+</span></span>
+<span id="cb449-5"><a href="sec-vis.html#cb449-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb449-6"><a href="sec-vis.html#cb449-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,  <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/boxplot-xaxis-rotated-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
@@ -571,26 +526,26 @@ graph?</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-39" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-39', 'sol-start-39')"></span>
 </p>
 <div id="sol-body-39" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-vis.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="co"># time as integer</span></span>
-<span id="cb450-2"><a href="sec-vis.html#cb450-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb450-3"><a href="sec-vis.html#cb450-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb450-4"><a href="sec-vis.html#cb450-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb450-5"><a href="sec-vis.html#cb450-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="fu">aes</span>(<span class="at">color =</span> time)) <span class="sc">+</span></span>
-<span id="cb450-6"><a href="sec-vis.html#cb450-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb450-7"><a href="sec-vis.html#cb450-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,  <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="sec-vis.html#cb450-1" aria-hidden="true"></a><span class="co"># time as integer</span></span>
+<span id="cb450-2"><a href="sec-vis.html#cb450-2" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb450-3"><a href="sec-vis.html#cb450-3" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb450-4"><a href="sec-vis.html#cb450-4" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb450-5"><a href="sec-vis.html#cb450-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="kw">aes</span>(<span class="dt">color =</span> time)) <span class="op">+</span></span>
+<span id="cb450-6"><a href="sec-vis.html#cb450-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb450-7"><a href="sec-vis.html#cb450-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,  <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/boxplot-color-time-1.png" width="672"></p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-vis.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="co"># time as factor</span></span>
-<span id="cb451-2"><a href="sec-vis.html#cb451-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb451-3"><a href="sec-vis.html#cb451-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb451-4"><a href="sec-vis.html#cb451-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb451-5"><a href="sec-vis.html#cb451-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">as.factor</span>(time))) <span class="sc">+</span></span>
-<span id="cb451-6"><a href="sec-vis.html#cb451-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb451-7"><a href="sec-vis.html#cb451-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,  <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-vis.html#cb451-1" aria-hidden="true"></a><span class="co"># time as factor</span></span>
+<span id="cb451-2"><a href="sec-vis.html#cb451-2" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb451-3"><a href="sec-vis.html#cb451-3" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb451-4"><a href="sec-vis.html#cb451-4" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb451-5"><a href="sec-vis.html#cb451-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">as.factor</span>(time))) <span class="op">+</span></span>
+<span id="cb451-6"><a href="sec-vis.html#cb451-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb451-7"><a href="sec-vis.html#cb451-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,  <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/boxplot-color-time-2.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -612,16 +567,16 @@ plot, where the shape (of the density of points) is drawn.</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-40" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-40', 'sol-start-40')"></span>
 </p>
 <div id="sol-body-40" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="sec-vis.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb452-2"><a href="sec-vis.html#cb452-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb452-3"><a href="sec-vis.html#cb452-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb452-4"><a href="sec-vis.html#cb452-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">fill =</span> <span class="fu">as.factor</span>(time))) <span class="sc">+</span></span>
-<span id="cb452-5"><a href="sec-vis.html#cb452-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,  <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="sec-vis.html#cb452-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb452-2"><a href="sec-vis.html#cb452-2" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb452-3"><a href="sec-vis.html#cb452-3" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb452-4"><a href="sec-vis.html#cb452-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">as.factor</span>(time))) <span class="op">+</span></span>
+<span id="cb452-5"><a href="sec-vis.html#cb452-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,  <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-184-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -639,16 +594,16 @@ plot, where the shape (of the density of points) is drawn.</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-41" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-41', 'sol-start-41')"></span>
 </p>
 <div id="sol-body-41" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="sec-vis.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna,</span>
-<span id="cb453-2"><a href="sec-vis.html#cb453-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> expression_log,</span>
-<span id="cb453-3"><a href="sec-vis.html#cb453-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">x =</span> sample)) <span class="sc">+</span></span>
-<span id="cb453-4"><a href="sec-vis.html#cb453-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb453-5"><a href="sec-vis.html#cb453-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>,  <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="sec-vis.html#cb453-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> rna,</span>
+<span id="cb453-2"><a href="sec-vis.html#cb453-2" aria-hidden="true"></a>         <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> expression_log,</span>
+<span id="cb453-3"><a href="sec-vis.html#cb453-3" aria-hidden="true"></a>                       <span class="dt">x =</span> sample)) <span class="op">+</span></span>
+<span id="cb453-4"><a href="sec-vis.html#cb453-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_violin</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> sex)) <span class="op">+</span></span>
+<span id="cb453-5"><a href="sec-vis.html#cb453-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>,  <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-185-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -658,78 +613,76 @@ plot, where the shape (of the density of points) is drawn.</p>
 </div>
 <div id="line-plots" class="section level2" number="6.4">
 <h2>
-<span class="header-section-number">6.4</span> Line plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('line-plots')" onmouseout="reset_tooltip('line-plots-tooltip')"><span class="tooltiptext" id="line-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.4</span> Line plots</h2>
 <p>Let’s calculate the mean expression per duration of the infection for the 10 genes having the highest log fold changes comparing time 8 versus time 0.
 First, we need to select the genes and create a subset of <code>rna</code> called <code>sub_rna</code> containing the 10 selected genes, then we need to group the data and calculate the mean gene expression within each group:</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-vis.html#cb454-1" aria-hidden="true" tabindex="-1"></a>rna_FC <span class="ot">&lt;-</span> rna_FC <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(time_8_vs_0))</span>
-<span id="cb454-2"><a href="sec-vis.html#cb454-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb454-3"><a href="sec-vis.html#cb454-3" aria-hidden="true" tabindex="-1"></a>sub_rna <span class="ot">&lt;-</span> rna <span class="sc">%&gt;%</span></span>
-<span id="cb454-4"><a href="sec-vis.html#cb454-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gene <span class="sc">%in%</span> rna_FC[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="st">"gene"</span>, <span class="at">drop=</span><span class="cn">TRUE</span>])</span>
-<span id="cb454-5"><a href="sec-vis.html#cb454-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb454-6"><a href="sec-vis.html#cb454-6" aria-hidden="true" tabindex="-1"></a>mean_exp_by_time <span class="ot">&lt;-</span> sub_rna <span class="sc">%&gt;%</span></span>
-<span id="cb454-7"><a href="sec-vis.html#cb454-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gene,time) <span class="sc">%&gt;%</span></span>
-<span id="cb454-8"><a href="sec-vis.html#cb454-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_exp =</span> <span class="fu">mean</span>(expression_log))</span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-vis.html#cb454-1" aria-hidden="true"></a>rna_FC &lt;-<span class="st"> </span>rna_FC <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(time_<span class="dv">8</span>_vs_<span class="dv">0</span>))</span>
+<span id="cb454-2"><a href="sec-vis.html#cb454-2" aria-hidden="true"></a></span>
+<span id="cb454-3"><a href="sec-vis.html#cb454-3" aria-hidden="true"></a>sub_rna &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb454-4"><a href="sec-vis.html#cb454-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(gene <span class="op">%in%</span><span class="st"> </span>rna_FC[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="st">"gene"</span>, <span class="dt">drop=</span><span class="ot">TRUE</span>])</span>
+<span id="cb454-5"><a href="sec-vis.html#cb454-5" aria-hidden="true"></a></span>
+<span id="cb454-6"><a href="sec-vis.html#cb454-6" aria-hidden="true"></a>mean_exp_by_time &lt;-<span class="st"> </span>sub_rna <span class="op">%&gt;%</span></span>
+<span id="cb454-7"><a href="sec-vis.html#cb454-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(gene,time) <span class="op">%&gt;%</span></span>
+<span id="cb454-8"><a href="sec-vis.html#cb454-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(expression_log))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'gene'. You can override using the `.groups` argument.</code></pre>
 <p>We can build the line plot with duration of the infection on the x-axis and the mean expression on the y-axis:</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="sec-vis.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time,</span>
-<span id="cb456-2"><a href="sec-vis.html#cb456-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp)) <span class="sc">+</span></span>
-<span id="cb456-3"><a href="sec-vis.html#cb456-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="sec-vis.html#cb456-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time,</span>
+<span id="cb456-2"><a href="sec-vis.html#cb456-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp)) <span class="op">+</span></span>
+<span id="cb456-3"><a href="sec-vis.html#cb456-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/first-time-series-1.png" width="672"></p>
 <p>Unfortunately, this does not work because we plotted data for all the genes
 together. We need to tell ggplot to draw a line for each gene by modifying
 the aesthetic function to include <code>group = gene</code>:</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-vis.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time,</span>
-<span id="cb457-2"><a href="sec-vis.html#cb457-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">group =</span> gene)) <span class="sc">+</span></span>
-<span id="cb457-3"><a href="sec-vis.html#cb457-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-vis.html#cb457-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time,</span>
+<span id="cb457-2"><a href="sec-vis.html#cb457-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">group =</span> gene)) <span class="op">+</span></span>
+<span id="cb457-3"><a href="sec-vis.html#cb457-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/time-series-by-gene-1.png" width="672"></p>
 <p>We will be able to distinguish genes in the plot if we add colors
 (using <code>color</code> also automatically groups the data):</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-vis.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time,</span>
-<span id="cb458-2"><a href="sec-vis.html#cb458-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> gene)) <span class="sc">+</span></span>
-<span id="cb458-3"><a href="sec-vis.html#cb458-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="sec-vis.html#cb458-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time,</span>
+<span id="cb458-2"><a href="sec-vis.html#cb458-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> gene)) <span class="op">+</span></span>
+<span id="cb458-3"><a href="sec-vis.html#cb458-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/time-series-with-colors-1.png" width="672"></p>
 </div>
 <div id="faceting" class="section level2" number="6.5">
 <h2>
-<span class="header-section-number">6.5</span> Faceting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('faceting')" onmouseout="reset_tooltip('faceting-tooltip')"><span class="tooltiptext" id="faceting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.5</span> Faceting</h2>
 <p><strong><code>ggplot2</code></strong> has a special technique called <em>faceting</em> that allows
 the user to split one plot into multiple (sub) plots based on a factor
 included in the dataset. These different subplots inherit the same
 properties (axes limits, ticks, …) to facilitate their direct
 comparison. We will use it to make a line plot across time for each
 gene:</p>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="sec-vis.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time,</span>
-<span id="cb459-2"><a href="sec-vis.html#cb459-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb459-3"><a href="sec-vis.html#cb459-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene)</span></code></pre></div>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="sec-vis.html#cb459-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time,</span>
+<span id="cb459-2"><a href="sec-vis.html#cb459-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb459-3"><a href="sec-vis.html#cb459-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/first-facet-1.png" width="672">
 Here both x- and y-axis have the same scale for all the sub plots. You can change this default behavior by modifying <code>scales</code> in order to allow a free scale for the y-axis:</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-vis.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time,</span>
-<span id="cb460-2"><a href="sec-vis.html#cb460-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp)) <span class="sc">+</span></span>
-<span id="cb460-3"><a href="sec-vis.html#cb460-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb460-4"><a href="sec-vis.html#cb460-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="sec-vis.html#cb460-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time,</span>
+<span id="cb460-2"><a href="sec-vis.html#cb460-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp)) <span class="op">+</span></span>
+<span id="cb460-3"><a href="sec-vis.html#cb460-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb460-4"><a href="sec-vis.html#cb460-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/first-facet-scales-1.png" width="672"></p>
 <p>Now we would like to split the line in each plot by the sex of the mice. To do that we need to make the mean expression in the data frame grouped by <code>gene</code>, <code>time</code>, and <code>sex</code>:</p>
-<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="sec-vis.html#cb461-1" aria-hidden="true" tabindex="-1"></a>mean_exp_by_time_sex <span class="ot">&lt;-</span> sub_rna <span class="sc">%&gt;%</span></span>
-<span id="cb461-2"><a href="sec-vis.html#cb461-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gene, time, sex) <span class="sc">%&gt;%</span></span>
-<span id="cb461-3"><a href="sec-vis.html#cb461-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_exp =</span> <span class="fu">mean</span>(expression_log))</span></code></pre></div>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="sec-vis.html#cb461-1" aria-hidden="true"></a>mean_exp_by_time_sex &lt;-<span class="st"> </span>sub_rna <span class="op">%&gt;%</span></span>
+<span id="cb461-2"><a href="sec-vis.html#cb461-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(gene, time, sex) <span class="op">%&gt;%</span></span>
+<span id="cb461-3"><a href="sec-vis.html#cb461-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(expression_log))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'gene', 'time'. You can override using the `.groups` argument.</code></pre>
 <p>We can now make the faceted plot by splitting further by sex using <code>color</code> (within a single plot):</p>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-vis.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb463-2"><a href="sec-vis.html#cb463-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb463-3"><a href="sec-vis.html#cb463-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb463-4"><a href="sec-vis.html#cb463-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="sec-vis.html#cb463-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb463-2"><a href="sec-vis.html#cb463-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb463-3"><a href="sec-vis.html#cb463-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb463-4"><a href="sec-vis.html#cb463-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/facet-by-gene-and-sex-1.png" width="672"></p>
 <p>Usually plots with white background look more readable when printed. We can set
 the background to white using the function <code>theme_bw()</code>. Additionally, we can remove
 the grid:</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="sec-vis.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb464-2"><a href="sec-vis.html#cb464-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb464-3"><a href="sec-vis.html#cb464-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb464-4"><a href="sec-vis.html#cb464-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb464-5"><a href="sec-vis.html#cb464-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb464-6"><a href="sec-vis.html#cb464-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="sec-vis.html#cb464-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb464-2"><a href="sec-vis.html#cb464-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb464-3"><a href="sec-vis.html#cb464-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb464-4"><a href="sec-vis.html#cb464-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb464-5"><a href="sec-vis.html#cb464-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb464-6"><a href="sec-vis.html#cb464-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/facet-by-gene-and-sex-white-bg-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
@@ -743,19 +696,19 @@ of each chromosome changes through the duration of infection.</p>
 </p>
 </div>
 </div>
-<div class="msmb-solution">
+<div class="solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-42" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-42', 'sol-start-42')"></span>
 </p>
 <div id="sol-body-42" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-vis.html#cb465-1" aria-hidden="true" tabindex="-1"></a>mean_exp_by_chromosome <span class="ot">&lt;-</span> rna <span class="sc">%&gt;%</span></span>
-<span id="cb465-2"><a href="sec-vis.html#cb465-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(chromosome_name, time) <span class="sc">%&gt;%</span></span>
-<span id="cb465-3"><a href="sec-vis.html#cb465-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_exp =</span> <span class="fu">mean</span>(expression_log))</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="sec-vis.html#cb465-1" aria-hidden="true"></a>mean_exp_by_chromosome &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb465-2"><a href="sec-vis.html#cb465-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(chromosome_name, time) <span class="op">%&gt;%</span></span>
+<span id="cb465-3"><a href="sec-vis.html#cb465-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(expression_log))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'chromosome_name'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="sec-vis.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_chromosome, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time,</span>
-<span id="cb467-2"><a href="sec-vis.html#cb467-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">y =</span> mean_exp)) <span class="sc">+</span></span>
-<span id="cb467-3"><a href="sec-vis.html#cb467-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb467-4"><a href="sec-vis.html#cb467-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> chromosome_name, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="sec-vis.html#cb467-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_chromosome, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time,</span>
+<span id="cb467-2"><a href="sec-vis.html#cb467-2" aria-hidden="true"></a>                                <span class="dt">y =</span> mean_exp)) <span class="op">+</span></span>
+<span id="cb467-3"><a href="sec-vis.html#cb467-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb467-4"><a href="sec-vis.html#cb467-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>chromosome_name, <span class="dt">scales =</span> <span class="st">"free_y"</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean-exp-chromosome-time-series-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -769,23 +722,22 @@ arranged via formula notation (<code>rows ~ columns</code>; a <code>.</code> can
 a placeholder that indicates only one row or column).</p>
 <p>Let’s modify the previous plot to compare how the mean gene expression of males and females
 has changed through time:</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="sec-vis.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One column, facet by rows</span></span>
-<span id="cb468-2"><a href="sec-vis.html#cb468-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb468-3"><a href="sec-vis.html#cb468-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> gene)) <span class="sc">+</span></span>
-<span id="cb468-4"><a href="sec-vis.html#cb468-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb468-5"><a href="sec-vis.html#cb468-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(sex <span class="sc">~</span> .)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="sec-vis.html#cb468-1" aria-hidden="true"></a><span class="co"># One column, facet by rows</span></span>
+<span id="cb468-2"><a href="sec-vis.html#cb468-2" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb468-3"><a href="sec-vis.html#cb468-3" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> gene)) <span class="op">+</span></span>
+<span id="cb468-4"><a href="sec-vis.html#cb468-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb468-5"><a href="sec-vis.html#cb468-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_grid</span>(sex <span class="op">~</span><span class="st"> </span>.)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean-exp-time-facet-sex-rows-1.png" width="672"></p>
-<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="sec-vis.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="co"># One row, facet by column</span></span>
-<span id="cb469-2"><a href="sec-vis.html#cb469-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb469-3"><a href="sec-vis.html#cb469-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> gene)) <span class="sc">+</span></span>
-<span id="cb469-4"><a href="sec-vis.html#cb469-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb469-5"><a href="sec-vis.html#cb469-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> sex)</span></code></pre></div>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="sec-vis.html#cb469-1" aria-hidden="true"></a><span class="co"># One row, facet by column</span></span>
+<span id="cb469-2"><a href="sec-vis.html#cb469-2" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb469-3"><a href="sec-vis.html#cb469-3" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> gene)) <span class="op">+</span></span>
+<span id="cb469-4"><a href="sec-vis.html#cb469-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb469-5"><a href="sec-vis.html#cb469-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>sex)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean-exp-time-facet-sex-columns-1.png" width="672"></p>
 </div>
 <div id="ggplot2-themes" class="section level2" number="6.6">
 <h2>
-<span class="header-section-number">6.6</span> <strong><code>ggplot2</code></strong> themes<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ggplot2-themes')" onmouseout="reset_tooltip('ggplot2-themes-tooltip')"><span class="tooltiptext" id="ggplot2-themes-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.6</span> <strong><code>ggplot2</code></strong> themes</h2>
 <p>In addition to <code>theme_bw()</code>, which changes the plot background to white, <strong><code>ggplot2</code></strong>
 comes with several other themes which can be useful to quickly change the look
 of your visualization. The complete list of themes is available
@@ -801,68 +753,67 @@ themes.</p>
 </div>
 <div id="customisation" class="section level2" number="6.7">
 <h2>
-<span class="header-section-number">6.7</span> Customisation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('customisation')" onmouseout="reset_tooltip('customisation-tooltip')"><span class="tooltiptext" id="customisation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.7</span> Customisation</h2>
 <p>Take a look at the <a href="https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf"><strong><code>ggplot2</code></strong> cheat
 sheet</a>,
 and think of ways you could improve the plot.</p>
 <p>Now, let’s change names of axes to something more informative than ‘time’
-and ‘mean_exp,’ add a title to the figure and change the colour legend title:</p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="sec-vis.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb470-2"><a href="sec-vis.html#cb470-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb470-3"><a href="sec-vis.html#cb470-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb470-4"><a href="sec-vis.html#cb470-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb470-5"><a href="sec-vis.html#cb470-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
-<span id="cb470-6"><a href="sec-vis.html#cb470-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
-<span id="cb470-7"><a href="sec-vis.html#cb470-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Mean gene expression"</span>)  <span class="sc">+</span></span>
-<span id="cb470-8"><a href="sec-vis.html#cb470-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Gender"</span>)) <span class="sc">+</span></span>
-<span id="cb470-9"><a href="sec-vis.html#cb470-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+and ‘mean_exp’, add a title to the figure and change the colour legend title:</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="sec-vis.html#cb470-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb470-2"><a href="sec-vis.html#cb470-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb470-3"><a href="sec-vis.html#cb470-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb470-4"><a href="sec-vis.html#cb470-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb470-5"><a href="sec-vis.html#cb470-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
+<span id="cb470-6"><a href="sec-vis.html#cb470-6" aria-hidden="true"></a>       <span class="dt">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
+<span id="cb470-7"><a href="sec-vis.html#cb470-7" aria-hidden="true"></a>       <span class="dt">y =</span> <span class="st">"Mean gene expression"</span>)  <span class="op">+</span></span>
+<span id="cb470-8"><a href="sec-vis.html#cb470-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">"Gender"</span>)) <span class="op">+</span></span>
+<span id="cb470-9"><a href="sec-vis.html#cb470-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean_exp-time-with-right-labels-1.png" width="672"></p>
 <p>The axes have more informative names, but their readability can be improved by
 increasing the font size:</p>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="sec-vis.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb471-2"><a href="sec-vis.html#cb471-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb471-3"><a href="sec-vis.html#cb471-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb471-4"><a href="sec-vis.html#cb471-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb471-5"><a href="sec-vis.html#cb471-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
-<span id="cb471-6"><a href="sec-vis.html#cb471-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
-<span id="cb471-7"><a href="sec-vis.html#cb471-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Mean gene expression"</span>) <span class="sc">+</span></span>
-<span id="cb471-8"><a href="sec-vis.html#cb471-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Gender"</span>)) <span class="sc">+</span></span>
-<span id="cb471-9"><a href="sec-vis.html#cb471-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb471-10"><a href="sec-vis.html#cb471-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="sec-vis.html#cb471-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb471-2"><a href="sec-vis.html#cb471-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb471-3"><a href="sec-vis.html#cb471-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb471-4"><a href="sec-vis.html#cb471-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb471-5"><a href="sec-vis.html#cb471-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
+<span id="cb471-6"><a href="sec-vis.html#cb471-6" aria-hidden="true"></a>         <span class="dt">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
+<span id="cb471-7"><a href="sec-vis.html#cb471-7" aria-hidden="true"></a>         <span class="dt">y =</span> <span class="st">"Mean gene expression"</span>) <span class="op">+</span></span>
+<span id="cb471-8"><a href="sec-vis.html#cb471-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">"Gender"</span>)) <span class="op">+</span></span>
+<span id="cb471-9"><a href="sec-vis.html#cb471-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb471-10"><a href="sec-vis.html#cb471-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>))</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean_exp-time-with-right-labels-xfont-size-1.png" width="672"></p>
 <p>Note that it is also possible to change the fonts of your plots. If you are on
 Windows, you may have to install
 the <a href="https://github.com/wch/extrafont"><strong><code>extrafont</code></strong> package</a>, and follow the
 instructions included in the README for this package.</p>
 <p>We can further customize the color of x- and y-axis text, the color of the grid, etc. We can also for example move the legend to the top by setting <code>legend.position</code> to <code>"top"</code>.</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="sec-vis.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb472-2"><a href="sec-vis.html#cb472-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb472-3"><a href="sec-vis.html#cb472-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb472-4"><a href="sec-vis.html#cb472-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb472-5"><a href="sec-vis.html#cb472-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
-<span id="cb472-6"><a href="sec-vis.html#cb472-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
-<span id="cb472-7"><a href="sec-vis.html#cb472-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Mean gene expression"</span>) <span class="sc">+</span></span>
-<span id="cb472-8"><a href="sec-vis.html#cb472-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Gender"</span>)) <span class="sc">+</span></span>
-<span id="cb472-9"><a href="sec-vis.html#cb472-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb472-10"><a href="sec-vis.html#cb472-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb472-11"><a href="sec-vis.html#cb472-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb472-12"><a href="sec-vis.html#cb472-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb472-13"><a href="sec-vis.html#cb472-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">"lightsteelblue1"</span>),</span>
-<span id="cb472-14"><a href="sec-vis.html#cb472-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="sec-vis.html#cb472-1" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb472-2"><a href="sec-vis.html#cb472-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb472-3"><a href="sec-vis.html#cb472-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb472-4"><a href="sec-vis.html#cb472-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb472-5"><a href="sec-vis.html#cb472-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
+<span id="cb472-6"><a href="sec-vis.html#cb472-6" aria-hidden="true"></a>         <span class="dt">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
+<span id="cb472-7"><a href="sec-vis.html#cb472-7" aria-hidden="true"></a>         <span class="dt">y =</span> <span class="st">"Mean gene expression"</span>) <span class="op">+</span></span>
+<span id="cb472-8"><a href="sec-vis.html#cb472-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">"Gender"</span>)) <span class="op">+</span></span>
+<span id="cb472-9"><a href="sec-vis.html#cb472-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb472-10"><a href="sec-vis.html#cb472-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),</span>
+<span id="cb472-11"><a href="sec-vis.html#cb472-11" aria-hidden="true"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>, <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb472-12"><a href="sec-vis.html#cb472-12" aria-hidden="true"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>, <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb472-13"><a href="sec-vis.html#cb472-13" aria-hidden="true"></a>        <span class="dt">panel.grid =</span> <span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">"lightsteelblue1"</span>),</span>
+<span id="cb472-14"><a href="sec-vis.html#cb472-14" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"top"</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean_exp-time-with-theme-1.png" width="672"></p>
 <p>If you like the changes you created better than the default theme, you can save them as
 an object to be able to easily apply them to other plots you may create:</p>
-<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="sec-vis.html#cb473-1" aria-hidden="true" tabindex="-1"></a>blue_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>,</span>
-<span id="cb473-2"><a href="sec-vis.html#cb473-2" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb473-3"><a href="sec-vis.html#cb473-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>,</span>
-<span id="cb473-4"><a href="sec-vis.html#cb473-4" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb473-5"><a href="sec-vis.html#cb473-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb473-6"><a href="sec-vis.html#cb473-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">"lightsteelblue1"</span>))</span>
-<span id="cb473-7"><a href="sec-vis.html#cb473-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb473-8"><a href="sec-vis.html#cb473-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(rna, <span class="fu">aes</span>(<span class="at">x =</span> expression_log)) <span class="sc">+</span></span>
-<span id="cb473-9"><a href="sec-vis.html#cb473-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb473-10"><a href="sec-vis.html#cb473-10" aria-hidden="true" tabindex="-1"></a>    blue_theme</span></code></pre></div>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="sec-vis.html#cb473-1" aria-hidden="true"></a>blue_theme &lt;-<span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>,</span>
+<span id="cb473-2"><a href="sec-vis.html#cb473-2" aria-hidden="true"></a>                                               <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb473-3"><a href="sec-vis.html#cb473-3" aria-hidden="true"></a>                    <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>,</span>
+<span id="cb473-4"><a href="sec-vis.html#cb473-4" aria-hidden="true"></a>                                               <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb473-5"><a href="sec-vis.html#cb473-5" aria-hidden="true"></a>                    <span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),</span>
+<span id="cb473-6"><a href="sec-vis.html#cb473-6" aria-hidden="true"></a>                    <span class="dt">panel.grid =</span> <span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">"lightsteelblue1"</span>))</span>
+<span id="cb473-7"><a href="sec-vis.html#cb473-7" aria-hidden="true"></a></span>
+<span id="cb473-8"><a href="sec-vis.html#cb473-8" aria-hidden="true"></a><span class="kw">ggplot</span>(rna, <span class="kw">aes</span>(<span class="dt">x =</span> expression_log)) <span class="op">+</span></span>
+<span id="cb473-9"><a href="sec-vis.html#cb473-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></span>
+<span id="cb473-10"><a href="sec-vis.html#cb473-10" aria-hidden="true"></a><span class="st">    </span>blue_theme</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/mean_exp-time-with-right-labels-xfont-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
@@ -889,8 +840,7 @@ for inspiration. Here are some ideas:</p>
 </div>
 <div id="composing-plots" class="section level2" number="6.8">
 <h2>
-<span class="header-section-number">6.8</span> Composing plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('composing-plots')" onmouseout="reset_tooltip('composing-plots-tooltip')"><span class="tooltiptext" id="composing-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.8</span> Composing plots</h2>
 <p>Faceting is a great tool for splitting one plot into multiple
 subplots, but sometimes you may want to produce a single figure that
 contains multiple independent plots, i.e. plots that are based on
@@ -898,61 +848,61 @@ different variables or even different data frames.</p>
 <p>Let’s start by creating the two plots that we want to arrange next to
 each other:</p>
 <p>The first graph counts the number of unique genes per chromosome. We first need to reorder the levels of <code>chromosome_name</code> and filter the unique genes per chromosome. We also change the scale of the yaxis to a log10 scale for better readability.</p>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="sec-vis.html#cb474-1" aria-hidden="true" tabindex="-1"></a>rna<span class="sc">$</span>chromosome_name <span class="ot">&lt;-</span> <span class="fu">factor</span>(rna<span class="sc">$</span>chromosome_name,</span>
-<span id="cb474-2"><a href="sec-vis.html#cb474-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>,<span class="st">"X"</span>,<span class="st">"Y"</span>))</span>
-<span id="cb474-3"><a href="sec-vis.html#cb474-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb474-4"><a href="sec-vis.html#cb474-4" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="ot">&lt;-</span> rna <span class="sc">%&gt;%</span> <span class="fu">select</span>(chromosome_name, gene) <span class="sc">%&gt;%</span></span>
-<span id="cb474-5"><a href="sec-vis.html#cb474-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb474-6"><a href="sec-vis.html#cb474-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> chromosome_name), <span class="at">fill =</span> <span class="st">"seagreen"</span>,</span>
-<span id="cb474-7"><a href="sec-vis.html#cb474-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
-<span id="cb474-8"><a href="sec-vis.html#cb474-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"log10(n genes)"</span>, <span class="at">x =</span> <span class="st">"chromosome"</span>) <span class="sc">+</span></span>
-<span id="cb474-9"><a href="sec-vis.html#cb474-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span>
-<span id="cb474-10"><a href="sec-vis.html#cb474-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb474-11"><a href="sec-vis.html#cb474-11" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="sec-vis.html#cb474-1" aria-hidden="true"></a>rna<span class="op">$</span>chromosome_name &lt;-<span class="st"> </span><span class="kw">factor</span>(rna<span class="op">$</span>chromosome_name,</span>
+<span id="cb474-2"><a href="sec-vis.html#cb474-2" aria-hidden="true"></a>                               <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">19</span>,<span class="st">"X"</span>,<span class="st">"Y"</span>))</span>
+<span id="cb474-3"><a href="sec-vis.html#cb474-3" aria-hidden="true"></a></span>
+<span id="cb474-4"><a href="sec-vis.html#cb474-4" aria-hidden="true"></a>count_gene_chromosome &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(chromosome_name, gene) <span class="op">%&gt;%</span></span>
+<span id="cb474-5"><a href="sec-vis.html#cb474-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">distinct</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb474-6"><a href="sec-vis.html#cb474-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> chromosome_name), <span class="dt">fill =</span> <span class="st">"seagreen"</span>,</span>
+<span id="cb474-7"><a href="sec-vis.html#cb474-7" aria-hidden="true"></a>           <span class="dt">position =</span> <span class="st">"dodge"</span>, <span class="dt">stat =</span> <span class="st">"count"</span>) <span class="op">+</span></span>
+<span id="cb474-8"><a href="sec-vis.html#cb474-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"log10(n genes)"</span>, <span class="dt">x =</span> <span class="st">"chromosome"</span>) <span class="op">+</span></span>
+<span id="cb474-9"><a href="sec-vis.html#cb474-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_log10</span>()</span>
+<span id="cb474-10"><a href="sec-vis.html#cb474-10" aria-hidden="true"></a></span>
+<span id="cb474-11"><a href="sec-vis.html#cb474-11" aria-hidden="true"></a>count_gene_chromosome</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/sub1-1.png" width="672"></p>
 <p>Below, we also remove the legend altogether by setting the <code>legend.position</code> to <code>"none"</code>.</p>
-<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="sec-vis.html#cb475-1" aria-hidden="true" tabindex="-1"></a>exp_boxplot_sex <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rna, <span class="fu">aes</span>(<span class="at">y=</span>expression_log, <span class="at">x =</span> <span class="fu">as.factor</span>(time),</span>
-<span id="cb475-2"><a href="sec-vis.html#cb475-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color=</span>sex)) <span class="sc">+</span></span>
-<span id="cb475-3"><a href="sec-vis.html#cb475-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb475-4"><a href="sec-vis.html#cb475-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Mean gene exp"</span>,</span>
-<span id="cb475-5"><a href="sec-vis.html#cb475-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"time"</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb475-6"><a href="sec-vis.html#cb475-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb475-7"><a href="sec-vis.html#cb475-7" aria-hidden="true" tabindex="-1"></a>exp_boxplot_sex</span></code></pre></div>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="sec-vis.html#cb475-1" aria-hidden="true"></a>exp_boxplot_sex &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rna, <span class="kw">aes</span>(<span class="dt">y=</span>expression_log, <span class="dt">x =</span> <span class="kw">as.factor</span>(time),</span>
+<span id="cb475-2"><a href="sec-vis.html#cb475-2" aria-hidden="true"></a>                 <span class="dt">color=</span>sex)) <span class="op">+</span></span>
+<span id="cb475-3"><a href="sec-vis.html#cb475-3" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb475-4"><a href="sec-vis.html#cb475-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">"Mean gene exp"</span>,</span>
+<span id="cb475-5"><a href="sec-vis.html#cb475-5" aria-hidden="true"></a>       <span class="dt">x =</span> <span class="st">"time"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb475-6"><a href="sec-vis.html#cb475-6" aria-hidden="true"></a></span>
+<span id="cb475-7"><a href="sec-vis.html#cb475-7" aria-hidden="true"></a>exp_boxplot_sex</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/sub2-1.png" width="672"></p>
 <p>The <a href="https://github.com/thomasp85/patchwork"><strong>patchwork</strong></a> package
 provides an elegant approach to combining figures using the <code>+</code> to
 arrange figures (typically side by side). More specifically the <code>|</code>
 explicitly arranges them side by side and <code>/</code> stacks them on top of
 each other.</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="sec-vis.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"patchwork"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="sec-vis.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"patchwork"</span>)</span>
-<span id="cb477-2"><a href="sec-vis.html#cb477-2" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="sc">+</span> exp_boxplot_sex</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="sec-vis.html#cb476-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">"patchwork"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="sec-vis.html#cb477-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"patchwork"</span>)</span>
+<span id="cb477-2"><a href="sec-vis.html#cb477-2" aria-hidden="true"></a>count_gene_chromosome <span class="op">+</span><span class="st"> </span>exp_boxplot_sex</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-187-1.png" width="672"></p>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="sec-vis.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="do">## or count_gene_chromosome | exp_boxplot_sex</span></span></code></pre></div>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="sec-vis.html#cb479-1" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="sc">/</span> exp_boxplot_sex</span></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="sec-vis.html#cb478-1" aria-hidden="true"></a><span class="co">## or count_gene_chromosome | exp_boxplot_sex</span></span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="sec-vis.html#cb479-1" aria-hidden="true"></a>count_gene_chromosome <span class="op">/</span><span class="st"> </span>exp_boxplot_sex</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-188-1.png" width="672"></p>
 <p>We can combine further control the layout of the final composition
 with <code>plot_layout</code> to create more complex layouts:</p>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="sec-vis.html#cb480-1" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="sc">+</span> exp_boxplot_sex <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="sec-vis.html#cb480-1" aria-hidden="true"></a>count_gene_chromosome <span class="op">+</span><span class="st"> </span>exp_boxplot_sex <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-189-1.png" width="672"></p>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="sec-vis.html#cb481-1" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="sc">+</span></span>
-<span id="cb481-2"><a href="sec-vis.html#cb481-2" aria-hidden="true" tabindex="-1"></a> (count_gene_chromosome <span class="sc">+</span> exp_boxplot_sex) <span class="sc">+</span></span>
-<span id="cb481-3"><a href="sec-vis.html#cb481-3" aria-hidden="true" tabindex="-1"></a> exp_boxplot_sex <span class="sc">+</span></span>
-<span id="cb481-4"><a href="sec-vis.html#cb481-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="sec-vis.html#cb481-1" aria-hidden="true"></a>count_gene_chromosome <span class="op">+</span></span>
+<span id="cb481-2"><a href="sec-vis.html#cb481-2" aria-hidden="true"></a><span class="st"> </span>(count_gene_chromosome <span class="op">+</span><span class="st"> </span>exp_boxplot_sex) <span class="op">+</span></span>
+<span id="cb481-3"><a href="sec-vis.html#cb481-3" aria-hidden="true"></a><span class="st"> </span>exp_boxplot_sex <span class="op">+</span></span>
+<span id="cb481-4"><a href="sec-vis.html#cb481-4" aria-hidden="true"></a><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-190-1.png" width="672"></p>
 <p>The last plot can also be created using the <code>|</code> and <code>/</code> composers:</p>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="sec-vis.html#cb482-1" aria-hidden="true" tabindex="-1"></a>count_gene_chromosome <span class="sc">/</span></span>
-<span id="cb482-2"><a href="sec-vis.html#cb482-2" aria-hidden="true" tabindex="-1"></a> (count_gene_chromosome <span class="sc">|</span> exp_boxplot_sex) <span class="sc">/</span></span>
-<span id="cb482-3"><a href="sec-vis.html#cb482-3" aria-hidden="true" tabindex="-1"></a> exp_boxplot_sex</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="sec-vis.html#cb482-1" aria-hidden="true"></a>count_gene_chromosome <span class="op">/</span></span>
+<span id="cb482-2"><a href="sec-vis.html#cb482-2" aria-hidden="true"></a><span class="st"> </span>(count_gene_chromosome <span class="op">|</span><span class="st"> </span>exp_boxplot_sex) <span class="op">/</span></span>
+<span id="cb482-3"><a href="sec-vis.html#cb482-3" aria-hidden="true"></a><span class="st"> </span>exp_boxplot_sex</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/unnamed-chunk-191-1.png" width="672"></p>
 <p>Learn more about <code>patchwork</code> on its
 <a href="https://patchwork.data-imaginist.com/">webpage</a> or in this
 <a href="https://www.youtube.com/watch?v=0m4yywqNPVY">video</a>.</p>
 <p>Another option is the <strong><code>gridExtra</code></strong> package that allows to combine
 separate ggplots into a single figure using <code>grid.arrange()</code>:</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="sec-vis.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gridExtra"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="sec-vis.html#cb484-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb484-2"><a href="sec-vis.html#cb484-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(count_gene_chromosome, exp_boxplot_sex, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="sec-vis.html#cb483-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">"gridExtra"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="sec-vis.html#cb484-1" aria-hidden="true"></a><span class="kw">library</span>(gridExtra)</span>
+<span id="cb484-2"><a href="sec-vis.html#cb484-2" aria-hidden="true"></a><span class="kw">grid.arrange</span>(count_gene_chromosome, exp_boxplot_sex, <span class="dt">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="BIOINFO_01_files/figure-html/gridarrange-example-1.png" width="960"></p>
 <p>In addition to the <code>ncol</code> and <code>nrow</code> arguments, used to make simple
 arrangements, there are tools for <a href="https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html">constructing more complex
@@ -960,8 +910,7 @@ layouts</a>.</p>
 </div>
 <div id="exporting-plots" class="section level2" number="6.9">
 <h2>
-<span class="header-section-number">6.9</span> Exporting plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('exporting-plots')" onmouseout="reset_tooltip('exporting-plots-tooltip')"><span class="tooltiptext" id="exporting-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.9</span> Exporting plots</h2>
 <p>After creating your plot, you can save it to a file in your favorite
 format. The Export tab in the <strong>Plot</strong> pane in RStudio will save your
 plots at low resolution, which will not be accepted by many journals
@@ -970,40 +919,38 @@ and will not scale well for posters.</p>
 the dimension and resolution of your plot by adjusting the appropriate
 arguments (<code>width</code>, <code>height</code> and <code>dpi</code>).</p>
 <p>Make sure you have the <code>fig_output/</code> folder in your working directory.</p>
-<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="sec-vis.html#cb485-1" aria-hidden="true" tabindex="-1"></a>my_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mean_exp_by_time_sex,</span>
-<span id="cb485-2"><a href="sec-vis.html#cb485-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> mean_exp, <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb485-3"><a href="sec-vis.html#cb485-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb485-4"><a href="sec-vis.html#cb485-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb485-5"><a href="sec-vis.html#cb485-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
-<span id="cb485-6"><a href="sec-vis.html#cb485-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
-<span id="cb485-7"><a href="sec-vis.html#cb485-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Mean gene expression"</span>) <span class="sc">+</span></span>
-<span id="cb485-8"><a href="sec-vis.html#cb485-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Gender"</span>)) <span class="sc">+</span></span>
-<span id="cb485-9"><a href="sec-vis.html#cb485-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb485-10"><a href="sec-vis.html#cb485-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb485-11"><a href="sec-vis.html#cb485-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"royalblue4"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb485-12"><a href="sec-vis.html#cb485-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb485-13"><a href="sec-vis.html#cb485-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_line</span>(<span class="at">colour=</span><span class="st">"lightsteelblue1"</span>),</span>
-<span id="cb485-14"><a href="sec-vis.html#cb485-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"top"</span>)</span>
-<span id="cb485-15"><a href="sec-vis.html#cb485-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"fig_output/mean_exp_by_time_sex.png"</span>, my_plot, <span class="at">width =</span> <span class="dv">15</span>,</span>
-<span id="cb485-16"><a href="sec-vis.html#cb485-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">10</span>)</span>
-<span id="cb485-17"><a href="sec-vis.html#cb485-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb485-18"><a href="sec-vis.html#cb485-18" aria-hidden="true" tabindex="-1"></a><span class="co"># This also works for grid.arrange() plots</span></span>
-<span id="cb485-19"><a href="sec-vis.html#cb485-19" aria-hidden="true" tabindex="-1"></a>combo_plot <span class="ot">&lt;-</span> <span class="fu">grid.arrange</span>(count_gene_chromosome, exp_boxplot_sex,</span>
-<span id="cb485-20"><a href="sec-vis.html#cb485-20" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">6</span>))</span>
-<span id="cb485-21"><a href="sec-vis.html#cb485-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"fig_output/combo_plot_chromosome_sex.png"</span>, combo_plot,</span>
-<span id="cb485-22"><a href="sec-vis.html#cb485-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">10</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="sec-vis.html#cb485-1" aria-hidden="true"></a>my_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> mean_exp_by_time_sex,</span>
+<span id="cb485-2"><a href="sec-vis.html#cb485-2" aria-hidden="true"></a>       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> mean_exp, <span class="dt">color =</span> sex)) <span class="op">+</span></span>
+<span id="cb485-3"><a href="sec-vis.html#cb485-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb485-4"><a href="sec-vis.html#cb485-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>gene, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb485-5"><a href="sec-vis.html#cb485-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Mean gene expression by duration of the infection"</span>,</span>
+<span id="cb485-6"><a href="sec-vis.html#cb485-6" aria-hidden="true"></a>         <span class="dt">x =</span> <span class="st">"Duration of the infection (in days)"</span>,</span>
+<span id="cb485-7"><a href="sec-vis.html#cb485-7" aria-hidden="true"></a>         <span class="dt">y =</span> <span class="st">"Mean gene expression"</span>) <span class="op">+</span></span>
+<span id="cb485-8"><a href="sec-vis.html#cb485-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">"Gender"</span>)) <span class="op">+</span></span>
+<span id="cb485-9"><a href="sec-vis.html#cb485-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></span>
+<span id="cb485-10"><a href="sec-vis.html#cb485-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>, <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb485-11"><a href="sec-vis.html#cb485-11" aria-hidden="true"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">colour =</span> <span class="st">"royalblue4"</span>, <span class="dt">size =</span> <span class="dv">12</span>),</span>
+<span id="cb485-12"><a href="sec-vis.html#cb485-12" aria-hidden="true"></a>        <span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>),</span>
+<span id="cb485-13"><a href="sec-vis.html#cb485-13" aria-hidden="true"></a>        <span class="dt">panel.grid =</span> <span class="kw">element_line</span>(<span class="dt">colour=</span><span class="st">"lightsteelblue1"</span>),</span>
+<span id="cb485-14"><a href="sec-vis.html#cb485-14" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"top"</span>)</span>
+<span id="cb485-15"><a href="sec-vis.html#cb485-15" aria-hidden="true"></a><span class="kw">ggsave</span>(<span class="st">"fig_output/mean_exp_by_time_sex.png"</span>, my_plot, <span class="dt">width =</span> <span class="dv">15</span>,</span>
+<span id="cb485-16"><a href="sec-vis.html#cb485-16" aria-hidden="true"></a>       <span class="dt">height =</span> <span class="dv">10</span>)</span>
+<span id="cb485-17"><a href="sec-vis.html#cb485-17" aria-hidden="true"></a></span>
+<span id="cb485-18"><a href="sec-vis.html#cb485-18" aria-hidden="true"></a><span class="co"># This also works for grid.arrange() plots</span></span>
+<span id="cb485-19"><a href="sec-vis.html#cb485-19" aria-hidden="true"></a>combo_plot &lt;-<span class="st"> </span><span class="kw">grid.arrange</span>(count_gene_chromosome, exp_boxplot_sex,</span>
+<span id="cb485-20"><a href="sec-vis.html#cb485-20" aria-hidden="true"></a>                           <span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">widths =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">6</span>))</span>
+<span id="cb485-21"><a href="sec-vis.html#cb485-21" aria-hidden="true"></a><span class="kw">ggsave</span>(<span class="st">"fig_output/combo_plot_chromosome_sex.png"</span>, combo_plot,</span>
+<span id="cb485-22"><a href="sec-vis.html#cb485-22" aria-hidden="true"></a>       <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
 <p>Note: The parameters <code>width</code> and <code>height</code> also determine the font size in the saved plot.</p>
 </div>
 <div id="other-packages-for-visualisation" class="section level2" number="6.10">
 <h2>
-<span class="header-section-number">6.10</span> Other packages for visualisation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('other-packages-for-visualisation')" onmouseout="reset_tooltip('other-packages-for-visualisation-tooltip')"><span class="tooltiptext" id="other-packages-for-visualisation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.10</span> Other packages for visualisation</h2>
 <p><code>ggplot2</code> is a very powerful package that fits very nicely in our
 <em>tidy data</em> and <em>tidy tools</em> pipeline. There are other visualisation
 packages in R that shouldn’t be ignored.</p>
 <div id="base-graphics" class="section level3 unnumbered">
-<h3>Base graphics<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('base-graphics')" onmouseout="reset_tooltip('base-graphics-tooltip')"><span class="tooltiptext" id="base-graphics-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>Base graphics</h3>
 <p>The default graphics system that comes with R, often called <em>base R
 graphics</em> is simple and fast. It is based on the <em>painter’s or canvas
 model</em>, where different output are directly overlaid on top of each
@@ -1011,15 +958,15 @@ other (see figure <a href="sec-vis.html#fig:paintermodel">6.1</a>). This is a fu
 difference with <code>ggplot2</code> (and with <code>lattice</code>, described below), that
 returns dedicated objects, that are rendered on screen or in a file,
 and that can even be updated.</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="sec-vis.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb486-2"><a href="sec-vis.html#cb486-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">main =</span> <span class="st">"First layer, produced with plot(1:20)"</span>)</span>
-<span id="cb486-3"><a href="sec-vis.html#cb486-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">main =</span> <span class="st">"A horizontal red line, added with abline(h = 10)"</span>)</span>
-<span id="cb486-4"><a href="sec-vis.html#cb486-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">10</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb486-5"><a href="sec-vis.html#cb486-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="at">main =</span> <span class="st">"A rectangle, added with rect(5, 5, 15, 15)"</span>)</span>
-<span id="cb486-6"><a href="sec-vis.html#cb486-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">10</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb486-7"><a href="sec-vis.html#cb486-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rect</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="sec-vis.html#cb486-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb486-2"><a href="sec-vis.html#cb486-2" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">main =</span> <span class="st">"First layer, produced with plot(1:20)"</span>)</span>
+<span id="cb486-3"><a href="sec-vis.html#cb486-3" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">main =</span> <span class="st">"A horizontal red line, added with abline(h = 10)"</span>)</span>
+<span id="cb486-4"><a href="sec-vis.html#cb486-4" aria-hidden="true"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">10</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb486-5"><a href="sec-vis.html#cb486-5" aria-hidden="true"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, <span class="dt">main =</span> <span class="st">"A rectangle, added with rect(5, 5, 15, 15)"</span>)</span>
+<span id="cb486-6"><a href="sec-vis.html#cb486-6" aria-hidden="true"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">10</span>, <span class="dt">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb486-7"><a href="sec-vis.html#cb486-7" aria-hidden="true"></a><span class="kw">rect</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:paintermodel"></span>
+<span id="fig:paintermodel"></span>
 <p class="caption marginnote shownote">
 Figure 6.1: Successive layers added on top of each other.
 </p>
@@ -1031,15 +978,15 @@ adapt their behaviour based on the class of their input. This is again
 very different from what we have in <code>ggplot2</code>, that only accepts
 dataframes as input, and that requires plots to be constructed bit by
 bit.</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="sec-vis.html#cb487-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb487-2"><a href="sec-vis.html#cb487-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>),</span>
-<span id="cb487-3"><a href="sec-vis.html#cb487-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of rnorm(100)"</span>)</span>
-<span id="cb487-4"><a href="sec-vis.html#cb487-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">10</span>),</span>
-<span id="cb487-5"><a href="sec-vis.html#cb487-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Boxplot of matrix(rnorm(100), ncol = 10)"</span>)</span>
-<span id="cb487-6"><a href="sec-vis.html#cb487-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
-<span id="cb487-7"><a href="sec-vis.html#cb487-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="sec-vis.html#cb487-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb487-2"><a href="sec-vis.html#cb487-2" aria-hidden="true"></a><span class="kw">boxplot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>),</span>
+<span id="cb487-3"><a href="sec-vis.html#cb487-3" aria-hidden="true"></a>        <span class="dt">main =</span> <span class="st">"Boxplot of rnorm(100)"</span>)</span>
+<span id="cb487-4"><a href="sec-vis.html#cb487-4" aria-hidden="true"></a><span class="kw">boxplot</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">ncol =</span> <span class="dv">10</span>),</span>
+<span id="cb487-5"><a href="sec-vis.html#cb487-5" aria-hidden="true"></a>        <span class="dt">main =</span> <span class="st">"Boxplot of matrix(rnorm(100), ncol = 10)"</span>)</span>
+<span id="cb487-6"><a href="sec-vis.html#cb487-6" aria-hidden="true"></a><span class="kw">hist</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb487-7"><a href="sec-vis.html#cb487-7" aria-hidden="true"></a><span class="kw">hist</span>(<span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>), <span class="dt">ncol =</span> <span class="dv">10</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:plotmethod"></span>
+<span id="fig:plotmethod"></span>
 <p class="caption marginnote shownote">
 Figure 6.2: Plotting boxplots (top) and histograms (bottom) vectors (left) or a matrices (right).
 </p>
@@ -1054,33 +1001,31 @@ complex (for example to produce facets), can become lengthy and
 cumbersome.</p>
 </div>
 <div id="the-lattice-package" class="section level3 unnumbered">
-<h3>The lattice package<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-lattice-package')" onmouseout="reset_tooltip('the-lattice-package-tooltip')"><span class="tooltiptext" id="the-lattice-package-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h3>
+<h3>The lattice package</h3>
 <p>The <code>lattice</code> package is similar to <code>ggplot2</code> in that is uses
 dataframes as input, returns graphical objects and supports
 faceting. <code>lattice</code> however isn’t based on the grammar of graphics
 and has a more convoluted interface.</p>
-<p>A good reference for the <code>lattice</code> package is <span class="citation"><label for="tufte-mn-13" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-13" class="margin-toggle">Deepayan (2008)<span class="marginnote">Deepayan, Sarkar. 2008. <em>Lattice: Multivariate Data Visualization with r</em>. New York: Springer. <a href="http://lmdvr.r-forge.r-project.org">http://lmdvr.r-forge.r-project.org</a>.</span></span>.</p>
+<p>A good reference for the <code>lattice</code> package is <span class="citation">Deepayan (<label for="tufte-mn-13" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-13" class="margin-toggle">2008<span class="marginnote">Deepayan, Sarkar. 2008. <em>Lattice: Multivariate Data Visualization with R</em>. New York: Springer. <a href="http://lmdvr.r-forge.r-project.org">http://lmdvr.r-forge.r-project.org</a>.</span>)</span>.</p>
 </div>
 </div>
-<div id="additional-exercises-1" class="section level2" number="6.11">
+<div id="additional-exercises" class="section level2" number="6.11">
 <h2>
-<span class="header-section-number">6.11</span> Additional exercises<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('additional-exercises-1')" onmouseout="reset_tooltip('additional-exercises-1-tooltip')"><span class="tooltiptext" id="additional-exercises-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
-</h2>
+<span class="header-section-number">6.11</span> Additional exercises</h2>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
 <p>Load the beer consuption data with</p>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="sec-vis.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="sec-vis.html#cb488-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
 <pre><code>## 
 ## This is 'rWSBIM1207' version 0.1.14</code></pre>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="sec-vis.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(beers)</span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="sec-vis.html#cb490-1" aria-hidden="true"></a><span class="kw">data</span>(beers)</span></code></pre></div>
 <p>Analyse the data to answer the question <em>Do men drink more than women
 according to age and working status?</em> Now reproduce the figure below.</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-193"></span>
+<span id="fig:unnamed-chunk-193"></span>
 <p class="caption marginnote shownote">
 Figure 6.3: Visualisation of beer consumption, highlighting different patterns of beer consumption in employed and unemployed males and females.
 </p>
@@ -1122,7 +1067,7 @@ samples.</p></li>
 representation is more appropriate? Why?</p></li>
 <li><p>Colour the samples according to the tissue type.</p></li>
 <li><p>Colour the samples according to their expression level in A2ML1.</p></li>
-<li><p>Highlight the points corresponding to patient “TCGA-73-4676.”</p></li>
+<li><p>Highlight the points corresponding to patient “TCGA-73-4676”.</p></li>
 <li><p>Add a transparent boxplot to the graph.</p></li>
 <li><p>Change the y scale to log10 scale.</p></li>
 <li><p>Visualise the expression of A1BG against that of A2LD1 setting the x
@@ -1159,8 +1104,6 @@ students group.</p>
 </p>
 <p class="build-date">Page built: 
 2021-09-24
- using 
-R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>
