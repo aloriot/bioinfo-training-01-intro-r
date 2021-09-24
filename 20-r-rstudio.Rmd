@@ -19,8 +19,8 @@
 ## What is R? What is RStudio?
 
 The term [R](https://www.r-project.org/) is used to refer to both the
-*programming language*, the *environment for statistical computing*
-and *the software* that interprets the scripts written using it.
+**programming language**, the *environment for statistical computing*
+and **the software** that interprets the scripts written using it.
 
 [RStudio](https://rstudio.com) is currently a very popular way to not
 only write your R scripts but also to interact with the R
@@ -36,6 +36,8 @@ The [RStudio IDE Cheat
 Sheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
 provides much more information that will be covered here, but can be
 useful to learn keyboard shortcuts and discover new features.
+
+[Other RStudio Cheat sheets](https://www.rstudio.com/resources/cheatsheets/) are available for specific topics.
 
 ## Why learn R?
 
@@ -57,9 +59,16 @@ Working with scripts forces you to have a deeper understanding of what
 you are doing, and facilitates your learning and comprehension of the
 methods you use.
 
+*Summary of (dis)advantages of working with scripts:*
+
+* (-) learning curve
+* (+) share, comment code
+* (+) redo quickly an analysis
+* (+) reproducibility
+
 ### R code is great for reproducibility {-}
 
-Reproducibility is when someone else (including your future self) can
+**Reproducibility** is when someone else (including your future self) can
 obtain the same results from the same dataset when using the same
 analysis.
 
@@ -75,7 +84,7 @@ requirements.
 
 ### R is interdisciplinary and extensible {-}
 
-With 10000+ packages[^whatarepkgs] that can be installed to extend its
+With 10000+ **packages**[^whatarepkgs] that can be installed to extend its
 capabilities, R provides a framework that allows you to combine
 statistical approaches from many scientific disciplines to best suit
 the analytical framework you need to analyze your data. For instance,
@@ -95,7 +104,7 @@ The skills you learn with R scale easily with the size of your
 dataset. Whether your dataset has hundreds or millions of lines, it
 won't make much difference to you.
 
-R is designed for data analysis. It comes with special data structures
+R is **designed for data analysis**. It comes with special data structures
 and data types that make handling of missing data and statistical
 factors convenient.
 
@@ -188,7 +197,7 @@ tutorial below.
   `New project`.
 3. Enter a name for this new folder (or "directory"), and choose a
    convenient location for it. This will be your **working directory**
-   for this session (or whole course) (e.g., `wsbim1207`).
+   for this session (or whole training) (e.g., `bioinfo_training_intro`).
 4. Click on `Create project`.
 5. (Optional) Set Preferences to 'Never' save workspace in RStudio.
 
@@ -243,15 +252,17 @@ directory.
 knitr::include_graphics("./figs/working-directory-structure.png")
 ```
 
-For this course, we will need a `data/` folder to store our raw data,
-and we will use `data_output/` for when we learn how to export data as
-CSV files, and `fig_output/` folder for the figures that we will save.
+For this course, we will need:
+
+* a `data/` folder to store our raw data,
+* a `data_output/` folder for when we learn how to export data as CSV files, 
+* and a `fig_output/` folder for the figures that we will save.
 
 `r msmbstyle::question_begin()`
 
 Under the `Files` tab on the right of the screen, click on `New Folder` and
 create a folder named `data` within your newly created working directory
-(e.g., `~/wsbim1207/data`). (Alternatively, type `dir.create("data")` at
+(e.g., `~/bioinfo_training_intro/data`). (Alternatively, type `dir.create("data")` at
 your R console.) Repeat these operations to create a `data_output/` and a
 `fig_output` folders.
 
@@ -265,31 +276,6 @@ Your working directory should now look like this:
 
 ```{r, results='markup',fig.cap="How it should look like at the beginning of this lesson", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("./figs/r-starting-how-it-should-look-like.png")
-```
-
-**Project management** is also applicable to bioinformatics projects,
-of course[^bioindatascience]. William Noble (@Noble:2009) proposes the
-following directory structure:
-
-[^bioindatascience]: In this course, we consider bioinformatics as
-    data science applied to biological or bio-medical data.
-
-> Directory names are in large typeface, and filenames are in smaller
-> typeface. Only a subset of the files are shown here. Note that the
-> dates are formatted `<year>-<month>-<day>` so that they can be
-> sorted in chronological order. The source code `src/ms-analysis.c`
-> is compiled to create `bin/ms-analysis` and is documented in
-> `doc/ms-analysis.html`. The `README` files in the data directories
-> specify who downloaded the data files from what URL on what
-> date. The driver script `results/2009-01-15/runall` automatically
-> generates the three subdirectories split1, split2, and split3,
-> corresponding to three cross-validation splits. The
-> `bin/parse-sqt.py` script is called by both of the `runall` driver
-> scripts.
-
-
-```{r bioinfoproj, fig.cap="Directory structure for a sample bioinformatics project.", out.width='100%', echo=FALSE}
-knitr::include_graphics("./figs/noble-bioinfo-project.png")
 ```
 
 The most important aspect of a well defined and well documented
@@ -315,7 +301,7 @@ The working directory is an important concept to understand. It is the
 place from where R will be looking for and saving the files. When you
 write code for your project, it should refer to files in relation to
 the root of your working directory and only need files within this
-structure.
+structure with **relative paths**.
 
 Using RStudio projects makes this easy and ensures that your working
 directory is set properly. If you need to check it, you can use
@@ -329,31 +315,31 @@ this line because it will fail on someone else's computer.
 
 **Example**
 
-The shema below represents the working directory `wsbim1207` with the
+The schema below represents the working directory `bioinfo_training_intro` with the
 `data` and `fig_output` sub-directories, and 2 files in the latter:
 
 ```
-wsbim1207/data/
-         /fig_output/fig1.pdf
-         /fig_output/fig2.png
+bioinfo_training_intro/data/
+                      /fig_output/fig1.pdf
+                      /fig_output/fig2.png
 ```
 
 If we were in the working directory, we could refer to the `fig1.pdf`
-file using the relative path `wsbim1207/fig_output/fig1.pdf` or the
-absolute path `/home/user/wsbim1207/fig_output/fig1.pdf`.
+file using the relative path `fig_output/fig1.pdf` or the
+absolute path `/home/user/bioinfo_training_intro/fig_output/fig1.pdf`.
 
 If we were in the `data` directory, we would use the relative path
 `../fig_output/fig1.pdf` or the same absolute path
-`/home/user/wsbim1207/fig_output/fig1.pdf`.
+`/home/user/bioinfo_training_intro/fig_output/fig1.pdf`.
 
 ## Interacting with R
 
 The basis of programming is that we write down instructions for the
 computer to follow, and then we tell the computer to follow those
-instructions. We write, or *code*, instructions in R because it is a
+instructions. We write, or **code**, instructions in R because it is a
 common language that both the computer and we can understand. We call
 the instructions *commands* and we tell the computer to follow the
-instructions by *executing* (also called *running*) those commands.
+instructions by **executing** (also called *running*) those commands.
 
 There are two main ways of interacting with R: by using the
 **console** or by using **scripts** (plain text files that contain
@@ -378,13 +364,6 @@ will be sent to the console and executed when you press `Ctrl` +
 `Enter`. You can find other keyboard shortcuts in this [RStudio
 cheatsheet about the RStudio
 IDE](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
-
-At some point in your analysis you may want to check the content of a
-variable or the structure of an object, without necessarily keeping a
-record of it in your script. You can type these commands and execute
-them directly in the console.  RStudio provides the `Ctrl` + `1` and
-`Ctrl` + `2` shortcuts allow you to jump between the script and the
-console panes.
 
 If R is ready to accept commands, the R console shows a `>` prompt. If
 it receives a command (by typing, copy-pasting or sent from the script
@@ -425,6 +404,21 @@ knitr::include_graphics("./figs/kitten-try-things.jpg")
 ```
 
 ## Seeking help
+
+In brief: 
+
+* Help on functions and datasets through the *help* pages: RStudio help interface or commands `help(mean)` or `?mean`
+
+* Asking for help when I get an error message or I don’t know how to achieve an operation:
+
+    + your neighbour
+    + more experimented colleague
+    + [Stack Overflow with r tag](http://stackoverflow.com/questions/tagged/r)
+    + [R-help mailing list](https://stat.ethz.ch/mailman/listinfo/r-help) or [topic-specific mailing lists](http://www.r-project.org/mail.html)
+    + on a specific package: look at the description file, contact the author, open an issue on GitHub
+
+
+In details:
 
 ### Use the built-in RStudio help interface to search for more information on R functions {-}
 
@@ -618,6 +612,8 @@ sessionInfo()
 
 ## R packages
 
+R packages need to be : (1) installed (+ their depednencies), and (2) loaded in your environment
+
 ### Loading packages
 
 As we have seen above, R packages play a fundamental role in R. The
@@ -645,15 +641,7 @@ dependencies, i.e. all the packages that it relies on to function.
 
 [Github](https://github.com/) is a general-pupose online software
 project repository and is well suited for R package development. To
-install a package from Gtihub, one can use the `install_github()`
-function from the `devtools` package. Below we first install the
-latter from CRAN (as show above), then we install `rWSBIM1207`
-directly from the user `UCLouvain-CBIO` github repository.
-
-```{r ghinstall, eval=FALSE, purl=FALSE}
-install.packages("devtools")
-library("devtools")
-install_github("UCLouvain-CBIO/rWSBIM1207")
-```
+install a package from Github, one can use the `install_github()`
+function from the `devtools` package. 
 
 
