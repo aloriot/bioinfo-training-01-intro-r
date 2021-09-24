@@ -1,6 +1,6 @@
 # bioinfo-training-01-intro: Data manipulation and visualisation with R
 
-Read the course at https://uclouvain-cbio.github.io/bioinfo-training-01-intro/
+Read the course at https://uclouvain-cbio.github.io/bioinfo-training-01-intro-r/
 
 This course is based on https://uclouvain-cbio.github.io/WSBIM1207
 
