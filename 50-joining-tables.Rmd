@@ -43,6 +43,8 @@ different tables that have one or more shared columns.
 The data we are going to use are available in the following package. 
 
 ```{r joindata}
+# install.packages(c("BiocManager", "remotes"))
+# BiocManager::install("UCLouvain-CBIO/rWSBIM1207")
 library("rWSBIM1207")
 data(jdf)
 ```
@@ -111,7 +113,7 @@ As can be seen above, the variable name of the first table is retained
 in the joined one.
 
 `r msmbstyle::question_begin()`
-Using the `full_join` function demonstrated above, join tables `jdf4`
+Using the `full_join` function, join tables `jdf4`
 and `jdf5`. What has happened for observations `P26039` and `P02468`?
 `r msmbstyle::question_end()`
 
@@ -291,13 +293,15 @@ of 102, while isoform 2, that localised to the GA, has a measured
 value of 3.
 
 Ideally, the isoform variables should be named identically in the two
-tables to enable and automatic join with the two keys.
+tables to enable an automatic join with the two keys.
 
 An alternative could be to rename the `isoform_num` from jdf7 in order to
 have the both keys names present in both tables, enabling an automatic join.
 This can be done easily using the rename function from `dplyr` package.
 
 ```{r}
+jdf7 %>% rename(isoform = isoform_num)
+
 inner_join(jdf6, 
            jdf7 %>% 
              rename(isoform = isoform_num)) 
@@ -336,7 +340,7 @@ d2
 
 
 using `rbind(d1, d2)` would produce an error because both data frames do not have the 
-same rownames (even if they have the same number of columns)
+same column names (even if they have the same number of columns)
 
 If we change the names of d2, it works!
 

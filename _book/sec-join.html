@@ -174,8 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html><body><div id="sec-join" class="section level1" number="7">
 <h1>
 <span class="header-section-number">Chapter 7</span> Joining tables</h1>
-<p><strong>Learning Objectives</strong></p>
-<p>The objectives are to :</p>
+<p><strong>Learning Objectives</strong>:</p>
 <ul>
 <li><p>Understand the need and concept of table joins</p></li>
 <li><p>Understand the different types of joins</p></li>
@@ -205,7 +204,9 @@ also provides a short overview on table joins.</p>
 bioinformatics world, where annotations about genes are scattered in
 different tables that have one or more shared columns.</p>
 <p>The data we are going to use are available in the following package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="sec-join.html#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="sec-join.html#cb1-1" aria-hidden="true"></a><span class="co"># install.packages(c("BiocManager", "remotes"))</span></span>
+<span id="cb1-2"><a href="sec-join.html#cb1-2" aria-hidden="true"></a><span class="co"># BiocManager::install("UCLouvain-CBIO/rWSBIM1207")</span></span>
+<span id="cb1-3"><a href="sec-join.html#cb1-3" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"rWSBIM1207"</span>)</span></code></pre></div>
 <pre><code>## 
 ## This is 'rWSBIM1207' version 0.1.14</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="sec-join.html#cb3-1" aria-hidden="true"></a><span class="kw">data</span>(jdf)</span></code></pre></div>
@@ -330,7 +331,7 @@ in the joined one.</p>
 ► Question
 </p>
 <div class="question-body">
-<p>Using the <code>full_join</code> function demonstrated above, join tables <code>jdf4</code>
+<p>Using the <code>full_join</code> function, join tables <code>jdf4</code>
 and <code>jdf5</code>. What has happened for observations <code>P26039</code> and <code>P02468</code>?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -647,13 +648,22 @@ used for the join.</p>
 of 102, while isoform 2, that localised to the GA, has a measured
 value of 3.</p>
 <p>Ideally, the isoform variables should be named identically in the two
-tables to enable and automatic join with the two keys.</p>
+tables to enable an automatic join with the two keys.</p>
 <p>An alternative could be to rename the <code>isoform_num</code> from jdf7 in order to
 have the both keys names present in both tables, enabling an automatic join.
 This can be done easily using the rename function from <code>dplyr</code> package.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="sec-join.html#cb52-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, </span>
-<span id="cb52-2"><a href="sec-join.html#cb52-2" aria-hidden="true"></a>           jdf7 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb52-3"><a href="sec-join.html#cb52-3" aria-hidden="true"></a><span class="st">             </span><span class="kw">rename</span>(<span class="dt">isoform =</span> isoform_num)) </span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="sec-join.html#cb52-1" aria-hidden="true"></a>jdf7 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">isoform =</span> isoform_num)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 6
+##   gene_name description                         uniprot organism isoform measure
+##   &lt;chr&gt;     &lt;chr&gt;                               &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Rrbp1     Ribosome-binding protein 1          Q99PL5  Mmus           1     102
+## 2 Rrbp1     Ribosome-binding protein 1          Q99PL5  Mmus           2       3
+## 3 Iqgap1    Ras GTPase-activating-like protein… Q9JKF1  Mmus           1      13
+## 4 Hspa5     78 kDa glucose-regulated protein    P20029  Mmus           1      54
+## 5 Pdcd11    Protein RRP5 homolog                Q6NS46  Mmus           1      28</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="sec-join.html#cb54-1" aria-hidden="true"></a><span class="kw">inner_join</span>(jdf6, </span>
+<span id="cb54-2"><a href="sec-join.html#cb54-2" aria-hidden="true"></a>           jdf7 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb54-3"><a href="sec-join.html#cb54-3" aria-hidden="true"></a><span class="st">             </span><span class="kw">rename</span>(<span class="dt">isoform =</span> isoform_num)) </span></code></pre></div>
 <pre><code>## Joining, by = c("uniprot", "isoform")</code></pre>
 <pre><code>## # A tibble: 2 × 8
 ##   uniprot organelle    entry   isoform gene_name description    organism measure
@@ -672,15 +682,15 @@ that can be used to combine two dataframes.</p>
 <code>cbind</code> can be used to bind two data frames by columns, but both must have the same
 number of rows.</li>
 </ul>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="sec-join.html#cb55-1" aria-hidden="true"></a>d2</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="sec-join.html#cb57-1" aria-hidden="true"></a>d2</span></code></pre></div>
 <pre><code>##   a b
 ## 1 4 4
 ## 2 5 5</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="sec-join.html#cb57-1" aria-hidden="true"></a>d3</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="sec-join.html#cb59-1" aria-hidden="true"></a>d3</span></code></pre></div>
 <pre><code>##   v1 v2 v3
 ## 1  1  3  5
 ## 2  2  4  6</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="sec-join.html#cb59-1" aria-hidden="true"></a><span class="kw">cbind</span>(d2, d3)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="sec-join.html#cb61-1" aria-hidden="true"></a><span class="kw">cbind</span>(d2, d3)</span></code></pre></div>
 <pre><code>##   a b v1 v2 v3
 ## 1 4 4  1  3  5
 ## 2 5 5  2  4  6</code></pre>
@@ -689,29 +699,29 @@ number of rows.</li>
 <code>rbind</code>, can be used to bind two data frames by rows, but both must have
 the same number of columns, and the same column names!</li>
 </ul>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="sec-join.html#cb61-1" aria-hidden="true"></a>d1</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="sec-join.html#cb63-1" aria-hidden="true"></a>d1</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
 ## 3 3 3</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="sec-join.html#cb63-1" aria-hidden="true"></a>d2</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="sec-join.html#cb65-1" aria-hidden="true"></a>d2</span></code></pre></div>
 <pre><code>##   a b
 ## 1 4 4
 ## 2 5 5</code></pre>
 <p>using <code>rbind(d1, d2)</code> would produce an error because both data frames do not have the
-same rownames (even if they have the same number of columns)</p>
+same column names (even if they have the same number of columns)</p>
 <p>If we change the names of d2, it works!</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="sec-join.html#cb65-1" aria-hidden="true"></a><span class="kw">names</span>(d2) &lt;-<span class="st"> </span><span class="kw">names</span>(d1)</span>
-<span id="cb65-2"><a href="sec-join.html#cb65-2" aria-hidden="true"></a>d1</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="sec-join.html#cb67-1" aria-hidden="true"></a><span class="kw">names</span>(d2) &lt;-<span class="st"> </span><span class="kw">names</span>(d1)</span>
+<span id="cb67-2"><a href="sec-join.html#cb67-2" aria-hidden="true"></a>d1</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
 ## 3 3 3</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="sec-join.html#cb67-1" aria-hidden="true"></a>d2</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="sec-join.html#cb69-1" aria-hidden="true"></a>d2</span></code></pre></div>
 <pre><code>##   x y
 ## 1 4 4
 ## 2 5 5</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="sec-join.html#cb69-1" aria-hidden="true"></a><span class="kw">rbind</span>(d1, d2)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="sec-join.html#cb71-1" aria-hidden="true"></a><span class="kw">rbind</span>(d1, d2)</span></code></pre></div>
 <pre><code>##   x y
 ## 1 1 1
 ## 2 2 2
