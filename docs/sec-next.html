@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto, Manon Martin &amp; Axelle Loriot" />
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
 
 <meta name="description" content="Course material for the Data manipulation and visualisation with R training (SMCS &amp; CBIO, UCLouvain).">
@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 we have seen so far. To deal with this, developers define specialised
 data containers (termed classes) that match the properties of the
 data they need to handle.</p>
-<p>This aspect is central to the <strong>Bioconductor</strong><label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> The <a href="http://www.bioconductor.org">Bioconductor</a> was initiated by
+<p>This aspect is central to the <strong>Bioconductor</strong><label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> The <a href="http://www.bioconductor.org">Bioconductor</a> was initiated by
 Robert Gentleman, one of the two creators of the R language. Bioconductor provides
 tools for the analysis and comprehension of omics data.
 Bioconductor uses the R statistical programming language, and is open source and
@@ -222,8 +222,8 @@ manipulation.</p>
 <span class="header-section-number">8.1.1</span> Creating a SummarizedExperiment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('creating-a-summarizedexperiment')" onmouseout="reset_tooltip('creating-a-summarizedexperiment-tooltip')"><span class="tooltiptext" id="creating-a-summarizedexperiment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Let’s return to the <code>rna</code> dataset that we have used previously.</p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="sec-next.html#cb530-1" aria-hidden="true"></a>rna &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"data/rnaseq.csv"</span>)</span>
-<span id="cb530-2"><a href="sec-next.html#cb530-2" aria-hidden="true"></a>rna</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="sec-next.html#cb539-1" aria-hidden="true"></a>rna &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"data/rnaseq.csv"</span>)</span>
+<span id="cb539-2"><a href="sec-next.html#cb539-2" aria-hidden="true"></a>rna</span></code></pre></div>
 <pre><code>## # A tibble: 32,428 × 19
 ##    gene    sample  expression organism   age sex   infection strain  time tissue
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; 
@@ -241,7 +241,7 @@ manipulation.</p>
 ## #   product &lt;chr&gt;, ensembl_gene_id &lt;chr&gt;, external_synonym &lt;chr&gt;,
 ## #   chromosome_name &lt;chr&gt;, gene_biotype &lt;chr&gt;, phenotype_description &lt;chr&gt;,
 ## #   hsapiens_homolog_associated_gene_name &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="sec-next.html#cb532-1" aria-hidden="true"></a><span class="kw">names</span>(rna)</span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="sec-next.html#cb541-1" aria-hidden="true"></a><span class="kw">names</span>(rna)</span></code></pre></div>
 <pre><code>##  [1] "gene"                                 
 ##  [2] "sample"                               
 ##  [3] "expression"                           
@@ -272,15 +272,15 @@ To do so we will extract from this table:</p>
 <li><p>A table describing the genes that will be used as the <strong>features metadata</strong> slot</p></li>
 </ul>
 <p><strong>count matrix</strong></p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="sec-next.html#cb534-1" aria-hidden="true"></a>counts &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
-<span id="cb534-2"><a href="sec-next.html#cb534-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, sample, expression) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb534-3"><a href="sec-next.html#cb534-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
-<span id="cb534-4"><a href="sec-next.html#cb534-4" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression) </span>
-<span id="cb534-5"><a href="sec-next.html#cb534-5" aria-hidden="true"></a></span>
-<span id="cb534-6"><a href="sec-next.html#cb534-6" aria-hidden="true"></a>count_matrix &lt;-<span class="st"> </span>counts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
-<span id="cb534-7"><a href="sec-next.html#cb534-7" aria-hidden="true"></a><span class="kw">rownames</span>(count_matrix) &lt;-<span class="st"> </span>counts<span class="op">$</span>gene</span>
-<span id="cb534-8"><a href="sec-next.html#cb534-8" aria-hidden="true"></a></span>
-<span id="cb534-9"><a href="sec-next.html#cb534-9" aria-hidden="true"></a>count_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="sec-next.html#cb543-1" aria-hidden="true"></a>counts &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb543-2"><a href="sec-next.html#cb543-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, sample, expression) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb543-3"><a href="sec-next.html#cb543-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
+<span id="cb543-4"><a href="sec-next.html#cb543-4" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression) </span>
+<span id="cb543-5"><a href="sec-next.html#cb543-5" aria-hidden="true"></a></span>
+<span id="cb543-6"><a href="sec-next.html#cb543-6" aria-hidden="true"></a>count_matrix &lt;-<span class="st"> </span>counts <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.matrix</span>()</span>
+<span id="cb543-7"><a href="sec-next.html#cb543-7" aria-hidden="true"></a><span class="kw">rownames</span>(count_matrix) &lt;-<span class="st"> </span>counts<span class="op">$</span>gene</span>
+<span id="cb543-8"><a href="sec-next.html#cb543-8" aria-hidden="true"></a></span>
+<span id="cb543-9"><a href="sec-next.html#cb543-9" aria-hidden="true"></a>count_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ## Asl           1170        361        400        586        626        988
 ## Apod         36194      10347       9173      10620      13021      29594
@@ -306,11 +306,11 @@ To do so we will extract from this table:</p>
 ## Klk6           894        501        598        259
 ## Fcrls          248        179        184         68</code></pre>
 <p><strong>table describing the samples</strong></p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="sec-next.html#cb536-1" aria-hidden="true"></a>sample_metadata &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
-<span id="cb536-2"><a href="sec-next.html#cb536-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(sample, organism, age, sex, infection, strain, time, tissue, mouse) </span>
-<span id="cb536-3"><a href="sec-next.html#cb536-3" aria-hidden="true"></a></span>
-<span id="cb536-4"><a href="sec-next.html#cb536-4" aria-hidden="true"></a><span class="co"># Many lines are repeated, as in rna, each gene (n = 1474) was analysed in each sample!</span></span>
-<span id="cb536-5"><a href="sec-next.html#cb536-5" aria-hidden="true"></a>sample_metadata</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="sec-next.html#cb545-1" aria-hidden="true"></a>sample_metadata &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb545-2"><a href="sec-next.html#cb545-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(sample, organism, age, sex, infection, strain, time, tissue, mouse) </span>
+<span id="cb545-3"><a href="sec-next.html#cb545-3" aria-hidden="true"></a></span>
+<span id="cb545-4"><a href="sec-next.html#cb545-4" aria-hidden="true"></a><span class="co"># Many lines are repeated, as in rna, each gene (n = 1474) was analysed in each sample!</span></span>
+<span id="cb545-5"><a href="sec-next.html#cb545-5" aria-hidden="true"></a>sample_metadata</span></code></pre></div>
 <pre><code>## # A tibble: 32,428 × 9
 ##    sample     organism       age sex    infection  strain   time tissue    mouse
 ##    &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
@@ -325,9 +325,9 @@ To do so we will extract from this table:</p>
 ##  9 GSM2545336 Mus musculus     8 Female InfluenzaA C57BL/6     8 Cerebell…    14
 ## 10 GSM2545336 Mus musculus     8 Female InfluenzaA C57BL/6     8 Cerebell…    14
 ## # … with 32,418 more rows</code></pre>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="sec-next.html#cb538-1" aria-hidden="true"></a><span class="co"># Remove redundancy</span></span>
-<span id="cb538-2"><a href="sec-next.html#cb538-2" aria-hidden="true"></a>sample_metadata &lt;-<span class="st"> </span><span class="kw">unique</span>(sample_metadata)</span>
-<span id="cb538-3"><a href="sec-next.html#cb538-3" aria-hidden="true"></a>sample_metadata</span></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="sec-next.html#cb547-1" aria-hidden="true"></a><span class="co"># Remove redundancy</span></span>
+<span id="cb547-2"><a href="sec-next.html#cb547-2" aria-hidden="true"></a>sample_metadata &lt;-<span class="st"> </span><span class="kw">unique</span>(sample_metadata)</span>
+<span id="cb547-3"><a href="sec-next.html#cb547-3" aria-hidden="true"></a>sample_metadata</span></code></pre></div>
 <pre><code>## # A tibble: 22 × 9
 ##    sample     organism       age sex    infection   strain   time tissue   mouse
 ##    &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
@@ -343,12 +343,12 @@ To do so we will extract from this table:</p>
 ## 10 GSM2545345 Mus musculus     8 Male   InfluenzaA  C57BL/6     4 Cerebel…    13
 ## # … with 12 more rows</code></pre>
 <p><strong>table describing the genes</strong></p>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="sec-next.html#cb540-1" aria-hidden="true"></a>gene_metadata &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
-<span id="cb540-2"><a href="sec-next.html#cb540-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, ENTREZID, product, ensembl_gene_id, external_synonym, chromosome_name, gene_biotype, phenotype_description, hsapiens_homolog_associated_gene_name)      </span>
-<span id="cb540-3"><a href="sec-next.html#cb540-3" aria-hidden="true"></a></span>
-<span id="cb540-4"><a href="sec-next.html#cb540-4" aria-hidden="true"></a><span class="co"># Remove redundancy</span></span>
-<span id="cb540-5"><a href="sec-next.html#cb540-5" aria-hidden="true"></a>gene_metadata &lt;-<span class="st"> </span><span class="kw">unique</span>(gene_metadata)</span>
-<span id="cb540-6"><a href="sec-next.html#cb540-6" aria-hidden="true"></a>gene_metadata</span></code></pre></div>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="sec-next.html#cb549-1" aria-hidden="true"></a>gene_metadata &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
+<span id="cb549-2"><a href="sec-next.html#cb549-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, ENTREZID, product, ensembl_gene_id, external_synonym, chromosome_name, gene_biotype, phenotype_description, hsapiens_homolog_associated_gene_name)      </span>
+<span id="cb549-3"><a href="sec-next.html#cb549-3" aria-hidden="true"></a></span>
+<span id="cb549-4"><a href="sec-next.html#cb549-4" aria-hidden="true"></a><span class="co"># Remove redundancy</span></span>
+<span id="cb549-5"><a href="sec-next.html#cb549-5" aria-hidden="true"></a>gene_metadata &lt;-<span class="st"> </span><span class="kw">unique</span>(gene_metadata)</span>
+<span id="cb549-6"><a href="sec-next.html#cb549-6" aria-hidden="true"></a>gene_metadata</span></code></pre></div>
 <pre><code>## # A tibble: 1,474 × 9
 ##    gene    ENTREZID product     ensembl_gene_id external_synonym chromosome_name
 ##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;          
@@ -366,12 +366,12 @@ To do so we will extract from this table:</p>
 ## #   phenotype_description &lt;chr&gt;, hsapiens_homolog_associated_gene_name &lt;chr&gt;</code></pre>
 <p>We can now put the different parts together using the
 <code>SummarizedExperiment</code> constructor:</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="sec-next.html#cb542-1" aria-hidden="true"></a><span class="co">#BiocManager::install("SummarizedExperiment")</span></span>
-<span id="cb542-2"><a href="sec-next.html#cb542-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="sec-next.html#cb543-1" aria-hidden="true"></a>se &lt;-<span class="st"> </span><span class="kw">SummarizedExperiment</span>(<span class="dt">assays =</span> count_matrix,</span>
-<span id="cb543-2"><a href="sec-next.html#cb543-2" aria-hidden="true"></a>                           <span class="dt">colData =</span> sample_metadata,</span>
-<span id="cb543-3"><a href="sec-next.html#cb543-3" aria-hidden="true"></a>                           <span class="dt">rowData =</span> gene_metadata)</span>
-<span id="cb543-4"><a href="sec-next.html#cb543-4" aria-hidden="true"></a>se</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="sec-next.html#cb551-1" aria-hidden="true"></a><span class="co">#BiocManager::install("SummarizedExperiment")</span></span>
+<span id="cb551-2"><a href="sec-next.html#cb551-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="sec-next.html#cb552-1" aria-hidden="true"></a>se &lt;-<span class="st"> </span><span class="kw">SummarizedExperiment</span>(<span class="dt">assays =</span> count_matrix,</span>
+<span id="cb552-2"><a href="sec-next.html#cb552-2" aria-hidden="true"></a>                           <span class="dt">colData =</span> sample_metadata,</span>
+<span id="cb552-3"><a href="sec-next.html#cb552-3" aria-hidden="true"></a>                           <span class="dt">rowData =</span> gene_metadata)</span>
+<span id="cb552-4"><a href="sec-next.html#cb552-4" aria-hidden="true"></a>se</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 1474 22 
 ## metadata(0):
@@ -384,9 +384,9 @@ To do so we will extract from this table:</p>
 <p>Using this data structure, we can access the expression matrix with
 the <code>assay</code> function, the feature metadata with the <code>rowData</code> function,
 and the sample metadata with the <code>colData</code> function:</p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="sec-next.html#cb545-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="sec-next.html#cb554-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
 <pre><code>## [1] 1474   22</code></pre>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="sec-next.html#cb547-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="sec-next.html#cb556-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ## Asl           1170        361        400        586        626        988
 ## Apod         36194      10347       9173      10620      13021      29594
@@ -415,7 +415,7 @@ and the sample metadata with the <code>colData</code> function:</p>
 ## Klk6           894        501        598        259
 ## Fcrls          248        179        184         68
 ## Slc2a4         248        350        317        796</code></pre>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="sec-next.html#cb549-1" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="sec-next.html#cb558-1" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
 <pre><code>## DataFrame with 22 rows and 9 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -443,9 +443,9 @@ and the sample metadata with the <code>colData</code> function:</p>
 ## GSM2545362     C57BL/6         4  Cerebellum        20
 ## GSM2545363     C57BL/6         4  Cerebellum        12
 ## GSM2545380     C57BL/6         8  Cerebellum        19</code></pre>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="sec-next.html#cb551-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="sec-next.html#cb560-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
 <pre><code>## [1] 1474    9</code></pre>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="sec-next.html#cb553-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="sec-next.html#cb562-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 9 columns
 ##                gene  ENTREZID
 ##         &lt;character&gt; &lt;numeric&gt;
@@ -492,8 +492,8 @@ and the sample metadata with the <code>colData</code> function:</p>
 <span class="header-section-number">8.1.1.1</span> Adding variables to metadata</h4>
 <p>We can also add information to the metadata.
 Suppose that you want to add the center where the samples were collected…</p>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="sec-next.html#cb555-1" aria-hidden="true"></a><span class="kw">colData</span>(se)<span class="op">$</span>center &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">"University of Illinois"</span>, <span class="kw">nrow</span>(<span class="kw">colData</span>(se)))</span>
-<span id="cb555-2"><a href="sec-next.html#cb555-2" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="sec-next.html#cb564-1" aria-hidden="true"></a><span class="kw">colData</span>(se)<span class="op">$</span>center &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">"University of Illinois"</span>, <span class="kw">nrow</span>(<span class="kw">colData</span>(se)))</span>
+<span id="cb564-2"><a href="sec-next.html#cb564-2" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
 <pre><code>## DataFrame with 22 rows and 10 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -533,8 +533,8 @@ the other structures!</p>
 with numerics or with characters of logicals.</p>
 <p>Below, we create a new instance of class SummarizedExperiment that contains only
 the 5 first features for the 3 first samples.</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="sec-next.html#cb557-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb557-2"><a href="sec-next.html#cb557-2" aria-hidden="true"></a>se1</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="sec-next.html#cb566-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
+<span id="cb566-2"><a href="sec-next.html#cb566-2" aria-hidden="true"></a>se1</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 5 3 
 ## metadata(0):
@@ -546,8 +546,8 @@ the 5 first features for the 3 first samples.</p>
 ## colData names(10): sample organism ... mouse center</code></pre>
 <p>We can also use the colData() function to subset on something from the sample metadata.
 For example, here we keep only the non infected samples.</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="sec-next.html#cb559-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[, <span class="kw">colData</span>(se)<span class="op">$</span>infection <span class="op">==</span><span class="st"> "NonInfected"</span>]</span>
-<span id="cb559-2"><a href="sec-next.html#cb559-2" aria-hidden="true"></a>se1</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="sec-next.html#cb568-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[, <span class="kw">colData</span>(se)<span class="op">$</span>infection <span class="op">==</span><span class="st"> "NonInfected"</span>]</span>
+<span id="cb568-2"><a href="sec-next.html#cb568-2" aria-hidden="true"></a>se1</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 1474 7 
 ## metadata(0):
@@ -557,7 +557,7 @@ For example, here we keep only the non infected samples.</p>
 ##   hsapiens_homolog_associated_gene_name
 ## colnames(7): GSM2545337 GSM2545338 ... GSM2545353 GSM2545354
 ## colData names(10): sample organism ... mouse center</code></pre>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="sec-next.html#cb561-1" aria-hidden="true"></a><span class="kw">colData</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="sec-next.html#cb570-1" aria-hidden="true"></a><span class="kw">colData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 7 rows and 10 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -579,8 +579,8 @@ For example, here we keep only the non infected samples.</p>
 ## GSM2545354     C57BL/6         0  Cerebellum         2 University of Illinois</code></pre>
 <p>Of course the rowData() function can similarly be used to keep only certain
 features of interest. We could for example focus on miRNAs…</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="sec-next.html#cb563-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="kw">rowData</span>(se)<span class="op">$</span>gene_biotype <span class="op">==</span><span class="st"> "miRNA"</span>,]</span>
-<span id="cb563-2"><a href="sec-next.html#cb563-2" aria-hidden="true"></a>se1</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="sec-next.html#cb572-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="kw">rowData</span>(se)<span class="op">$</span>gene_biotype <span class="op">==</span><span class="st"> "miRNA"</span>,]</span>
+<span id="cb572-2"><a href="sec-next.html#cb572-2" aria-hidden="true"></a>se1</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 7 22 
 ## metadata(0):
@@ -590,7 +590,7 @@ features of interest. We could for example focus on miRNAs…</p>
 ##   hsapiens_homolog_associated_gene_name
 ## colnames(22): GSM2545336 GSM2545337 ... GSM2545363 GSM2545380
 ## colData names(10): sample organism ... mouse center</code></pre>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="sec-next.html#cb565-1" aria-hidden="true"></a><span class="kw">assay</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="sec-next.html#cb574-1" aria-hidden="true"></a><span class="kw">assay</span>(se1)</span></code></pre></div>
 <pre><code>##          GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ## Mir1901          24         45         44         32         34         26
 ## Mir378a          12         11          7          6          5         13
@@ -636,10 +636,10 @@ features of interest. We could for example focus on miRNAs…</p>
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-49" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-49', 'sol-start-49')"></span>
+► Solution<span id="sol-start-48" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-48', 'sol-start-48')"></span>
 </p>
-<div id="sol-body-49" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="sec-next.html#cb567-1" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">!=</span><span class="st"> </span><span class="dv">4</span>]</span></code></pre></div>
+<div id="sol-body-48" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="sec-next.html#cb576-1" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">!=</span><span class="st"> </span><span class="dv">4</span>]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545341 GSM2545342 GSM2545343
 ## Asl           1170        361        400        988        836        535
 ## Apod         36194      10347       9173      29594      24959      13668
@@ -652,8 +652,8 @@ features of interest. We could for example focus on miRNAs…</p>
 ## Asl            473       1192
 ## Apod         11088      38148
 ## Cyp2d22       1821       4019</code></pre>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="sec-next.html#cb569-1" aria-hidden="true"></a><span class="co"># Equivalent to</span></span>
-<span id="cb569-2"><a href="sec-next.html#cb569-2" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">8</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="sec-next.html#cb578-1" aria-hidden="true"></a><span class="co"># Equivalent to</span></span>
+<span id="cb578-2"><a href="sec-next.html#cb578-2" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">8</span>]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545341 GSM2545342 GSM2545343
 ## Asl           1170        361        400        988        836        535
 ## Apod         36194      10347       9173      29594      24959      13668
@@ -690,7 +690,7 @@ use the Bioconductor <code>DESeq2</code> package to do some differential express
 <a href="session-information.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-24
+2021-09-25
  using 
 R version 4.0.2 (2020-06-22)
 </p>

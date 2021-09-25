@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto, Manon Martin &amp; Axelle Loriot" />
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-25" />
 
 
 <meta name="description" content="Course material for the Data manipulation and visualisation with R training (SMCS &amp; CBIO, UCLouvain).">
@@ -738,7 +738,7 @@ statistics. So to compute the mean <code>expression</code> by gene:</p>
 ##  9 Acap3           3536.  
 ## 10 Acbd4           1431.  
 ## # … with 1,464 more rows</code></pre>
-<p>We could also want to calculate the mean expression levels of all genes in each samples:</p>
+<p>We could also want to calculate the mean expression levels of all genes in each sample:</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="sec-dplyr.html#cb313-1" aria-hidden="true"></a>rna <span class="op">%&gt;%</span></span>
 <span id="cb313-2"><a href="sec-dplyr.html#cb313-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span></span>
 <span id="cb313-3"><a href="sec-dplyr.html#cb313-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_expression =</span> <span class="kw">mean</span>(expression))</span></code></pre></div>
@@ -777,8 +777,8 @@ statistics. So to compute the mean <code>expression</code> by gene:</p>
 ## 10 Abhd14a InfluenzaA      4          547.  
 ## # … with 4,412 more rows</code></pre>
 <p>Once the data is grouped, you can also summarize multiple variables at the same
-time (and not necessarily on the same variable). For instance, we could add
-columns indicating the median <code>expression</code> by gene and by condition:</p>
+time (and not necessarily on the same variable). For instance, we could add a
+column indicating the median <code>expression</code> by gene and by condition:</p>
 <div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="sec-dplyr.html#cb318-1" aria-hidden="true"></a>rna <span class="op">%&gt;%</span></span>
 <span id="cb318-2"><a href="sec-dplyr.html#cb318-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(gene, infection, time) <span class="op">%&gt;%</span></span>
 <span id="cb318-3"><a href="sec-dplyr.html#cb318-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_expression =</span> <span class="kw">mean</span>(expression),</span>
@@ -1116,6 +1116,9 @@ and other column(s) list(s) the context of the value.</p>
 a <code>wide-format</code> is preferred, as a more compact way of representing the data.
 This is typically the case with gene expression values that scientists are used to
 look as matrices, were rows represent genes and columns represent samples.</p>
+<p>In this format, it would become therefore straightforward
+to explore the relationship between the gene expression levels within, and
+between, the samples.</p>
 <pre><code>## # A tibble: 1,474 × 23
 ##    gene    GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ##    &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
@@ -1135,18 +1138,12 @@ look as matrices, were rows represent genes and columns represent samples.</p>
 ## #   GSM2545351 &lt;dbl&gt;, GSM2545352 &lt;dbl&gt;, GSM2545353 &lt;dbl&gt;, GSM2545354 &lt;dbl&gt;,
 ## #   GSM2545362 &lt;dbl&gt;, GSM2545363 &lt;dbl&gt;, GSM2545380 &lt;dbl&gt;</code></pre>
 <p>To convert the gene expression values from <code>rna</code> into a wide-format,
-we need to create a new table where each row (the units) is composed
-of expression values associated with each gene.</p>
-<p>In practical terms this means the values of the <code>sample</code> column in <code>rna</code> would
-become the names of column variables, and the cells would contain the expression
-values measured on each gene.</p>
+we need to create a new table where the values of the <code>sample</code> column would
+become the names of column variables.</p>
 <p>The key point here is that we are still following
 a tidy data structure, but we have <strong>reshaped</strong> the data according to
 the observations of interest: expression levels per gene instead
 of recording them per gene and per sample.</p>
-<p>With this new table, it would become therefore straightforward
-to explore the relationship between the gene expression levels within, and
-between, the samples.</p>
 <p>The opposite transformation would be to transform column names into
 values of a new variable.</p>
 <p>We can do both these of transformations with two <code>tidyr</code> functions,
@@ -1185,11 +1182,6 @@ names;</li>
 columns.</li>
 </ol>
 <p><img src="figs/pivot_wider.png"></p>
-<p>Note also the <code>values_fill</code> argument which, if set, fills in missing
-values with the value provided.</p>
-<p>Using <code>pivot_wider()</code>, using new columns from the <code>sample</code> variable and
-values from <code>expression</code>, this becomes 1474 gene expression measurements of 22
-variables, one row for each gene, one column for each sample. We again use pipes:</p>
 <div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="sec-dplyr.html#cb352-1" aria-hidden="true"></a>rna_wide &lt;-<span class="st"> </span>rna_exp <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb352-2"><a href="sec-dplyr.html#cb352-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
 <span id="cb352-3"><a href="sec-dplyr.html#cb352-3" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression)</span>
@@ -1212,11 +1204,8 @@ variables, one row for each gene, one column for each sample. We again use pipes
 ## #   GSM2545347 &lt;dbl&gt;, GSM2545348 &lt;dbl&gt;, GSM2545349 &lt;dbl&gt;, GSM2545350 &lt;dbl&gt;,
 ## #   GSM2545351 &lt;dbl&gt;, GSM2545352 &lt;dbl&gt;, GSM2545353 &lt;dbl&gt;, GSM2545354 &lt;dbl&gt;,
 ## #   GSM2545362 &lt;dbl&gt;, GSM2545363 &lt;dbl&gt;, GSM2545380 &lt;dbl&gt;</code></pre>
-<p>We can now easily plot the comparisons between the gene expression levels
-in different samples.</p>
-<p>Note that the <code>pivot_wider()</code> function comes with an optional <code>values_fill</code> argument
-that can be usefull when dealing with missing values.
-Let’s imagine that for some reason, we had some missing expression values for some
+<p>Note that by default, the <code>pivot_wider()</code> function will add <code>NA</code> for missing values.</p>
+<p>Let’s imagine that for some reason, we had some missing expression values for some
 genes in certain samples. In the following fictive example, the gene Cyp2d22 has only
 one expression value, in GSM2545338 sample.</p>
 <div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="sec-dplyr.html#cb354-1" aria-hidden="true"></a>rna_with_missing_values</span></code></pre></div>
@@ -1240,18 +1229,6 @@ one expression value, in GSM2545338 sample.</p>
 ## 1 Asl           1170        361        400
 ## 2 Apod         36194      10347       9173
 ## 3 Cyp2d22         NA         NA       1603</code></pre>
-<p>But in some cases, we may wish to fill in the missing values by setting <code>values_fill</code>
-to a specific value.</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="sec-dplyr.html#cb358-1" aria-hidden="true"></a>rna_with_missing_values <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb358-2"><a href="sec-dplyr.html#cb358-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
-<span id="cb358-3"><a href="sec-dplyr.html#cb358-3" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression,</span>
-<span id="cb358-4"><a href="sec-dplyr.html#cb358-4" aria-hidden="true"></a>              <span class="dt">values_fill =</span> <span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 3 × 4
-##   gene    GSM2545336 GSM2545337 GSM2545338
-##   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1 Asl           1170        361        400
-## 2 Apod         36194      10347       9173
-## 3 Cyp2d22          0          0       1603</code></pre>
 </div>
 <div id="pivoting-data-into-a-longer-format" class="section level3" number="5.7.2">
 <h3>
@@ -1264,9 +1241,9 @@ associated with the column names.</p>
 <p><code>pivot_longer()</code> takes four main arguments:</p>
 <ol style="list-style-type: decimal">
 <li>the data to be transformed;</li>
-<li>the <code>names_to</code>: the new column we wish to create and populate with the
+<li>the <code>names_to</code>: the new column name we wish to create and populate with the
 current column names;</li>
-<li>the <code>values_to</code>: the new column we wish to create and populate with
+<li>the <code>values_to</code>: the new column name we wish to create and populate with
 current values;</li>
 <li>the names of the columns to be used to populate the <code>names_to</code> and
 <code>values_to</code> variables (or to drop).</li>
@@ -1277,11 +1254,53 @@ called <code>sample</code> and value called <code>expression</code> and use all 
 except <code>gene</code> for the key variable. Here we drop <code>gene</code> column
 with a minus sign.</p>
 <p>Notice how the new variable names are to be quoted here.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="sec-dplyr.html#cb360-1" aria-hidden="true"></a>rna_long &lt;-<span class="st"> </span>rna_wide <span class="op">%&gt;%</span></span>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="sec-dplyr.html#cb358-1" aria-hidden="true"></a>rna_long &lt;-<span class="st"> </span>rna_wide <span class="op">%&gt;%</span></span>
+<span id="cb358-2"><a href="sec-dplyr.html#cb358-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
+<span id="cb358-3"><a href="sec-dplyr.html#cb358-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
+<span id="cb358-4"><a href="sec-dplyr.html#cb358-4" aria-hidden="true"></a>                 <span class="op">-</span>gene)</span>
+<span id="cb358-5"><a href="sec-dplyr.html#cb358-5" aria-hidden="true"></a>rna_long</span></code></pre></div>
+<pre><code>## # A tibble: 32,428 × 3
+##    gene  sample     expression
+##    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
+##  1 Asl   GSM2545336       1170
+##  2 Asl   GSM2545337        361
+##  3 Asl   GSM2545338        400
+##  4 Asl   GSM2545339        586
+##  5 Asl   GSM2545340        626
+##  6 Asl   GSM2545341        988
+##  7 Asl   GSM2545342        836
+##  8 Asl   GSM2545343        535
+##  9 Asl   GSM2545344        586
+## 10 Asl   GSM2545345        597
+## # … with 32,418 more rows</code></pre>
+<p>We could also have used a specification for what columns to
+include. This can be useful if you have a large number of identifying
+columns, and it’s easier to specify what to gather than what to leave
+alone. Here the <code>starts_with()</code> function can help to retrieve sample
+names without having to list them all!
+Another possibility would be to use the <code>:</code> operator!</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="sec-dplyr.html#cb360-1" aria-hidden="true"></a>rna_wide <span class="op">%&gt;%</span></span>
 <span id="cb360-2"><a href="sec-dplyr.html#cb360-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
 <span id="cb360-3"><a href="sec-dplyr.html#cb360-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
-<span id="cb360-4"><a href="sec-dplyr.html#cb360-4" aria-hidden="true"></a>                 <span class="op">-</span>gene)</span>
-<span id="cb360-5"><a href="sec-dplyr.html#cb360-5" aria-hidden="true"></a>rna_long</span></code></pre></div>
+<span id="cb360-4"><a href="sec-dplyr.html#cb360-4" aria-hidden="true"></a>                 <span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">"GSM"</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 32,428 × 3
+##    gene  sample     expression
+##    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
+##  1 Asl   GSM2545336       1170
+##  2 Asl   GSM2545337        361
+##  3 Asl   GSM2545338        400
+##  4 Asl   GSM2545339        586
+##  5 Asl   GSM2545340        626
+##  6 Asl   GSM2545341        988
+##  7 Asl   GSM2545342        836
+##  8 Asl   GSM2545343        535
+##  9 Asl   GSM2545344        586
+## 10 Asl   GSM2545345        597
+## # … with 32,418 more rows</code></pre>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="sec-dplyr.html#cb362-1" aria-hidden="true"></a>rna_wide <span class="op">%&gt;%</span></span>
+<span id="cb362-2"><a href="sec-dplyr.html#cb362-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
+<span id="cb362-3"><a href="sec-dplyr.html#cb362-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
+<span id="cb362-4"><a href="sec-dplyr.html#cb362-4" aria-hidden="true"></a>                 GSM2545336<span class="op">:</span>GSM2545380)</span></code></pre></div>
 <pre><code>## # A tibble: 32,428 × 3
 ##    gene  sample     expression
 ##    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
@@ -1297,22 +1316,33 @@ with a minus sign.</p>
 ## 10 Asl   GSM2545345        597
 ## # … with 32,418 more rows</code></pre>
 <p>Note that if we had missing values in the wide-format, the <code>NA</code> would be
-included in the new long format. Pivoting to wider and longer formats can
-be a useful way to balance out a dataset so every replicate has the same composition.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="sec-dplyr.html#cb362-1" aria-hidden="true"></a>wide_with_NA &lt;-<span class="st"> </span>rna_with_missing_values <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb362-2"><a href="sec-dplyr.html#cb362-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
-<span id="cb362-3"><a href="sec-dplyr.html#cb362-3" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression)</span>
-<span id="cb362-4"><a href="sec-dplyr.html#cb362-4" aria-hidden="true"></a>wide_with_NA</span></code></pre></div>
+included in the new long format.</p>
+<p>Remember our previous fictive tibble containing missing values:</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="sec-dplyr.html#cb364-1" aria-hidden="true"></a>rna_with_missing_values</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 3
+##   gene    sample     expression
+##   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;
+## 1 Asl     GSM2545336       1170
+## 2 Apod    GSM2545336      36194
+## 3 Asl     GSM2545337        361
+## 4 Apod    GSM2545337      10347
+## 5 Asl     GSM2545338        400
+## 6 Apod    GSM2545338       9173
+## 7 Cyp2d22 GSM2545338       1603</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="sec-dplyr.html#cb366-1" aria-hidden="true"></a>wide_with_NA &lt;-<span class="st"> </span>rna_with_missing_values <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb366-2"><a href="sec-dplyr.html#cb366-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> sample,</span>
+<span id="cb366-3"><a href="sec-dplyr.html#cb366-3" aria-hidden="true"></a>              <span class="dt">values_from =</span> expression)</span>
+<span id="cb366-4"><a href="sec-dplyr.html#cb366-4" aria-hidden="true"></a>wide_with_NA</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 4
 ##   gene    GSM2545336 GSM2545337 GSM2545338
 ##   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
 ## 1 Asl           1170        361        400
 ## 2 Apod         36194      10347       9173
 ## 3 Cyp2d22         NA         NA       1603</code></pre>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="sec-dplyr.html#cb364-1" aria-hidden="true"></a>wide_with_NA <span class="op">%&gt;%</span></span>
-<span id="cb364-2"><a href="sec-dplyr.html#cb364-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
-<span id="cb364-3"><a href="sec-dplyr.html#cb364-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
-<span id="cb364-4"><a href="sec-dplyr.html#cb364-4" aria-hidden="true"></a>                 <span class="op">-</span>gene)</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="sec-dplyr.html#cb368-1" aria-hidden="true"></a>wide_with_NA <span class="op">%&gt;%</span></span>
+<span id="cb368-2"><a href="sec-dplyr.html#cb368-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
+<span id="cb368-3"><a href="sec-dplyr.html#cb368-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
+<span id="cb368-4"><a href="sec-dplyr.html#cb368-4" aria-hidden="true"></a>                 <span class="op">-</span>gene)</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 3
 ##   gene    sample     expression
 ##   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;
@@ -1325,48 +1355,8 @@ be a useful way to balance out a dataset so every replicate has the same composi
 ## 7 Cyp2d22 GSM2545336         NA
 ## 8 Cyp2d22 GSM2545337         NA
 ## 9 Cyp2d22 GSM2545338       1603</code></pre>
-<p>We could also have used a specification for what columns to
-include. This can be useful if you have a large number of identifying
-columns, and it’s easier to specify what to gather than what to leave
-alone. Here the <code>starts_with()</code> function can help to retrieve sample
-names without having to list them all!
-Another possibility would be to use the <code>:</code> operator!</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="sec-dplyr.html#cb366-1" aria-hidden="true"></a>rna_wide <span class="op">%&gt;%</span></span>
-<span id="cb366-2"><a href="sec-dplyr.html#cb366-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
-<span id="cb366-3"><a href="sec-dplyr.html#cb366-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
-<span id="cb366-4"><a href="sec-dplyr.html#cb366-4" aria-hidden="true"></a>                 <span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">"GSM"</span>))</span></code></pre></div>
-<pre><code>## # A tibble: 32,428 × 3
-##    gene  sample     expression
-##    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 Asl   GSM2545336       1170
-##  2 Asl   GSM2545337        361
-##  3 Asl   GSM2545338        400
-##  4 Asl   GSM2545339        586
-##  5 Asl   GSM2545340        626
-##  6 Asl   GSM2545341        988
-##  7 Asl   GSM2545342        836
-##  8 Asl   GSM2545343        535
-##  9 Asl   GSM2545344        586
-## 10 Asl   GSM2545345        597
-## # … with 32,418 more rows</code></pre>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="sec-dplyr.html#cb368-1" aria-hidden="true"></a>rna_wide <span class="op">%&gt;%</span></span>
-<span id="cb368-2"><a href="sec-dplyr.html#cb368-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>,</span>
-<span id="cb368-3"><a href="sec-dplyr.html#cb368-3" aria-hidden="true"></a>                 <span class="dt">values_to =</span> <span class="st">"expression"</span>,</span>
-<span id="cb368-4"><a href="sec-dplyr.html#cb368-4" aria-hidden="true"></a>                 GSM2545336<span class="op">:</span>GSM2545380)</span></code></pre></div>
-<pre><code>## # A tibble: 32,428 × 3
-##    gene  sample     expression
-##    &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;
-##  1 Asl   GSM2545336       1170
-##  2 Asl   GSM2545337        361
-##  3 Asl   GSM2545338        400
-##  4 Asl   GSM2545339        586
-##  5 Asl   GSM2545340        626
-##  6 Asl   GSM2545341        988
-##  7 Asl   GSM2545342        836
-##  8 Asl   GSM2545343        535
-##  9 Asl   GSM2545344        586
-## 10 Asl   GSM2545345        597
-## # … with 32,418 more rows</code></pre>
+<p>Pivoting to wider and longer formats can be a useful way to balance out a dataset
+so every replicate has the same composition.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -1661,51 +1651,21 @@ Convert this table in a long-format table gathering the foldchanges calculated.<
 <h2>
 <span class="header-section-number">5.8</span> Exporting data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('exporting-data')" onmouseout="reset_tooltip('exporting-data-tooltip')"><span class="tooltiptext" id="exporting-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>Now that you have learned how to use <strong><code>dplyr</code></strong> to extract information from
+<p>Now that you have learned how to use <code>dplyr</code> to extract information from
 or summarize your raw data, you may want to export these new data sets to share
 them with your collaborators or for archival.</p>
 <p>Similar to the <code>read_csv()</code> function used for reading CSV files into R, there is
 a <code>write_csv()</code> function that generates CSV files from data frames.</p>
 <p>Before using <code>write_csv()</code>, we are going to create a new folder, <code>data_output</code>,
-in our working directory that will store this generated dataset.</p>
-<p>We don’t want to write generated datasets in the same directory as our raw data.
-It’s good practice to keep them separate.</p>
-<p>The <code>data</code> folder should only contain the raw, unaltered data, and should be left
-alone to make sure we don’t delete or modify it.</p>
-<p>In contrast, our script will generate the contents of the <code>data_output</code>
+in our working directory that will store this generated dataset. We don’t want
+to write generated datasets in the same directory as our raw data.
+It’s good practice to keep them separate. The <code>data</code> folder should only contain
+the raw, unaltered data, and should be left alone to make sure we don’t delete
+or modify it. In contrast, our script will generate the contents of the <code>data_output</code>
 directory, so even if the files it contains are deleted, we can always
 re-generate them.</p>
-<p>In preparation for our next lesson on plotting, we are going to prepare a
-table representing for each gene, the fold-changes (in log values) between timepoint 8
-and timepoint 0, and the fold-changes between timepoint 8 and timepoint 0.</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="sec-dplyr.html#cb399-1" aria-hidden="true"></a>rna_FC &lt;-<span class="st"> </span>rna <span class="op">%&gt;%</span></span>
-<span id="cb399-2"><a href="sec-dplyr.html#cb399-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">expression_log =</span> <span class="kw">log</span>(expression)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb399-3"><a href="sec-dplyr.html#cb399-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(gene, time, gene_biotype, expression_log) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb399-4"><a href="sec-dplyr.html#cb399-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(gene, time, gene_biotype) <span class="op">%&gt;%</span></span>
-<span id="cb399-5"><a href="sec-dplyr.html#cb399-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_exp =</span> <span class="kw">mean</span>(expression_log)) <span class="op">%&gt;%</span></span>
-<span id="cb399-6"><a href="sec-dplyr.html#cb399-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> time,</span>
-<span id="cb399-7"><a href="sec-dplyr.html#cb399-7" aria-hidden="true"></a>              <span class="dt">values_from =</span> mean_exp) <span class="op">%&gt;%</span></span>
-<span id="cb399-8"><a href="sec-dplyr.html#cb399-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">time_8_vs_0 =</span> <span class="st">`</span><span class="dt">8</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">0</span><span class="st">`</span>, <span class="dt">time_4_vs_0 =</span> <span class="st">`</span><span class="dt">4</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">0</span><span class="st">`</span>) </span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by 'gene', 'time'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="sec-dplyr.html#cb401-1" aria-hidden="true"></a>rna_FC</span></code></pre></div>
-<pre><code>## # A tibble: 1,474 × 7
-## # Groups:   gene [1,474]
-##    gene    gene_biotype     `0`   `4`   `8` time_8_vs_0 time_4_vs_0
-##    &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-##  1 Aamp    protein_coding  8.43  8.48  8.46      0.0271    0.0522  
-##  2 Abca12  protein_coding  1.50  1.38  1.38     -0.116    -0.114   
-##  3 Abcc8   protein_coding  7.84  7.86  7.73     -0.114     0.0163  
-##  4 Abhd14a protein_coding  6.37  6.29  6.06     -0.309    -0.0800  
-##  5 Abi2    protein_coding  8.49  8.49  8.50      0.0110   -0.000894
-##  6 Abi3bp  protein_coding  7.07  6.96  6.63     -0.432    -0.107   
-##  7 Abl2    protein_coding  7.68  7.63  7.66     -0.0188   -0.0550  
-##  8 Acadl   protein_coding  7.63  7.64  7.59     -0.0353    0.0182  
-##  9 Acap3   protein_coding  8.22  8.13  8.13     -0.0869   -0.0900  
-## 10 Acbd4   protein_coding  7.09  7.24  7.41      0.320     0.149   
-## # … with 1,464 more rows</code></pre>
-<p>We can save the table as a CSV file in our <code>data_output</code>
-folder.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="sec-dplyr.html#cb403-1" aria-hidden="true"></a><span class="kw">write_csv</span>(rna_FC, <span class="dt">file =</span> <span class="st">"data_output/rna_FC.csv"</span>)</span></code></pre></div>
+<p>Let’s use <code>write_csv()</code> to save the rna_wide table that we have created previously.</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="sec-dplyr.html#cb399-1" aria-hidden="true"></a><span class="kw">write_csv</span>(rna_wide, <span class="dt">file =</span> <span class="st">"data_output/rna_wide.csv"</span>)</span></code></pre></div>
 
 </div>
 </div></body></html>
@@ -1715,7 +1675,7 @@ folder.</p>
 <a href="sec-vis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-24
+2021-09-25
  using 
 R version 4.0.2 (2020-06-22)
 </p>

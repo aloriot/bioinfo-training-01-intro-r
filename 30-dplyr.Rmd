@@ -343,7 +343,7 @@ rna %>%
   summarize(mean_expression = mean(expression))
 ```
 
-We could also want to calculate the mean expression levels of all genes in each samples:
+We could also want to calculate the mean expression levels of all genes in each sample:
 
 ```{r}
 rna %>%
@@ -360,8 +360,8 @@ rna %>%
 ```
 
 Once the data is grouped, you can also summarize multiple variables at the same
-time (and not necessarily on the same variable). For instance, we could add
-columns indicating the median `expression` by gene and by condition:
+time (and not necessarily on the same variable). For instance, we could add a 
+column indicating the median `expression` by gene and by condition:
 
 ```{r, purl = FALSE}
 rna %>%
@@ -555,6 +555,10 @@ a `wide-format` is preferred, as a more compact way of representing the data.
 This is typically the case with gene expression values that scientists are used to
 look as matrices, were rows represent genes and columns represent samples.
 
+In this format, it would become therefore straightforward 
+to explore the relationship between the gene expression levels within, and
+between, the samples. 
+
 ```{r, echo = FALSE}
 rna %>% 
   select(gene, sample, expression) %>% 
@@ -563,23 +567,13 @@ rna %>%
 ```  
 
 To convert the gene expression values from `rna` into a wide-format,
-we need to create a new table where each row (the units) is composed
-of expression values associated with each gene. 
-
-In practical terms this means the values of the `sample` column in `rna` would 
-become the names of column variables, and the cells would contain the expression 
-values measured on each gene.
+we need to create a new table where the values of the `sample` column would 
+become the names of column variables. 
 
 The key point here is that we are still following
 a tidy data structure, but we have **reshaped** the data according to
 the observations of interest: expression levels per gene instead
 of recording them per gene and per sample.
-
-With this new table, it would become therefore straightforward 
-to explore the relationship between the gene expression levels within, and
-between, the samples. 
-
-
 
 The opposite transformation would be to transform column names into
 values of a new variable.
@@ -610,13 +604,6 @@ rna_exp
 
 ![](./figs/pivot_wider.png)
 
-Note also the `values_fill` argument which, if set, fills in missing
-values with the value provided.
-
-Using `pivot_wider()`, using new columns from the `sample` variable and
-values from `expression`, this becomes 1474 gene expression measurements of 22
-variables, one row for each gene, one column for each sample. We again use pipes:
-
 ```{r, purl = FALSE}
 rna_wide <- rna_exp %>% 
   pivot_wider(names_from = sample,
@@ -625,16 +612,8 @@ rna_wide
 ```
 
 
+Note that by default, the `pivot_wider()` function will add `NA` for missing values.
 
-
-
-
-
-We can now easily plot the comparisons between the gene expression levels
-in different samples.
-
-Note that the `pivot_wider()` function comes with an optional `values_fill` argument
-that can be usefull when dealing with missing values.
 Let's imagine that for some reason, we had some missing expression values for some 
 genes in certain samples. In the following fictive example, the gene Cyp2d22 has only
 one expression value, in GSM2545338 sample.
@@ -661,17 +640,6 @@ rna_with_missing_values %>%
               values_from = expression)
 ```
 
-But in some cases, we may wish to fill in the missing values by setting `values_fill` 
-to a specific value.
-
-```{r, purl = FALSE}
-rna_with_missing_values %>% 
-  pivot_wider(names_from = sample,
-              values_from = expression,
-              values_fill = 0)
-```
-
-
 
 ### Pivoting data into a longer format
 
@@ -683,9 +651,9 @@ associated with the column names.
 `pivot_longer()` takes four main arguments:
 
 1. the data to be transformed;
-2. the `names_to`: the new column we wish to create and populate with the
+2. the `names_to`: the new column name we wish to create and populate with the
    current column names;
-3. the `values_to`: the new column we wish to create and populate with
+3. the `values_to`: the new column name we wish to create and populate with
    current values;
 4. the names of the columns to be used to populate the `names_to` and
    `values_to` variables (or to drop).
@@ -708,28 +676,6 @@ rna_long
 ```
 
 
-
-
-
-
-
-Note that if we had missing values in the wide-format, the `NA` would be 
-included in the new long format. Pivoting to wider and longer formats can 
-be a useful way to balance out a dataset so every replicate has the same composition.
-
-```{r}
-wide_with_NA <- rna_with_missing_values %>% 
-  pivot_wider(names_from = sample,
-              values_from = expression)
-wide_with_NA
-
-wide_with_NA %>%
-    pivot_longer(names_to = "sample",
-                 values_to = "expression",
-                 -gene)
-```
-
-
 We could also have used a specification for what columns to
 include. This can be useful if you have a large number of identifying
 columns, and it's easier to specify what to gather than what to leave
@@ -747,6 +693,31 @@ rna_wide %>%
                  values_to = "expression",
                  GSM2545336:GSM2545380)
 ```
+
+
+
+Note that if we had missing values in the wide-format, the `NA` would be 
+included in the new long format. 
+
+Remember our previous fictive tibble containing missing values:
+
+```{r}
+rna_with_missing_values
+
+wide_with_NA <- rna_with_missing_values %>% 
+  pivot_wider(names_from = sample,
+              values_from = expression)
+wide_with_NA
+
+wide_with_NA %>%
+    pivot_longer(names_to = "sample",
+                 values_to = "expression",
+                 -gene)
+```
+
+Pivoting to wider and longer formats can be a useful way to balance out a dataset 
+so every replicate has the same composition.
+
 
 
 `r msmbstyle::question_begin()`
@@ -910,7 +881,7 @@ rna_FC %>%
 
 ## Exporting data
 
-Now that you have learned how to use **`dplyr`** to extract information from
+Now that you have learned how to use `dplyr` to extract information from
 or summarize your raw data, you may want to export these new data sets to share
 them with your collaborators or for archival.
 
@@ -918,39 +889,17 @@ Similar to the `read_csv()` function used for reading CSV files into R, there is
 a `write_csv()` function that generates CSV files from data frames.
 
 Before using `write_csv()`, we are going to create a new folder, `data_output`,
-in our working directory that will store this generated dataset. 
-
-We don't want to write generated datasets in the same directory as our raw data. 
-It's good practice to keep them separate. 
-
-The `data` folder should only contain the raw, unaltered data, and should be left 
-alone to make sure we don't delete or modify it. 
-
-In contrast, our script will generate the contents of the `data_output`
+in our working directory that will store this generated dataset. We don't want 
+to write generated datasets in the same directory as our raw data. 
+It's good practice to keep them separate. The `data` folder should only contain 
+the raw, unaltered data, and should be left alone to make sure we don't delete 
+or modify it. In contrast, our script will generate the contents of the `data_output`
 directory, so even if the files it contains are deleted, we can always
 re-generate them.
 
-In preparation for our next lesson on plotting, we are going to prepare a
-table representing for each gene, the fold-changes (in log values) between timepoint 8 
-and timepoint 0, and the fold-changes between timepoint 8 and timepoint 0. 
+Let's use `write_csv()` to save the rna_wide table that we have created previously.
 
-
-```{r}
-rna_FC <- rna %>%
-  mutate(expression_log = log(expression)) %>% 
-  select(gene, time, gene_biotype, expression_log) %>% 
-  group_by(gene, time, gene_biotype) %>%
-  summarize(mean_exp = mean(expression_log)) %>%
-  pivot_wider(names_from = time,
-              values_from = mean_exp) %>%
-  mutate(time_8_vs_0 = `8` - `0`, time_4_vs_0 = `4` - `0`) 
-
-rna_FC
-```
-
-We can save the table as a CSV file in our `data_output`
-folder.
 
 ```{r, purl=FALSE, eval=FALSE}
-write_csv(rna_FC, file = "data_output/rna_FC.csv")
+write_csv(rna_wide, file = "data_output/rna_wide.csv")
 ```
