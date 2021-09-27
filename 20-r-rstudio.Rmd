@@ -41,6 +41,13 @@ useful to learn keyboard shortcuts and discover new features.
 
 ## Why learn R?
 
+*Summary of (dis)advantages of working with scripts:*
+
+* (-) learning curve
+* (+) share, comment code
+* (+) redo quickly an analysis
+* (+) reproducibility
+
 ### R does not involve lots of pointing and clicking, and that's a good thing {-}
 
 The learning curve might be steeper than with other software, but with
@@ -58,13 +65,6 @@ you feedback and spot mistakes.
 Working with scripts forces you to have a deeper understanding of what
 you are doing, and facilitates your learning and comprehension of the
 methods you use.
-
-*Summary of (dis)advantages of working with scripts:*
-
-* (-) learning curve
-* (+) share, comment code
-* (+) redo quickly an analysis
-* (+) reproducibility
 
 ### R code is great for reproducibility {-}
 
@@ -185,7 +185,7 @@ easier to move your project around on your computer and share it with
 others without worrying about whether or not the underlying scripts
 will still work.
 
-RStudio provides a helpful set of tools to do this through its "Projects"
+RStudio provides a helpful set of tools to do this through its "**Projects**"
 interface, which not only creates a working directory for you, but also remembers
 its location (allowing you to quickly navigate to it) and optionally preserves
 custom settings and open files to make it easier to resume work after a
@@ -241,7 +241,7 @@ create directories (folders) for **scripts**, **data**, and **documents**.
    and other text.
  - **`scripts/`** (or `src`) This would be the location to keep your R
    scripts for different analyses or plotting, and potentially a
-   separate folder for your functions (more on that later).
+   separate folder for your functions.
 
 You may want additional directories or subdirectories depending on
 your project needs, but these should form the backbone of your working
@@ -639,7 +639,7 @@ install.packages("dplyr")
 This command will install the `dplyr` package as well as all its
 dependencies, i.e. all the packages that it relies on to function.
 
-[Github](https://github.com/) is a general-purpose online software
+Another common package repository is [Github](https://github.com/). GitHub is a general-purpose online software
 project repository and is well suited for R package development. To
 install a package from Github, one can use the `install_github()`
 function from the `devtools` package. 

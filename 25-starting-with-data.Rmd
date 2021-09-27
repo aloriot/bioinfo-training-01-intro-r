@@ -8,7 +8,7 @@
 - Describe what a factor is.
 - Convert between strings and factors.
 - Reorder and rename factors.
-- Format dates.
+- Ohter R objects: matrices and lists
 - Export and save data.
 
 ## Presentation of the gene expression data
@@ -346,7 +346,7 @@ order. For instance, if you have a factor with 2 levels:
 sex <- factor(c("male", "female", "female", "male", "female"))
 ```
 
-The levels can be seen this by using the function `levels()` and you can find the number of levels using `nlevels()`:
+The levels can be seen by using the function `levels()` and you can find the number of levels using `nlevels()`:
 
 
 ```{r}
@@ -368,7 +368,7 @@ sex ## after re-ordering
 ```
 
 
-### Converting to factors {-}
+### Converting to character {-}
 
 If you need to convert a factor to a character vector, you use
 `as.character(x)`.
