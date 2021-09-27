@@ -725,7 +725,7 @@ so every replicate has the same composition.
 Subset genes located on X and Y chromosomes from the `rna` data frame and 
 spread the data frame with `sex` as columns, `chromosome_name` as
 rows, and the mean expression of genes located in each chromosome as the values,
-as in the followinf tibble. 
+as in the following tibble: 
 
 ![](./figs/Exercise_pivot_W.png)   
 
@@ -736,16 +736,8 @@ You will need to summarize before reshaping!
 
 `r msmbstyle::solution_begin()`
 
-Let's have a look to variables of interest 
-
-```{r, answer=TRUE, purl=FALSE}
-rna %>% 
-  filter(chromosome_name == "Y" | chromosome_name == "X") %>% 
-  select(gene, sample, sex, expression, chromosome_name) %>% 
-  arrange(gene)
-```
-
-Let's calculate the mean expression level of X and Y linked genes from male and female samples...
+Let's first calculate the mean expression level of X and Y linked genes from 
+male and female samples...
 
 ```{r}
  rna %>% 
@@ -799,12 +791,22 @@ the mean expression levels of genes and columns represent the different timepoin
 
 `r msmbstyle::solution_begin()`
 
+Let's first calculate the mean expression by gene and by time 
 ```{r}
 rna %>% 
+  group_by(gene, time) %>% 
+  summarize(mean_exp = mean(expression)) 
+```
+
+before using the pivot_wider() function
+
+```{r}
+rna_time <- rna %>% 
   group_by(gene, time) %>% 
   summarize(mean_exp = mean(expression)) %>% 
   pivot_wider(names_from = time,
               values_from = mean_exp)
+rna_time
 ```
 
 Notice that this generates a tibble with some column names starting by a number.
@@ -859,22 +861,29 @@ Convert this table in a long-format table gathering the foldchanges calculated.
 
 `r msmbstyle::solution_begin()`
 
+starting from the rna_time tibble:
 ```{r}
-rna_FC <- rna %>% 
-  group_by(gene, time) %>% 
-  summarize(mean_exp = mean(expression)) %>% 
-  pivot_wider(names_from = time,
-              values_from = mean_exp) %>% 
-  mutate(time_8_vs_0 = `8` / `0`, time_8_vs_4 = `8` / `4`) 
-rna_FC
+rna_time
 ```
 
+Calculate FoldChanges:
+
 ```{r}
-rna_FC %>% 
+rna_time %>% 
+  mutate(time_8_vs_0 = `8` / `0`, time_8_vs_4 = `8` / `4`) 
+```
+
+And use the pivot_longer() function:
+
+```{r}
+rna_time %>% 
+  mutate(time_8_vs_0 = `8` / `0`, time_8_vs_4 = `8` / `4`) %>% 
   pivot_longer(names_to = "comparisons",
                values_to = "Fold_changes",
                time_8_vs_0:time_8_vs_4)
 ```
+
+
 
 `r msmbstyle::solution_end()`
 
