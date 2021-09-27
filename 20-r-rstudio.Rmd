@@ -612,7 +612,7 @@ sessionInfo()
 
 ## R packages
 
-R packages need to be : (1) installed (+ their depednencies), and (2) loaded in your environment
+R packages need to be : (1) installed (+ their dependencies), and (2) loaded in your environment
 
 ### Loading packages
 

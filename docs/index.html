@@ -21,7 +21,7 @@
 
 <title>Preamble | Data manipulation and visualisation with R</title>
 
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -129,6 +129,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -256,9 +279,9 @@ however, as they cover large parts of the material or provide
 complementary resources.</p>
 <p>The material for the first chapters, covering the <em>Introduction to
 data science with R</em>, is based on the <a href="https://datacarpentry.org/lessons/#ecology-workshop"><strong>Data Carpentry</strong> Ecology
-curiculum</a> <span class="citation">(Michonneau and Fournier <label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">2019<span class="marginnote">Michonneau, Francois, and Auriel Fournier, eds. 2019. “Data Carpentry: R for Data Analysis and Visualization of Ecological Data.” <a href="https://doi.org/10.5281/zenodo.569338">https://doi.org/10.5281/zenodo.569338</a>.</span>)</span>.</p>
+curiculum</a> <span class="citation">(<label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">Michonneau and Fournier 2019<span class="marginnote">Michonneau, Francois, and Auriel Fournier, eds. 2019. <span>“<span>Data Carpentry</span>: <span>R</span> for Data Analysis and Visualization of Ecological Data.”</span> <a href="https://doi.org/10.5281/zenodo.569338">https://doi.org/10.5281/zenodo.569338</a>.</span>)</span>.</p>
 <p>General references for this course are <em>R for Data Science</em>
-<span class="citation">(Grolemund and Wickham <label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">2017<span class="marginnote">Grolemund, Garrett, and Hadley Wickham. 2017. <em>R for Data Science</em>. O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.</span>)</span> and <em>Bioinformatics Data Skills</em> <span class="citation">(Buffalo <label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</p>
+<span class="citation">(<label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">Grolemund and Wickham 2017<span class="marginnote">Grolemund, Garrett, and Hadley Wickham. 2017. <em>R for Data Science</em>. O’Reilly Media. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.</span>)</span> and <em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</p>
 <p>The <a href="https://www.rstudio.com/resources/cheatsheets/">RStudio Cheat
 Sheets</a> are also a
 handy resource and readers will be pointed to specific sheets in the
@@ -271,8 +294,8 @@ Martin at the UCLouvain, Belgium.</p>
 <div id="about-this-course-material" class="section level2 unnumbered">
 <h2>About this course material<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('about-this-course-material')" onmouseout="reset_tooltip('about-this-course-material-tooltip')"><span class="tooltiptext" id="about-this-course-material-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>This material is written in R markdown <span class="citation">(Allaire et al. <label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">2020<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.</span>)</span> and compiled as
-a book using <code>knitr</code> <span class="citation">(Xie <label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">2020b<span class="marginnote">Xie, Yihui. 2020b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</span>)</span> <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.</span>)</span>. The source
+<p>This material is written in R markdown <span class="citation">(<label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">Allaire et al. 2021<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</span>)</span> and compiled as
+a book using <code>knitr</code> <span class="citation">(<label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">Xie 2021b<span class="marginnote">Xie, Yihui. 2021b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</span>)</span> <code>bookdown</code> <span class="citation">(<label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">Xie 2021a<span class="marginnote">Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span>. The source
 code is publicly available in a Github repository
 <a href="https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro-r">https://github.com/UCLouvain-CBIO/bioinfo-training-01-intro-r</a>
 and the compiled material can be read at
@@ -308,7 +331,7 @@ installed. See section <a href="session-information.html#sec-setup2">9.1</a> for
 <p class="build-date">Page built: 
 2021-09-27
  using 
-R version 4.0.2 (2020-06-22)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>
