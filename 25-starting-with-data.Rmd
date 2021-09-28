@@ -8,7 +8,7 @@
 - Describe what a factor is.
 - Convert between strings and factors.
 - Reorder and rename factors.
-- Ohter R objects: matrices and lists
+- Other R objects: matrices and lists
 - Export and save data.
 
 ## Presentation of the gene expression data

@@ -124,3 +124,10 @@ saving-your-work
 universal-desktop-service-at-uclouvain
 session-information
 sec-setup2
+comments-1
+loading-data-with-tidyverse
+sec-next
+summarizedexperiment
+creating-a-summarizedexperiment
+adding-variables-to-metadata
+subsetting-a-summarizedexperiment
