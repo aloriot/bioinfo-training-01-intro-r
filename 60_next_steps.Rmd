@@ -196,7 +196,7 @@ For example, here we keep only miRNAs and the non infected samples:
 se1 <- se[rowData(se)$gene_biotype == "miRNA", 
           colData(se)$infection == "NonInfected"]
 se1
-head(assay(se1))
+assay(se1)
 colData(se1)
 rowData(se1)
 ```

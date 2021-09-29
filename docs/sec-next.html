@@ -506,7 +506,7 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ##   hsapiens_homolog_associated_gene_name
 ## colnames(7): GSM2545337 GSM2545338 ... GSM2545353 GSM2545354
 ## colData names(9): sample organism ... tissue mouse</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="sec-next.html#cb580-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">assay</span>(se1))</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="sec-next.html#cb580-1" aria-hidden="true"></a><span class="kw">assay</span>(se1)</span></code></pre></div>
 <pre><code>##          GSM2545337 GSM2545338 GSM2545343 GSM2545348 GSM2545349 GSM2545353
 ## Mir1901          45         44         74         55         68         33
 ## Mir378a          11          7          9          4         12          4
@@ -514,13 +514,15 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ## Mir30c-2         10          6         16         12          8         17
 ## Mir149            1          2          0          0          0          0
 ## Mir128-1          4          1          2          2          1          2
+## Mir7682           2          0          4          1          3          5
 ##          GSM2545354
 ## Mir1901          60
 ## Mir378a           8
 ## Mir133b           3
 ## Mir30c-2         15
 ## Mir149            2
-## Mir128-1          1</code></pre>
+## Mir128-1          1
+## Mir7682           5</code></pre>
 <div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="sec-next.html#cb582-1" aria-hidden="true"></a><span class="kw">colData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 7 rows and 9 columns
 ##                 sample     organism       age         sex   infection
