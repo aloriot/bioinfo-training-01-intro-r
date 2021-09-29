@@ -127,6 +127,26 @@ filter(rna, sex == "Male")
 filter(rna, sex == "Male" & infection == "NonInfected")
 ```
 
+Now let's imagine we are interested in the human homologs of the mouse 
+genes analysed in this dataset. This information can be found in the 
+last column of the `rna` tibble, named `hsapiens_homolog_associated_gene_name`.
+Some mouse gene have no human homologs. These can be retrieved using a `filter()` 
+in the chain, and the `is.na()` function that determines whether something is an `NA`.
+
+```{r, purl = FALSE}
+rna_NA <- filter(rna, is.na(hsapiens_homolog_associated_gene_name))
+select(rna_NA, gene, hsapiens_homolog_associated_gene_name)
+```
+
+If we want to keep only mouse gene that have a human homolog, we can insert a "!"
+symbol that negates the result, so we're asking for every row where 
+hsapiens_homolog_associated_gene_name *is not* an `NA`.
+
+```{r, purl = FALSE}
+rna_no_NA <- filter(rna, !is.na(hsapiens_homolog_associated_gene_name))
+select(rna_no_NA, gene, hsapiens_homolog_associated_gene_name)
+```
+
 ## Pipes
 
 What if you want to select and filter at the same time? There are three
@@ -245,33 +265,7 @@ rna %>%
 ```
 
 
-Now let's imagine we are interested in the human homologs of the mouse 
-genes analysed in this dataset. This information can be found in the 
-last column of the `rna` tibble, named `hsapiens_homolog_associated_gene_name`.
 
-```{r, purl = FALSE}
-rna %>% 
-  select(gene, hsapiens_homolog_associated_gene_name)
-```
-
-Some mouse gene have no human homologs. These can be retrieved using a `filter()` 
-in the chain, and the `is.na()` function that determines whether something is an `NA`.
-
-```{r, purl = FALSE}
-rna %>% 
-  select(gene, hsapiens_homolog_associated_gene_name) %>% 
-  filter(is.na(hsapiens_homolog_associated_gene_name))
-```
-
-If we want to keep only mouse gene that have a human homolog, we can insert a "!"
-symbol that negates the result, so we're asking for every row where 
-hsapiens_homolog_associated_gene_name *is not* an `NA`.
-
-```{r, purl = FALSE}
-rna %>% 
-  select(gene, hsapiens_homolog_associated_gene_name) %>% 
-  filter(!is.na(hsapiens_homolog_associated_gene_name))
-```
 
 `r msmbstyle::question_begin()`
 
@@ -370,7 +364,22 @@ rna %>%
             median_expression = median(expression)) 
 ```
 
+`r msmbstyle::question_begin()`
 
+Calculate the mean expression level of gene "Dok3" by timepoints.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r, purl=FALSE}
+rna %>% 
+  filter(gene == "Dok3") %>% 
+  group_by(time) %>% 
+  summarize(mean = mean(expression)) 
+```
+
+`r msmbstyle::solution_end()`
 
 ### Counting
 
@@ -472,27 +481,11 @@ rna %>%
 
 `r msmbstyle::solution_end()`
 
-`r msmbstyle::question_begin()`
 
-3. Calculate the mean expression level of gene "Dok3" by timepoints.
-
-`r msmbstyle::question_end()`
-
-`r msmbstyle::solution_begin()`
-
-```{r, purl=FALSE}
-rna %>% 
-  filter(gene == "Dok3") %>% 
-  group_by(time) %>% 
-  summarize(mean = mean(expression)) %>% 
-  arrange(time)
-```
-
-`r msmbstyle::solution_end()`
 
 `r msmbstyle::question_begin()`
 
-4. Pick one sample and evaluate the number of genes by biotype 
+3. Pick one sample and evaluate the number of genes by biotype 
 
 `r msmbstyle::question_end()`
 
@@ -510,7 +503,7 @@ rna %>%
 
 `r msmbstyle::question_begin()`
 
-5. Identify genes associated with "abnormal DNA methylation" phenotype description, 
+4. Identify genes associated with "abnormal DNA methylation" phenotype description, 
    and calculate their mean expression (in log) at time 0, time 4 and time 8.
 
 `r msmbstyle::question_end()`
