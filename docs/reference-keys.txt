@@ -10,9 +10,9 @@ fig:unnamed-chunk-81
 fig:firstfactorplot
 fig:paintermodel
 fig:plotmethod
-fig:unnamed-chunk-185
-fig:unnamed-chunk-186
 fig:unnamed-chunk-188
+fig:unnamed-chunk-189
+fig:unnamed-chunk-191
 sec-dataorg
 spreadsheet-programs
 formatting-data-tables-in-spreadsheets

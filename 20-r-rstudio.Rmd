@@ -324,7 +324,7 @@ bioinfo_training_intro/data/
                       /fig_output/fig2.png
 ```
 
-If we were in the working directory, we could refer to the `fig1.pdf`
+If we were in the working directory (`bioinfo_training_intro`), we could refer to the `fig1.pdf`
 file using the relative path `fig_output/fig1.pdf` or the
 absolute path `/home/user/bioinfo_training_intro/fig_output/fig1.pdf`.
 
