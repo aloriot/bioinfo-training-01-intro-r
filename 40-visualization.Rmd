@@ -109,8 +109,7 @@ ggplot(data = rna, mapping = aes(x = expression))
       * `geom_line()` for trend lines, time series, etc.
 
 
-To add a geom(etry) to the plot use the `+` operator. Because we have
-two continuous variables, let's use `geom_histogram()` first:
+To add a geom(etry) to the plot use the `+` operator. Let's use `geom_histogram()` first:
 
 ```{r first-ggplot, cache=FALSE}
 ggplot(data = rna, mapping = aes(x = expression)) +

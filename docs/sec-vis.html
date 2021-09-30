@@ -281,8 +281,7 @@ different geoms; we will use some common ones today, including:</p>
 * `geom_line()` for trend lines, time series, etc.</code></pre>
 </li>
 </ul>
-<p>To add a geom(etry) to the plot use the <code>+</code> operator. Because we have
-two continuous variables, let’s use <code>geom_histogram()</code> first:</p>
+<p>To add a geom(etry) to the plot use the <code>+</code> operator. Let’s use <code>geom_histogram()</code> first:</p>
 <div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="sec-vis.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rna, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> expression)) <span class="sc">+</span></span>
 <span id="cb408-2"><a href="sec-vis.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
