@@ -10,9 +10,9 @@ fig:unnamed-chunk-81
 fig:firstfactorplot
 fig:paintermodel
 fig:plotmethod
+fig:unnamed-chunk-187
 fig:unnamed-chunk-188
-fig:unnamed-chunk-189
-fig:unnamed-chunk-191
+fig:unnamed-chunk-190
 sec-dataorg
 spreadsheet-programs
 formatting-data-tables-in-spreadsheets
@@ -97,7 +97,7 @@ row-and-column-binding
 sec-next
 summarizedexperiment
 creating-a-summarizedexperiment
-adding-variables-to-metadata
 subsetting-a-summarizedexperiment
+adding-variables-to-metadata
 session-information
 sec-setup2

@@ -14,14 +14,14 @@
 
 <meta name="author" content="Laurent Gatto, Manon Martin &amp; Axelle Loriot" />
 
-<meta name="date" content="2021-09-29" />
+<meta name="date" content="2021-09-30" />
 
 
 <meta name="description" content="Course material for the Data manipulation and visualisation with R training (SMCS &amp; CBIO, UCLouvain).">
 
 <title>Chapter 8 Next steps | Data manipulation and visualisation with R</title>
 
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -130,6 +130,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="style.css" type="text/css" />
 
 </head>
@@ -227,7 +250,7 @@ it would be automatically removed from the sample metadata in the same operation
 <ul>
 <li><strong>An expression matrix</strong></li>
 </ul>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="sec-next.html#cb549-1" aria-hidden="true"></a>count_matrix[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="sec-next.html#cb549-1" aria-hidden="true" tabindex="-1"></a>count_matrix[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ## Asl           1170        361        400        586        626        988
 ## Apod         36194      10347       9173      10620      13021      29594
@@ -252,12 +275,12 @@ it would be automatically removed from the sample metadata in the same operation
 ## Cyp2d22       1821       2842       2011       4019
 ## Klk6           894        501        598        259
 ## Fcrls          248        179        184         68</code></pre>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="sec-next.html#cb551-1" aria-hidden="true"></a><span class="kw">dim</span>(count_matrix)</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="sec-next.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(count_matrix)</span></code></pre></div>
 <pre><code>## [1] 1474   22</code></pre>
 <ul>
 <li><strong>A table describing the samples</strong></li>
 </ul>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="sec-next.html#cb553-1" aria-hidden="true"></a>sample_metadata</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="sec-next.html#cb553-1" aria-hidden="true" tabindex="-1"></a>sample_metadata</span></code></pre></div>
 <pre><code>## # A tibble: 22 × 9
 ##    sample     organism       age sex    infection   strain   time tissue   mouse
 ##    &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
@@ -275,7 +298,7 @@ it would be automatically removed from the sample metadata in the same operation
 <ul>
 <li><strong>A table describing the genes</strong></li>
 </ul>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="sec-next.html#cb555-1" aria-hidden="true"></a>gene_metadata</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="sec-next.html#cb555-1" aria-hidden="true" tabindex="-1"></a>gene_metadata</span></code></pre></div>
 <pre><code>## # A tibble: 1,474 × 9
 ##    gene    ENTREZID product     ensembl_gene_id external_synonym chromosome_name
 ##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;          
@@ -299,12 +322,14 @@ it would be automatically removed from the sample metadata in the same operation
 </ul>
 <p>To do this we can put the different parts together using the
 <code>SummarizedExperiment</code> constructor:</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="sec-next.html#cb557-1" aria-hidden="true"></a><span class="co">#BiocManager::install("SummarizedExperiment")</span></span>
-<span id="cb557-2"><a href="sec-next.html#cb557-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="sec-next.html#cb558-1" aria-hidden="true"></a>se &lt;-<span class="st"> </span><span class="kw">SummarizedExperiment</span>(<span class="dt">assays =</span> count_matrix,</span>
-<span id="cb558-2"><a href="sec-next.html#cb558-2" aria-hidden="true"></a>                           <span class="dt">colData =</span> sample_metadata,</span>
-<span id="cb558-3"><a href="sec-next.html#cb558-3" aria-hidden="true"></a>                           <span class="dt">rowData =</span> gene_metadata)</span>
-<span id="cb558-4"><a href="sec-next.html#cb558-4" aria-hidden="true"></a>se</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="sec-next.html#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("SummarizedExperiment")</span></span>
+<span id="cb557-2"><a href="sec-next.html#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
+<pre><code>## Warning: le package 'MatrixGenerics' a été compilé avec la version R 4.1.1</code></pre>
+<pre><code>## Warning: le package 'GenomeInfoDb' a été compilé avec la version R 4.1.1</code></pre>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="sec-next.html#cb560-1" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">SummarizedExperiment</span>(<span class="at">assays =</span> count_matrix,</span>
+<span id="cb560-2"><a href="sec-next.html#cb560-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">colData =</span> sample_metadata,</span>
+<span id="cb560-3"><a href="sec-next.html#cb560-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">rowData =</span> gene_metadata)</span>
+<span id="cb560-4"><a href="sec-next.html#cb560-4" aria-hidden="true" tabindex="-1"></a>se</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 1474 22 
 ## metadata(0):
@@ -316,7 +341,7 @@ it would be automatically removed from the sample metadata in the same operation
 ## colData names(9): sample organism ... tissue mouse</code></pre>
 <p>Using this data structure, we can access the expression matrix with
 the <code>assay</code> function:</p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="sec-next.html#cb560-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="sec-next.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">assay</span>(se))</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545339 GSM2545340 GSM2545341
 ## Asl           1170        361        400        586        626        988
 ## Apod         36194      10347       9173      10620      13021      29594
@@ -345,10 +370,10 @@ the <code>assay</code> function:</p>
 ## Klk6           894        501        598        259
 ## Fcrls          248        179        184         68
 ## Slc2a4         248        350        317        796</code></pre>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="sec-next.html#cb562-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">assay</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="sec-next.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">assay</span>(se))</span></code></pre></div>
 <pre><code>## [1] 1474   22</code></pre>
 <p>We can access the sample metadata using the <code>colData</code> function:</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="sec-next.html#cb564-1" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="sec-next.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)</span></code></pre></div>
 <pre><code>## DataFrame with 22 rows and 9 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -376,43 +401,27 @@ the <code>assay</code> function:</p>
 ## GSM2545362     C57BL/6         4  Cerebellum        20
 ## GSM2545363     C57BL/6         4  Cerebellum        12
 ## GSM2545380     C57BL/6         8  Cerebellum        19</code></pre>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="sec-next.html#cb566-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">colData</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="sec-next.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">colData</span>(se))</span></code></pre></div>
 <pre><code>## [1] 22  9</code></pre>
 <p>We can also access the feature metadata using the <code>rowData</code> function:</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="sec-next.html#cb568-1" aria-hidden="true"></a><span class="kw">head</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="sec-next.html#cb570-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">rowData</span>(se))</span></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 9 columns
-##                gene  ENTREZID
-##         &lt;character&gt; &lt;numeric&gt;
-## Asl             Asl    109900
-## Apod           Apod     11815
-## Cyp2d22     Cyp2d22     56448
-## Klk6           Klk6     19144
-## Fcrls         Fcrls     80891
-## Slc2a4       Slc2a4     20528
-##                                                                          product
-##                                                                      &lt;character&gt;
-## Asl                                argininosuccinate lyase transcript variant X1
-## Apod                                       apolipoprotein D transcript variant 3
-## Cyp2d22 cytochrome P450 family 2 subfamily d polypeptide 22 transcript variant 2
-## Klk6                         kallikrein related-peptidase 6 transcript variant 2
-## Fcrls                Fc receptor-like S scavenger receptor transcript variant X1
-## Slc2a4        solute carrier family 2 (facilitated glucose transporter) member 4
-##            ensembl_gene_id external_synonym chromosome_name   gene_biotype
-##                &lt;character&gt;      &lt;character&gt;     &lt;character&gt;    &lt;character&gt;
-## Asl     ENSMUSG00000025533    2510006M18Rik               5 protein_coding
-## Apod    ENSMUSG00000022548               NA              16 protein_coding
-## Cyp2d22 ENSMUSG00000061740             2D22              15 protein_coding
-## Klk6    ENSMUSG00000050063             Bssp               7 protein_coding
-## Fcrls   ENSMUSG00000015852    2810439C17Rik               3 protein_coding
-## Slc2a4  ENSMUSG00000018566           Glut-4              11 protein_coding
-##                                   phenotype_description
-##                                             &lt;character&gt;
-## Asl               abnormal circulating amino acid level
-## Apod                         abnormal lipid homeostasis
-## Cyp2d22                        abnormal skin morphology
-## Klk6                            abnormal cytokine level
-## Fcrls   decreased CD8-positive alpha-beta T cell number
-## Slc2a4               abnormal circulating glucose level
+##                gene  ENTREZID                product    ensembl_gene_id
+##         &lt;character&gt; &lt;numeric&gt;            &lt;character&gt;        &lt;character&gt;
+## Asl             Asl    109900 argininosuccinate ly.. ENSMUSG00000025533
+## Apod           Apod     11815 apolipoprotein D tra.. ENSMUSG00000022548
+## Cyp2d22     Cyp2d22     56448 cytochrome P450 fami.. ENSMUSG00000061740
+## Klk6           Klk6     19144 kallikrein related-p.. ENSMUSG00000050063
+## Fcrls         Fcrls     80891 Fc receptor-like S s.. ENSMUSG00000015852
+## Slc2a4       Slc2a4     20528 solute carrier famil.. ENSMUSG00000018566
+##         external_synonym chromosome_name   gene_biotype  phenotype_description
+##              &lt;character&gt;     &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
+## Asl        2510006M18Rik               5 protein_coding abnormal circulating..
+## Apod                  NA              16 protein_coding abnormal lipid homeo..
+## Cyp2d22             2D22              15 protein_coding abnormal skin morpho..
+## Klk6                Bssp               7 protein_coding abnormal cytokine le..
+## Fcrls      2810439C17Rik               3 protein_coding decreased CD8-positi..
+## Slc2a4            Glut-4              11 protein_coding abnormal circulating..
 ##         hsapiens_homolog_associated_gene_name
 ##                                   &lt;character&gt;
 ## Asl                                       ASL
@@ -421,7 +430,7 @@ the <code>assay</code> function:</p>
 ## Klk6                                     KLK6
 ## Fcrls                                   FCRL4
 ## Slc2a4                                 SLC2A4</code></pre>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="sec-next.html#cb570-1" aria-hidden="true"></a><span class="kw">dim</span>(<span class="kw">rowData</span>(se))</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="sec-next.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(<span class="fu">rowData</span>(se))</span></code></pre></div>
 <pre><code>## [1] 1474    9</code></pre>
 </div>
 <div id="subsetting-a-summarizedexperiment" class="section level3" number="8.1.2">
@@ -432,8 +441,8 @@ the <code>assay</code> function:</p>
 with numerics or with characters of logicals.</p>
 <p>Below, we create a new instance of class SummarizedExperiment that contains only
 the 5 first features for the 3 first samples.</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="sec-next.html#cb572-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span>
-<span id="cb572-2"><a href="sec-next.html#cb572-2" aria-hidden="true"></a>se1</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="sec-next.html#cb574-1" aria-hidden="true" tabindex="-1"></a>se1 <span class="ot">&lt;-</span> se[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb574-2"><a href="sec-next.html#cb574-2" aria-hidden="true" tabindex="-1"></a>se1</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 5 3 
 ## metadata(0):
@@ -443,7 +452,7 @@ the 5 first features for the 3 first samples.</p>
 ##   hsapiens_homolog_associated_gene_name
 ## colnames(3): GSM2545336 GSM2545337 GSM2545338
 ## colData names(9): sample organism ... tissue mouse</code></pre>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="sec-next.html#cb574-1" aria-hidden="true"></a><span class="kw">colData</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="sec-next.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 3 rows and 9 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -455,36 +464,22 @@ the 5 first features for the 3 first samples.</p>
 ## GSM2545336     C57BL/6         8  Cerebellum        14
 ## GSM2545337     C57BL/6         0  Cerebellum         9
 ## GSM2545338     C57BL/6         0  Cerebellum        10</code></pre>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="sec-next.html#cb576-1" aria-hidden="true"></a><span class="kw">rowData</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="sec-next.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 5 rows and 9 columns
-##                gene  ENTREZID
-##         &lt;character&gt; &lt;numeric&gt;
-## Asl             Asl    109900
-## Apod           Apod     11815
-## Cyp2d22     Cyp2d22     56448
-## Klk6           Klk6     19144
-## Fcrls         Fcrls     80891
-##                                                                          product
-##                                                                      &lt;character&gt;
-## Asl                                argininosuccinate lyase transcript variant X1
-## Apod                                       apolipoprotein D transcript variant 3
-## Cyp2d22 cytochrome P450 family 2 subfamily d polypeptide 22 transcript variant 2
-## Klk6                         kallikrein related-peptidase 6 transcript variant 2
-## Fcrls                Fc receptor-like S scavenger receptor transcript variant X1
-##            ensembl_gene_id external_synonym chromosome_name   gene_biotype
-##                &lt;character&gt;      &lt;character&gt;     &lt;character&gt;    &lt;character&gt;
-## Asl     ENSMUSG00000025533    2510006M18Rik               5 protein_coding
-## Apod    ENSMUSG00000022548               NA              16 protein_coding
-## Cyp2d22 ENSMUSG00000061740             2D22              15 protein_coding
-## Klk6    ENSMUSG00000050063             Bssp               7 protein_coding
-## Fcrls   ENSMUSG00000015852    2810439C17Rik               3 protein_coding
-##                                   phenotype_description
-##                                             &lt;character&gt;
-## Asl               abnormal circulating amino acid level
-## Apod                         abnormal lipid homeostasis
-## Cyp2d22                        abnormal skin morphology
-## Klk6                            abnormal cytokine level
-## Fcrls   decreased CD8-positive alpha-beta T cell number
+##                gene  ENTREZID                product    ensembl_gene_id
+##         &lt;character&gt; &lt;numeric&gt;            &lt;character&gt;        &lt;character&gt;
+## Asl             Asl    109900 argininosuccinate ly.. ENSMUSG00000025533
+## Apod           Apod     11815 apolipoprotein D tra.. ENSMUSG00000022548
+## Cyp2d22     Cyp2d22     56448 cytochrome P450 fami.. ENSMUSG00000061740
+## Klk6           Klk6     19144 kallikrein related-p.. ENSMUSG00000050063
+## Fcrls         Fcrls     80891 Fc receptor-like S s.. ENSMUSG00000015852
+##         external_synonym chromosome_name   gene_biotype  phenotype_description
+##              &lt;character&gt;     &lt;character&gt;    &lt;character&gt;            &lt;character&gt;
+## Asl        2510006M18Rik               5 protein_coding abnormal circulating..
+## Apod                  NA              16 protein_coding abnormal lipid homeo..
+## Cyp2d22             2D22              15 protein_coding abnormal skin morpho..
+## Klk6                Bssp               7 protein_coding abnormal cytokine le..
+## Fcrls      2810439C17Rik               3 protein_coding decreased CD8-positi..
 ##         hsapiens_homolog_associated_gene_name
 ##                                   &lt;character&gt;
 ## Asl                                       ASL
@@ -494,9 +489,9 @@ the 5 first features for the 3 first samples.</p>
 ## Fcrls                                   FCRL4</code></pre>
 <p>We can also use the <code>colData()</code> function to subset on something from the sample metadata, or the <code>rowData()</code> to subset on something from the feature metadata.
 For example, here we keep only miRNAs and the non infected samples:</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="sec-next.html#cb578-1" aria-hidden="true"></a>se1 &lt;-<span class="st"> </span>se[<span class="kw">rowData</span>(se)<span class="op">$</span>gene_biotype <span class="op">==</span><span class="st"> "miRNA"</span>, </span>
-<span id="cb578-2"><a href="sec-next.html#cb578-2" aria-hidden="true"></a>          <span class="kw">colData</span>(se)<span class="op">$</span>infection <span class="op">==</span><span class="st"> "NonInfected"</span>]</span>
-<span id="cb578-3"><a href="sec-next.html#cb578-3" aria-hidden="true"></a>se1</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="sec-next.html#cb580-1" aria-hidden="true" tabindex="-1"></a>se1 <span class="ot">&lt;-</span> se[<span class="fu">rowData</span>(se)<span class="sc">$</span>gene_biotype <span class="sc">==</span> <span class="st">"miRNA"</span>, </span>
+<span id="cb580-2"><a href="sec-next.html#cb580-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">colData</span>(se)<span class="sc">$</span>infection <span class="sc">==</span> <span class="st">"NonInfected"</span>]</span>
+<span id="cb580-3"><a href="sec-next.html#cb580-3" aria-hidden="true" tabindex="-1"></a>se1</span></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 7 7 
 ## metadata(0):
@@ -506,7 +501,7 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ##   hsapiens_homolog_associated_gene_name
 ## colnames(7): GSM2545337 GSM2545338 ... GSM2545353 GSM2545354
 ## colData names(9): sample organism ... tissue mouse</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="sec-next.html#cb580-1" aria-hidden="true"></a><span class="kw">assay</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="sec-next.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(se1)</span></code></pre></div>
 <pre><code>##          GSM2545337 GSM2545338 GSM2545343 GSM2545348 GSM2545349 GSM2545353
 ## Mir1901          45         44         74         55         68         33
 ## Mir378a          11          7          9          4         12          4
@@ -523,7 +518,7 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ## Mir149            2
 ## Mir128-1          1
 ## Mir7682           5</code></pre>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="sec-next.html#cb582-1" aria-hidden="true"></a><span class="kw">colData</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="sec-next.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 7 rows and 9 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -543,7 +538,7 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ## GSM2545349     C57BL/6         0  Cerebellum         7
 ## GSM2545353     C57BL/6         0  Cerebellum         4
 ## GSM2545354     C57BL/6         0  Cerebellum         2</code></pre>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="sec-next.html#cb584-1" aria-hidden="true"></a><span class="kw">rowData</span>(se1)</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="sec-next.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(se1)</span></code></pre></div>
 <pre><code>## DataFrame with 7 rows and 9 columns
 ##                 gene  ENTREZID        product    ensembl_gene_id
 ##          &lt;character&gt; &lt;numeric&gt;    &lt;character&gt;        &lt;character&gt;
@@ -554,24 +549,15 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ## Mir149        Mir149    387167   microRNA 149 ENSMUSG00000065470
 ## Mir128-1    Mir128-1    387147 microRNA 128-1 ENSMUSG00000065520
 ## Mir7682      Mir7682 102466847  microRNA 7682 ENSMUSG00000106406
-##          external_synonym chromosome_name gene_biotype
-##               &lt;character&gt;     &lt;character&gt;  &lt;character&gt;
-## Mir1901          Mirn1901              18        miRNA
-## Mir378a           Mirn378              18        miRNA
-## Mir133b          mir 133b               1        miRNA
-## Mir30c-2        mir 30c-2               1        miRNA
-## Mir149            Mirn149               1        miRNA
-## Mir128-1          Mirn128               1        miRNA
-## Mir7682      mmu-mir-7682               1        miRNA
-##                                       phenotype_description
-##                                                 &lt;character&gt;
-## Mir1901                                                  NA
-## Mir378a                   abnormal mitochondrial physiology
-## Mir133b                      no abnormal phenotype detected
-## Mir30c-2                                                 NA
-## Mir149   increased circulating aspartate transaminase level
-## Mir128-1                     no abnormal phenotype detected
-## Mir7682                                                  NA
+##          external_synonym chromosome_name gene_biotype  phenotype_description
+##               &lt;character&gt;     &lt;character&gt;  &lt;character&gt;            &lt;character&gt;
+## Mir1901          Mirn1901              18        miRNA                     NA
+## Mir378a           Mirn378              18        miRNA abnormal mitochondri..
+## Mir133b          mir 133b               1        miRNA no abnormal phenotyp..
+## Mir30c-2        mir 30c-2               1        miRNA                     NA
+## Mir149            Mirn149               1        miRNA increased circulatin..
+## Mir128-1          Mirn128               1        miRNA no abnormal phenotyp..
+## Mir7682      mmu-mir-7682               1        miRNA                     NA
 ##          hsapiens_homolog_associated_gene_name
 ##                                    &lt;character&gt;
 ## Mir1901                                     NA
@@ -584,10 +570,10 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 <p>For the following exercise, you should download the SE.rda object
 (that contains the <code>se</code> object), and open the file using the
 ‘load()’ function.</p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="sec-next.html#cb586-1" aria-hidden="true"></a><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="st">"https://raw.githubusercontent.com/UCLouvain-CBIO/bioinfo-training-01-intro-r/master/data/SE.rda"</span>, </span>
-<span id="cb586-2"><a href="sec-next.html#cb586-2" aria-hidden="true"></a>              <span class="dt">destfile =</span> <span class="st">"data/SE.rda"</span>)</span>
-<span id="cb586-3"><a href="sec-next.html#cb586-3" aria-hidden="true"></a></span>
-<span id="cb586-4"><a href="sec-next.html#cb586-4" aria-hidden="true"></a><span class="kw">load</span>(<span class="dt">file =</span> <span class="st">"data/SE.rda"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="sec-next.html#cb588-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> <span class="st">"https://raw.githubusercontent.com/UCLouvain-CBIO/bioinfo-training-01-intro-r/master/data/SE.rda"</span>, </span>
+<span id="cb588-2"><a href="sec-next.html#cb588-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">destfile =</span> <span class="st">"data/SE.rda"</span>)</span>
+<span id="cb588-3"><a href="sec-next.html#cb588-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb588-4"><a href="sec-next.html#cb588-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/SE.rda"</span>)</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -604,7 +590,7 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ► Solution<span id="sol-start-51" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-51', 'sol-start-51')"></span>
 </p>
 <div id="sol-body-51" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="sec-next.html#cb587-1" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">!=</span><span class="st"> </span><span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="sec-next.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(se)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">colData</span>(se)<span class="sc">$</span>time <span class="sc">!=</span> <span class="dv">4</span>]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545341 GSM2545342 GSM2545343
 ## Asl           1170        361        400        988        836        535
 ## Apod         36194      10347       9173      29594      24959      13668
@@ -617,8 +603,8 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 ## Asl            473       1192
 ## Apod         11088      38148
 ## Cyp2d22       1821       4019</code></pre>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="sec-next.html#cb589-1" aria-hidden="true"></a><span class="co"># Equivalent to</span></span>
-<span id="cb589-2"><a href="sec-next.html#cb589-2" aria-hidden="true"></a><span class="kw">assay</span>(se)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">|</span><span class="st"> </span><span class="kw">colData</span>(se)<span class="op">$</span>time <span class="op">==</span><span class="st"> </span><span class="dv">8</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="sec-next.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalent to</span></span>
+<span id="cb591-2"><a href="sec-next.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">assay</span>(se)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fu">colData</span>(se)<span class="sc">$</span>time <span class="sc">==</span> <span class="dv">0</span> <span class="sc">|</span> <span class="fu">colData</span>(se)<span class="sc">$</span>time <span class="sc">==</span> <span class="dv">8</span>]</span></code></pre></div>
 <pre><code>##         GSM2545336 GSM2545337 GSM2545338 GSM2545341 GSM2545342 GSM2545343
 ## Asl           1170        361        400        988        836        535
 ## Apod         36194      10347       9173      29594      24959      13668
@@ -641,8 +627,8 @@ For example, here we keep only miRNAs and the non infected samples:</p>
 <span class="header-section-number">8.1.2.1</span> Adding variables to metadata</h4>
 <p>We can also add information to the metadata.
 Suppose that you want to add the center where the samples were collected…</p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="sec-next.html#cb591-1" aria-hidden="true"></a><span class="kw">colData</span>(se)<span class="op">$</span>center &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="st">"University of Illinois"</span>, <span class="kw">nrow</span>(<span class="kw">colData</span>(se)))</span>
-<span id="cb591-2"><a href="sec-next.html#cb591-2" aria-hidden="true"></a><span class="kw">colData</span>(se)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="sec-next.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)<span class="sc">$</span>center <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">"University of Illinois"</span>, <span class="fu">nrow</span>(<span class="fu">colData</span>(se)))</span>
+<span id="cb593-2"><a href="sec-next.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(se)</span></code></pre></div>
 <pre><code>## DataFrame with 22 rows and 10 columns
 ##                 sample     organism       age         sex   infection
 ##            &lt;character&gt;  &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;
@@ -691,9 +677,9 @@ use the Bioconductor <code>DESeq2</code> package to do some differential express
 <a href="session-information.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-29
+2021-09-30
  using 
-R version 4.0.2 (2020-06-22)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>
