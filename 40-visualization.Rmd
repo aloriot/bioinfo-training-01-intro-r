@@ -232,10 +232,10 @@ rna_plot
 ## Building your plots iteratively
 
 We will now draw a scatter plot with two continuous variables and the `geom_point()` function.
-This graph will represent the log2 fold changes of expression comparing time 8 versus time 0 and time 4 versus time 0. To this end, we first need to compute the means of the log-transformed expression values by gene and time then the log fold changes by subtracting the mean log expressions between time 8 and time 0 and between time 4 and time 0. Note that we also include here the gene biotype that we will use later on to represent the genes. We will save the fold changes in a new data frame called `rna_FC.`
+This graph will represent the log2 fold changes of expression comparing time 8 versus time 0 and time 4 versus time 0. To this end, we first need to compute the means of the log-transformed expression values by gene and time then the log fold changes by subtracting the mean log expressions between time 8 and time 0 and between time 4 and time 0. Note that we also include here the gene biotype that we will use later on to represent the genes. We will save the fold changes in a new data frame called `rna_fc.`
 
-```{r rna_FC, cache=FALSE}
-rna_FC <- rna %>% select(gene, time,
+```{r rna_fc, cache=FALSE}
+rna_fc <- rna %>% select(gene, time,
                          gene_biotype, expression_log) %>%
   group_by(gene, time, gene_biotype) %>%
   summarize(mean_exp = mean(expression_log)) %>%
@@ -245,11 +245,11 @@ rna_FC <- rna %>% select(gene, time,
 
 ```
 
-We can then build a ggplot with the newly created dataset `rna_FC`. Building plots with **`ggplot2`** is typically an iterative process. We start by
+We can then build a ggplot with the newly created dataset `rna_fc`. Building plots with **`ggplot2`** is typically an iterative process. We start by
 defining the dataset we'll use, lay out the axes, and choose a geom:
 
 ```{r create-ggplot-object, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
   geom_point()
 ```
 
@@ -257,7 +257,7 @@ Then, we start modifying this plot to extract more information from it. For
 instance, we can add transparency (`alpha`) to avoid overplotting:
 
 ```{r adding-transparency, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
   geom_point(alpha = 0.3)
 ```
 
@@ -265,7 +265,7 @@ ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
 We can also add colors for all the points:
 
 ```{r adding-colors, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
   geom_point(alpha = 0.3, color = "blue")
 ```
 
@@ -276,7 +276,7 @@ vector. Here is an example where we color with **`gene_biotype`**:
 
 
 ```{r color-by-gene_biotype1, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
   geom_point(alpha = 0.3, aes(color = gene_biotype))
 
 ```
@@ -286,7 +286,7 @@ the `ggplot()` function. This will be seen by any geom layers and the
 mapping will be determined by the x- and y-axis set up in `aes()`.
 
 ```{r color-by-gene_biotype2, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
                                 color = gene_biotype)) +
   geom_point(alpha = 0.3)
 ```
@@ -294,7 +294,7 @@ ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
 Finally, we could also add a diagonal line with the `geom_abline()` function:
 
 ```{r adding-diag, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
                                 color = gene_biotype)) +
   geom_point(alpha = 0.3) +
   geom_abline(intercept = 0)
@@ -303,7 +303,7 @@ ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
 Notice that we can change the geom layer from `geom_point` to `geom_jitter` and colors will be still determined by `gene_biotype`.
 
 ```{r color-by-gene_biotype3, cache=FALSE}
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
                                 color = gene_biotype)) +
   geom_jitter(alpha = 0.3) +
   geom_abline(intercept = 0)
@@ -313,7 +313,7 @@ ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0,
 
 Scatter plots can be useful exploratory tools for small datasets. For
 data sets with large numbers of observations, such as the
-`rna_FC` data set, overplotting of points can be a
+`rna_fc` data set, overplotting of points can be a
 limitation of scatter plots. One strategy for handling such settings
 is to use hexagonal binning of observations. The plot space is
 tessellated into hexagons. Each hexagon is assigned a color based on
@@ -340,7 +340,7 @@ install.packages("hexbin")
 ```{r}
 library("hexbin")
 
-ggplot(data = rna_FC, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
+ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
   geom_hex() +
   geom_abline(intercept = 0)
 
@@ -419,8 +419,7 @@ ggplot(data = rna,
 Add color to the data points on your boxplot according to the duration of the infection (`time`).
 
 *Hint:* Check the class for `time`. Consider changing the class of
-`time` from integer to factor. Why does this change how R makes the
-graph?
+`time` from integer to factor directly in the ggplot mapping. Why does this change how R makes the graph?
 
 `r msmbstyle::question_end()`
 
@@ -486,10 +485,12 @@ Let’s calculate the mean expression per duration of the infection for the 10 g
 First, we need to select the genes and create a subset of `rna` called `sub_rna` containing the 10 selected genes, then we need to group the data and calculate the mean gene expression within each group:
 
 ```{r}
-rna_FC <- rna_FC %>% arrange(desc(time_8_vs_0))
+rna_fc <- rna_fc %>% arrange(desc(time_8_vs_0))
+
+genes_selected <- rna_fc$gene[1:10]
 
 sub_rna <- rna %>%
-  filter(gene %in% rna_FC[1:10,"gene", drop=TRUE])
+    filter(gene %in% genes_selected)
 
 mean_exp_by_time <- sub_rna %>%
   group_by(gene,time) %>%
@@ -707,7 +708,7 @@ ggplot(data = mean_exp_by_time_sex,
 ```
 
 If you like the changes you created better than the default theme, you can save them as
-an object to be able to easily apply them to other plots you may create. here is an example with the histogram we have previously created.
+an object to be able to easily apply them to other plots you may create. Here is an example with the histogram we have previously created.
 
 
 ```{r mean_exp-time-with-right-labels-xfont, cache=FALSE}
