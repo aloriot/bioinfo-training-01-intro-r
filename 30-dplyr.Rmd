@@ -42,9 +42,9 @@ data in a tidy way.
 To learn more about **`dplyr`** and **`tidyr`** after the workshop,
 you may want to check out this [handy data transformation with
 **`dplyr`**
-cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
 and this [one about
-**`tidyr`**](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf).
+**`tidyr`**](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf).
 
 - The **`tidyverse`** package is an "umbrella-package" that installs
 several useful packages for data analysis which work well together,
