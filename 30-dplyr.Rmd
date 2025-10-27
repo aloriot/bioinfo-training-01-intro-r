@@ -511,7 +511,7 @@ rna %>%
 `r msmbstyle::question_begin()`
 
 4. Identify genes associated with "abnormal DNA methylation" phenotype description, 
-   and calculate their mean expression (in log) at time 0, time 4 and time 8.
+   and calculate the mean of their log expression at time 0, time 4 and time 8.
 
 `r msmbstyle::question_end()`
 
