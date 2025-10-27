@@ -130,12 +130,21 @@ filter(rna, sex == "Male" & infection == "NonInfected")
 Now let's imagine we are interested in the human homologs of the mouse 
 genes analysed in this dataset. This information can be found in the 
 last column of the `rna` tibble, named `hsapiens_homolog_associated_gene_name`.
-Some mouse gene have no human homologs. These can be retrieved using a `filter()` 
-in the chain, and the `is.na()` function that determines whether something is an `NA`.
+Some mouse gene have no human homologs. To visualise it easily, we will create 
+a new table containing just the 2 columns `gene` and 
+`hsapiens_homolog_associated_gene_name`.
 
 ```{r, purl = FALSE}
-rna_NA <- filter(rna, is.na(hsapiens_homolog_associated_gene_name))
-select(rna_NA, gene, hsapiens_homolog_associated_gene_name)
+genes <- select(rna, gene, hsapiens_homolog_associated_gene_name)
+genes
+```
+
+Some mouse genes have no human homologs. These can be retrieved using 
+`filter()` and the `is.na()` function, that determines whether 
+something is an NA.
+
+```{r, purl = FALSE}
+filter(genes, is.na(hsapiens_homolog_associated_gene_name))
 ```
 
 If we want to keep only mouse gene that have a human homolog, we can insert a "!"
@@ -143,8 +152,7 @@ symbol that negates the result, so we're asking for every row where
 hsapiens_homolog_associated_gene_name *is not* an `NA`.
 
 ```{r, purl = FALSE}
-rna_no_NA <- filter(rna, !is.na(hsapiens_homolog_associated_gene_name))
-select(rna_no_NA, gene, hsapiens_homolog_associated_gene_name)
+filter(genes, !is.na(hsapiens_homolog_associated_gene_name))
 ```
 
 ## Pipes
