@@ -522,8 +522,7 @@ rna %>%
 rna %>%
   filter(phenotype_description == "abnormal DNA methylation") %>% 
   group_by(gene, time) %>% 
-  summarize(mean_expression = mean(log(expression))) %>% 
-  arrange()
+  summarize(mean_expression = mean(log(expression)))
 ```  
 
 `r msmbstyle::solution_end()`
