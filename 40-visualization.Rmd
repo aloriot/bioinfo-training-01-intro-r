@@ -484,13 +484,13 @@ ggplot(data = rna,
 
 ## Line plots
 
-Let’s calculate the mean expression per duration of the infection for the 10 genes having the highest log fold changes comparing time 8 versus time 0.
+Let’s calculate the mean expression per duration of the infection for the 6 genes having the highest log fold changes comparing time 8 versus time 0.
 First, we need to select the genes and create a subset of `rna` called `sub_rna` containing the 10 selected genes, then we need to group the data and calculate the mean gene expression within each group:
 
 ```{r}
 rna_fc <- rna_fc %>% arrange(desc(time_8_vs_0))
 
-genes_selected <- rna_fc$gene[1:10]
+genes_selected <- rna_fc$gene[1:6]
 
 sub_rna <- rna %>%
     filter(gene %in% genes_selected)
