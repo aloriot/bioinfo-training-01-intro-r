@@ -355,8 +355,8 @@ ggplot(data = rna_fc, mapping = aes(x = time_4_vs_0, y = time_8_vs_0)) +
 `r msmbstyle::question_begin()`
 
 Use what you just learned to create a scatter plot of `expression_log`
-over `sample` from the `rna` dataset with the time showing in
-different colors. Is this a good way to show this type of data?
+over `sample` from the `rna` dataset with the mouse id showing in
+different colors. Is this a good way to represent this type of data?
 
 `r msmbstyle::question_end()`
 
@@ -364,8 +364,8 @@ different colors. Is this a good way to show this type of data?
 `r msmbstyle::solution_begin()`
 
 ```{r, eval = TRUE}
-ggplot(data = rna, mapping = aes(y = expression_log, x = sample)) +
-    geom_point(aes(color = time))
+ggplot(rna , aes(x = sample, y = expression_log)) +
+       geom_point(aes(color = mouse))
 ```
 
 `r msmbstyle::solution_end()`
