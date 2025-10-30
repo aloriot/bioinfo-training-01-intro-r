@@ -580,6 +580,35 @@ ggplot(data = mean_exp_by_time_sex,
   theme(panel.grid = element_blank())
 ```
 
+`r msmbstyle::question_begin()`
+
+Use the `geom_col()` to try to reproduce the following figure starting from `rna` table.
+
+```{r, echo = FALSE, expression_by_sample_facet-by-gene}
+rna %>% 
+  filter(gene %in% genes_selected) %>% 
+  ggplot(aes(x = sample,  y = expression)) +
+  geom_col(aes(fill = factor(time))) +
+  facet_wrap(~ gene, scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 90, size = 5))
+```
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r expression_by_sample_facet_solution}
+rna %>% 
+  filter(gene %in% genes_selected) %>% 
+  ggplot(aes(x = sample,  y = expression)) +
+  geom_col(aes(fill = factor(time))) +
+  facet_wrap(~ gene, scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 90, size = 5))
+```
+
+`r msmbstyle::solution_end()`
+
+
 
 `r msmbstyle::question_begin()`
 
