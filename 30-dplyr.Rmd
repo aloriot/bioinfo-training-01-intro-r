@@ -39,12 +39,15 @@ to do some specific analyses or for visualization. The package **`tidyr`** addre
 this common problem of reshaping data and provides tools for manipulating 
 data in a tidy way.
 
-To learn more about **`dplyr`** and **`tidyr`** after the workshop,
-you may want to check out this [handy data transformation with
-**`dplyr`**
-cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
-and this [one about
-**`tidyr`**](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf).
+The [Data Transformation Cheat
+Sheet](https://github.com/rstudio/cheatsheets/raw/main/data-transformation.pdf)
+provides an overview of the `dplyr` grammar, offering more details and
+functions that we will see in this chapter. The [Tidy Data
+Tutor](https://tidydatatutor.com/) is a wonderful tool to visually
+describe what the tidy data operations do. The following
+[tutorial](https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/)
+offers nice animations of `mutate()`, `summarize()`, `group_by()`, and
+`ungroup()`.
 
 - The **`tidyverse`** package is an "umbrella-package" that installs
 several useful packages for data analysis which work well together,
